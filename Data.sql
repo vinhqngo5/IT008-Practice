@@ -39,10 +39,10 @@ CREATE TABLE Food
 (
 	Id INT IDENTITY PRIMARY KEY,
 	Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
-	IDCategory INT NOT NULL,
+	IdCategory INT NOT NULL,
 	Price FLOAT NOT NULL DEFAULT 0
 
-	FOREIGN KEY (IDCategory) REFERENCES dbo.FoodCategory(Id)
+	FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
 )
 GO
 
@@ -51,22 +51,22 @@ CREATE TABLE Bill
 	Id INT IDENTITY PRIMARY KEY,
 	DateCheckIn DATE NOT NULL DEFAULT GETDATE(),
 	DateCheckOut DATE,
-	IDTable INT NOT NULL,
+	IdTable INT NOT NULL,
 	Status BIT NOT NULL DEFAULT 0 -- 1: đã thanh toán && 0: chưa thanh toán
 	
-	FOREIGN KEY (IDTable) REFERENCES dbo.TableFood(Id)
+	FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
 )
 GO
 
 CREATE TABLE BillInfo
 (
 	Id INT IDENTITY PRIMARY KEY,
-	IDBill INT NOT NULL,
-	IDFood INT NOT NULL,
+	IdBill INT NOT NULL,
+	IdFood INT NOT NULL,
 	Count INT NOT NULL DEFAULT 0
 	
-	FOREIGN KEY (IDBill) REFERENCES dbo.Bill(Id),
-	FOREIGN KEY (IDFood) REFERENCES dbo.Food(Id)
+	FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
+	FOREIGN KEY (IdFood) REFERENCES dbo.Food(Id)
 )
 GO
 
