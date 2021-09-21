@@ -1,3 +1,4 @@
+-- DROP DATABASE QuanLyQuanCafe1
 CREATE DATABASE QuanLyQuanCafe
 GO
 USE QuanLyQuanCafe
@@ -11,9 +12,9 @@ GO
 
 CREATE TABLE TableFood
 (
-  id INT IDENTITY PRIMARY KEY,
-  name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
-  status NVARCHAR(100) NOT NULL DEFAULT N'Trống',
+  Id INT IDENTITY PRIMARY KEY,
+  Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
+  Status NVARCHAR(100) NOT NULL DEFAULT N'Trống',
   -- Trống || Có người
 
 )
@@ -31,43 +32,43 @@ GO
 
 CREATE TABLE FoodCategory
 (
-  id INT IDENTITY PRIMARY KEY,
-  name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
+  Id INT IDENTITY PRIMARY KEY,
+  Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
 )
 GO
 
 CREATE TABLE Food
 (
-  id INT IDENTITY PRIMARY KEY,
-  name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
-  idCategory INT NOT NULL,
-  price FLOAT NOT NULL DEFAULT 0,
+  Id INT IDENTITY PRIMARY KEY,
+  Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
+  IdCategory INT NOT NULL,
+  Price FLOAT NOT NULL DEFAULT 0,
 
-  FOREIGN KEY (idCategory) REFERENCES dbo.FoodCategory(id)
+  FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
 )
 GO
 
 CREATE TABLE Bill
 (
-  id INT IDENTITY PRIMARY KEY,
+  Id INT IDENTITY PRIMARY KEY,
   DateCheckIn DATE NOT NULL DEFAULT GETDATE(),
   DateCheckOut DATE,
-  idTable INT NOT NULL,
-  status INT NOT NULL DEFAULT 0,
+  IdTable INT NOT NULL,
+  Status INT NOT NULL DEFAULT 0,
   -- 1: đã thanh toán && 0: chưa thanh toán
 
-  FOREIGN KEY (idTable) REFERENCES dbo.TableFood(id)
+  FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
 
 )
 GO
 
 CREATE TABLE BillInfo
 (
-  id INT IDENTITY PRIMARY KEY,
-  idBill INT NOT NULL,
-  idFood INT NOT NULL,
-  count INT NOT NULL DEFAULT 0,
+  Id INT IDENTITY PRIMARY KEY,
+  IdBill INT NOT NULL,
+  IdFood INT NOT NULL,
+  Count INT NOT NULL DEFAULT 0,
 
-  FOREIGN KEY (idBill) REFERENCES dbo.Bill(id),
-  FOREIGN KEY (idFood) REFERENCES dbo.Food(id)
+  FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
+  FOREIGN KEY (IdFood) REFERENCES dbo.Food(Id)
 )

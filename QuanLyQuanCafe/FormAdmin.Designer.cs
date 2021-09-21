@@ -1,7 +1,7 @@
 ﻿
 namespace QuanLyQuanCafe
 {
-    partial class fAdmin
+    partial class FormAdmin
     {
         /// <summary>
         /// Required designer variable.

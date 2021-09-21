@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fLogin : Form
+    public partial class FormLogin : Form
     {
-        public fLogin()
+        public FormLogin()
         {
             InitializeComponent();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            fTableManager f = new fTableManager();
+            FormTableManager f = new FormTableManager();
             this.Hide();
             f.ShowDialog();
             this.Show();

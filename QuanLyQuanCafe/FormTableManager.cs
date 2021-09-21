@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fTableManager : Form
+    public partial class FormTableManager : Form
     {
-        public fTableManager()
+        public FormTableManager()
         {
             InitializeComponent();
         }
@@ -24,13 +24,13 @@ namespace QuanLyQuanCafe
 
         private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fAccountProfile f = new fAccountProfile();
+            FormAccountProfile f = new FormAccountProfile();
             f.ShowDialog();
         }
 
         private void adminToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fAdmin f = new fAdmin();
+            FormAdmin f = new FormAdmin();
             f.ShowDialog();
         }
     }

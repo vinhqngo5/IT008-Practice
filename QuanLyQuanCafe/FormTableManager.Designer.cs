@@ -1,7 +1,7 @@
 ﻿
 namespace QuanLyQuanCafe
 {
-    partial class fTableManager
+    partial class FormTableManager
     {
         /// <summary>
         /// Required designer variable.

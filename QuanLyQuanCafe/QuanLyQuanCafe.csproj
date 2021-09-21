@@ -46,43 +46,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fAccountProfile.cs">
+    <Compile Include="FormAccountProfile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="fAccountProfile.Designer.cs">
-      <DependentUpon>fAccountProfile.cs</DependentUpon>
+    <Compile Include="FormAccountProfile.Designer.cs">
+      <DependentUpon>FormAccountProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="fAdmin.cs">
+    <Compile Include="FormAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="fAdmin.Designer.cs">
-      <DependentUpon>fAdmin.cs</DependentUpon>
+    <Compile Include="FormAdmin.Designer.cs">
+      <DependentUpon>FormAdmin.cs</DependentUpon>
     </Compile>
-    <Compile Include="fLogin.cs">
+    <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="fLogin.Designer.cs">
-      <DependentUpon>fLogin.cs</DependentUpon>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="fTableManager.cs">
+    <Compile Include="FormTableManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="fTableManager.Designer.cs">
-      <DependentUpon>fTableManager.cs</DependentUpon>
+    <Compile Include="FormTableManager.Designer.cs">
+      <DependentUpon>FormTableManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="fAccountProfile.resx">
-      <DependentUpon>fAccountProfile.cs</DependentUpon>
+    <EmbeddedResource Include="FormAccountProfile.resx">
+      <DependentUpon>FormAccountProfile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="fAdmin.resx">
-      <DependentUpon>fAdmin.cs</DependentUpon>
+    <EmbeddedResource Include="FormAdmin.resx">
+      <DependentUpon>FormAdmin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="fLogin.resx">
-      <DependentUpon>fLogin.cs</DependentUpon>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="fTableManager.resx">
-      <DependentUpon>fTableManager.cs</DependentUpon>
+    <EmbeddedResource Include="FormTableManager.resx">
+      <DependentUpon>FormTableManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

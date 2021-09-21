@@ -1,7 +1,7 @@
 ﻿
 namespace QuanLyQuanCafe
 {
-    partial class fAccountProfile
+    partial class FormAccountProfile
     {
         /// <summary>
         /// Required designer variable.
