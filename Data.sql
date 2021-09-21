@@ -1,0 +1,72 @@
+﻿CREATE DATABASE QUANLYQUANCAFE
+GO
+
+USE QUANLYQUANCAFE
+GO
+
+-- Food
+-- Table
+-- FoodCategory
+-- Account
+-- Bill
+-- BillInfo
+
+CREATE TABLE TableFood
+(
+	Id INT IDENTITY PRIMARY KEY,
+	Name NVARCHAR(100) NOT NULL DEFAULT N'Bàn chưa có tên',
+	Status BIT NOT NULL DEFAULT 0	-- Trống: 0 || Có người: 1
+)
+GO
+
+CREATE TABLE Account
+(
+	UserName NVARCHAR(100) PRIMARY KEY,	
+	DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Staff',
+	PassWord NVARCHAR(1000) NOT NULL DEFAULT 0,
+	Type BIT NOT NULL DEFAULT 0 -- 1: admin && 0: staff
+)
+GO
+
+CREATE TABLE FoodCategory
+(
+	Id INT IDENTITY PRIMARY KEY,
+	Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên'
+)
+GO
+
+CREATE TABLE Food
+(
+	Id INT IDENTITY PRIMARY KEY,
+	Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
+	IDCategory INT NOT NULL,
+	Price FLOAT NOT NULL DEFAULT 0
+
+	FOREIGN KEY (IDCategory) REFERENCES dbo.FoodCategory(Id)
+)
+GO
+
+CREATE TABLE Bill
+(
+	Id INT IDENTITY PRIMARY KEY,
+	DateCheckIn DATE NOT NULL DEFAULT GETDATE(),
+	DateCheckOut DATE,
+	IDTable INT NOT NULL,
+	Status BIT NOT NULL DEFAULT 0 -- 1: đã thanh toán && 0: chưa thanh toán
+	
+	FOREIGN KEY (IDTable) REFERENCES dbo.TableFood(Id)
+)
+GO
+
+CREATE TABLE BillInfo
+(
+	Id INT IDENTITY PRIMARY KEY,
+	IDBill INT NOT NULL,
+	IDFood INT NOT NULL,
+	Count INT NOT NULL DEFAULT 0
+	
+	FOREIGN KEY (IDBill) REFERENCES dbo.Bill(Id),
+	FOREIGN KEY (IDFood) REFERENCES dbo.Food(Id)
+)
+GO
+
