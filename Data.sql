@@ -118,4 +118,9 @@ BEGIN
 END
 GO
 
-EXEC dbo.USP_GetAccountByUserName @userName = N'K9' --nvarchar(100)
+EXEC dbo.USP_GetAccountByUserName @userName = N'K9'
+--nvarchar(100)
+
+SELECT *
+FROM dbo.Account
+WHERE UserName = N'K9' AND PassWord = N'1'

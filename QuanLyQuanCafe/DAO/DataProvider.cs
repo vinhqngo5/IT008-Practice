@@ -10,14 +10,14 @@ namespace QuanLyQuanCafe.DAO
 {
     public class DataProvider
     {
-        private static DataProvider instance; // Ctrl R + E
+        private static DataProvider _instance; // Ctrl R + E
 
         private string connectionStr = "Data Source=.\\SQLEXPRESS;Initial Catalog=QUANLYQUANCAFE;Integrated Security=True";
 
         public static DataProvider Instance
         {
-            get => (instance == null ? instance = new DataProvider() : instance);
-            private set => instance = value;
+            get => (_instance == null ? _instance = new DataProvider() : _instance);
+            private set => _instance = value;
         }
 
         private DataProvider() { }
