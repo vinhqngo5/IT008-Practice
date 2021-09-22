@@ -89,7 +89,7 @@ BEGIN
 	SELECT * FROM dbo.Account Where UserName = @userName
 END
 GO
-select * from dbo.USP_GetAccountByUserName
-EXEC dbo.USP_GetAccountByUserName @userName = N'Nhan vien' --nvarchar100
-use master
-DROP database QUANLYQUANCAFE
+EXEC dbo.USP_GetAccountByUserName @userName='staff'
+
+SELECT * FROM Account WHERE UserName='staff' AND PassWord=N'1'
+
