@@ -1,0 +1,6 @@
+C:\Users\HTT\Desktop\Visual Project\IT008-Practice\Project\QuanLyQuanCafe\WinFormsApp1\obj\Release\netcoreapp3.1\WinFormsApp1.Form1.resources
+C:\Users\HTT\Desktop\Visual Project\IT008-Practice\Project\QuanLyQuanCafe\WinFormsApp1\obj\Release\netcoreapp3.1\QuanLyQuanCafe.csproj.GenerateResource.cache
+C:\Users\HTT\Desktop\Visual Project\IT008-Practice\Project\QuanLyQuanCafe\WinFormsApp1\obj\Release\netcoreapp3.1\QuanLyQuanCafe.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HTT\Desktop\Visual Project\IT008-Practice\Project\QuanLyQuanCafe\WinFormsApp1\obj\Release\netcoreapp3.1\QuanLyQuanCafe.AssemblyInfoInputs.cache
+C:\Users\HTT\Desktop\Visual Project\IT008-Practice\Project\QuanLyQuanCafe\WinFormsApp1\obj\Release\netcoreapp3.1\QuanLyQuanCafe.AssemblyInfo.cs
+C:\Users\HTT\Desktop\Visual Project\IT008-Practice\Project\QuanLyQuanCafe\WinFormsApp1\obj\Release\netcoreapp3.1\QuanLyQuanCafe.csproj.CoreCompileInputs.cache
