@@ -81,5 +81,15 @@ VALUES (N'staff', --UserName -nvarchar(100)
 		N'1', --PassWord -nvarchar(100)
 		0 --Type -int
 		)
-
-
+GO
+CREATE PROC USP_GetAccountByUserName
+@userName nvarchar(100)
+AS
+BEGIN
+	SELECT * FROM dbo.Account Where UserName = @userName
+END
+GO
+select * from dbo.USP_GetAccountByUserName
+EXEC dbo.USP_GetAccountByUserName @userName = N'Nhan vien' --nvarchar100
+use master
+DROP database QUANLYQUANCAFE

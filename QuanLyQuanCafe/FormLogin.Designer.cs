@@ -34,10 +34,10 @@ namespace QuanLyQuanCafe
             this.btnExit = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txbPassword = new System.Windows.Forms.TextBox();
             this.labelPassword = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txbUserName = new System.Windows.Forms.TextBox();
             this.labelUsername = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
@@ -94,7 +94,7 @@ namespace QuanLyQuanCafe
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Controls.Add(this.txbPassword);
             this.panel4.Controls.Add(this.labelPassword);
             this.panel4.Location = new System.Drawing.Point(4, 134);
             this.panel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -102,13 +102,13 @@ namespace QuanLyQuanCafe
             this.panel4.Size = new System.Drawing.Size(430, 49);
             this.panel4.TabIndex = 2;
             // 
-            // textBox2
+            // txbPassword
             // 
-            this.textBox2.Location = new System.Drawing.Point(122, 9);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(305, 29);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.UseSystemPasswordChar = true;
+            this.txbPassword.Location = new System.Drawing.Point(122, 9);
+            this.txbPassword.Name = "txbPassword";
+            this.txbPassword.Size = new System.Drawing.Size(305, 34);
+            this.txbPassword.TabIndex = 2;
+            this.txbPassword.UseSystemPasswordChar = true;
             // 
             // labelPassword
             // 
@@ -116,13 +116,13 @@ namespace QuanLyQuanCafe
             this.labelPassword.Location = new System.Drawing.Point(4, 12);
             this.labelPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(75, 21);
+            this.labelPassword.Size = new System.Drawing.Size(94, 28);
             this.labelPassword.TabIndex = 0;
             this.labelPassword.Text = "Mật khẩu";
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.textBox1);
+            this.panel3.Controls.Add(this.txbUserName);
             this.panel3.Controls.Add(this.labelUsername);
             this.panel3.Location = new System.Drawing.Point(4, 75);
             this.panel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -130,12 +130,12 @@ namespace QuanLyQuanCafe
             this.panel3.Size = new System.Drawing.Size(430, 49);
             this.panel3.TabIndex = 1;
             // 
-            // textBox1
+            // txbUserName
             // 
-            this.textBox1.Location = new System.Drawing.Point(122, 9);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(305, 29);
-            this.textBox1.TabIndex = 1;
+            this.txbUserName.Location = new System.Drawing.Point(122, 9);
+            this.txbUserName.Name = "txbUserName";
+            this.txbUserName.Size = new System.Drawing.Size(305, 34);
+            this.txbUserName.TabIndex = 1;
             // 
             // labelUsername
             // 
@@ -143,7 +143,7 @@ namespace QuanLyQuanCafe
             this.labelUsername.Location = new System.Drawing.Point(4, 12);
             this.labelUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(111, 21);
+            this.labelUsername.Size = new System.Drawing.Size(140, 28);
             this.labelUsername.TabIndex = 0;
             this.labelUsername.Text = "Tên đăng nhập";
             // 
@@ -163,14 +163,14 @@ namespace QuanLyQuanCafe
             this.labelTitle.Location = new System.Drawing.Point(84, 14);
             this.labelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(274, 30);
+            this.labelTitle.Size = new System.Drawing.Size(350, 39);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Coffee Management";
             // 
             // FormLogin
             // 
             this.AcceptButton = this.btnLogin;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(464, 273);
@@ -200,10 +200,10 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txbPassword;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txbUserName;
         private System.Windows.Forms.Label labelUsername;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label labelTitle;
