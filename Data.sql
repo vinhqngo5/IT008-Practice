@@ -98,3 +98,7 @@ END
 GO
 
 EXEC USP_GetAccountByUserName @userName = N'admin'
+
+SELECT *
+FROM dbo.Account
+WHERE UserName = N'admin' AND PassWord = N'1'
