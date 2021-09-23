@@ -24,8 +24,8 @@ namespace QuanLyQuanCafe
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string userName = txbUserName.Text;
-            string password = txbPassWord.Text;
-            if (Login(userName,password))
+            string passWord = txbPassWord.Text;
+            if (Login(userName,passWord))
             {
                 FormTableManager f = new FormTableManager();
                 this.Hide();
