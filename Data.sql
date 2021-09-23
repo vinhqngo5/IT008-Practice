@@ -88,3 +88,13 @@ GO
 SELECT *
 FROM dbo.Account
 GO
+
+CREATE PROC USP_GetAccountByUserName
+@userName NVARCHAR(100)
+AS
+BEGIN
+	SELECT * FROM dbo.Account WHERE UserName = @userName
+END
+GO
+
+EXEC USP_GetAccountByUserName @userName = N'admin'
