@@ -9,12 +9,12 @@ namespace QuanLyQuanCafe.DAO
 {
     public class AccountDAO
     {
-        private static AccountDAO _instance;
+        private static AccountDAO s_instance;
 
         public static AccountDAO Instance 
         { 
-            get => _instance ?? (_instance = new AccountDAO()); 
-            private set => _instance = value; 
+            get => s_instance ?? (s_instance = new AccountDAO()); 
+            private set => s_instance = value; 
         }
 
         private AccountDAO() { }

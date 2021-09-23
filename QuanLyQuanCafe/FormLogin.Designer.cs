@@ -116,7 +116,7 @@ namespace QuanLyQuanCafe
             this.labelPassword.Location = new System.Drawing.Point(4, 12);
             this.labelPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(75, 21);
+            this.labelPassword.Size = new System.Drawing.Size(94, 28);
             this.labelPassword.TabIndex = 0;
             this.labelPassword.Text = "Mật khẩu";
             // 
@@ -143,7 +143,7 @@ namespace QuanLyQuanCafe
             this.labelUsername.Location = new System.Drawing.Point(4, 12);
             this.labelUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(111, 21);
+            this.labelUsername.Size = new System.Drawing.Size(140, 28);
             this.labelUsername.TabIndex = 0;
             this.labelUsername.Text = "Tên đăng nhập";
             // 
@@ -163,14 +163,14 @@ namespace QuanLyQuanCafe
             this.labelTitle.Location = new System.Drawing.Point(84, 14);
             this.labelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(274, 30);
+            this.labelTitle.Size = new System.Drawing.Size(350, 39);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Coffee Management";
             // 
             // FormLogin
             // 
             this.AcceptButton = this.btnLogin;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(464, 273);
