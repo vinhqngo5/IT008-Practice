@@ -70,3 +70,21 @@ CREATE TABLE BillInfo
 )
 GO
 
+INSERT INTO dbo.Account
+VALUES	(
+			N'admin', -- UserName - nvarchar(100)
+			N'Admin', -- DisplayName - nvarchar(100)
+			N'1', -- PassWord - nvarchar(1000)
+			1 -- Type - bit
+		),
+		(
+			N'staff', -- UserName - nvarchar(100)
+			N'Staff', -- DisplayName - nvarchar(100)
+			N'1', -- PassWord - nvarchar(1000)
+			0 -- Type - bit
+		)
+GO
+
+SELECT *
+FROM dbo.Account
+GO
