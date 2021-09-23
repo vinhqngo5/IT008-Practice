@@ -18,16 +18,12 @@ namespace QuanLyQuanCafe
         {
             InitializeComponent();
         }
-        bool Login(string userName, string passWord)
-        {
-            return AccountDAO.Instance.Login(userName, passWord);
-        }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             string userName = txbUserName.Text;
             string passWord = txbPassWord.Text;
-            if (Login(userName,passWord))
+            if (Login(userName, passWord))
             {
                 FormTableManager f = new FormTableManager();
                 this.Hide();
@@ -35,10 +31,20 @@ namespace QuanLyQuanCafe
                 this.Show();
             }
             else
-                MessageBox.Show("Sai tên tài khoản hoặc mật khẩu!","Thông báo");
+            {
+                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", 
+                                "Đăng nhập không thành công", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Warning);
+            }
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private bool Login(string userName, string passWord)
+        {
+            return AccountDAO.Instance.Login(userName, passWord);
+        }
+
+        private void BtnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }

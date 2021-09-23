@@ -79,7 +79,7 @@ namespace QuanLyQuanCafe
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "Thoát";
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // btnLogin
             // 
@@ -90,7 +90,7 @@ namespace QuanLyQuanCafe
             this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "Đăng nhập";
             this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // panel4
             // 
@@ -106,7 +106,7 @@ namespace QuanLyQuanCafe
             // 
             this.txbPassWord.Location = new System.Drawing.Point(122, 9);
             this.txbPassWord.Name = "txbPassWord";
-            this.txbPassWord.Size = new System.Drawing.Size(305, 34);
+            this.txbPassWord.Size = new System.Drawing.Size(305, 29);
             this.txbPassWord.TabIndex = 2;
             this.txbPassWord.UseSystemPasswordChar = true;
             // 
@@ -134,7 +134,7 @@ namespace QuanLyQuanCafe
             // 
             this.txbUserName.Location = new System.Drawing.Point(122, 9);
             this.txbUserName.Name = "txbUserName";
-            this.txbUserName.Size = new System.Drawing.Size(305, 34);
+            this.txbUserName.Size = new System.Drawing.Size(305, 29);
             this.txbUserName.TabIndex = 1;
             // 
             // labelUsername
