@@ -55,7 +55,6 @@ namespace QuanLyQuanCafe.DAO
 
             return data;
         }
-
         public int ExecuteNonQuery(string query, object[] parameter = null)
         {
             int data = 0;
