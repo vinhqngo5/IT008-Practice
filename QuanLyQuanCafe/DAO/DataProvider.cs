@@ -10,8 +10,19 @@ namespace QuanLyQuanCafe.DAO
 {
     public class DataProvider
     {
+        private static DataProvider _instance;
+
+        public static DataProvider Instance 
+        {
+            get => _instance ?? (_instance = new DataProvider());
+
+            private set => _instance = value; 
+        }
+
+        private DataProvider() { }
+
         private string _connectionStr = "Data Source=.\\;Initial Catalog=QUANLYQUANCAFE;Integrated Security=True";
-        
+
         public DataTable ExecuteQuery(string query, object[] parameter = null)
         {
             DataTable data = new DataTable();
