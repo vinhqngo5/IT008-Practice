@@ -34,7 +34,6 @@ namespace QuanLyQuanCafe
             }
             else
                 MessageBox.Show("Sai tên tài khoản hoặc mật khẩu!","Thông báo");
- 
         }
 
         private void btnExit_Click(object sender, EventArgs e)
