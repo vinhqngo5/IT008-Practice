@@ -17,24 +17,6 @@ namespace QuanLyQuanCafe
         public FormAdmin()
         {
             InitializeComponent();
-
-            LoadAccountList();
-
-            //LoadFoodList();
         }
-
-        private void LoadFoodList()
-        {
-            string query = "SELECT * FROM dbo.Food";
-
-            dtgvAccount.DataSource = DataProvider.Instance.ExecuteQuery(query);
-        }
-
-        private void LoadAccountList()
-        {
-            string query = "EXEC USP_GetAccountByUserName @userName";
-
-            dtgvAccount.DataSource = DataProvider.Instance.ExecuteQuery(query, new object[] {"admin"});
-        } 
     }
 }
