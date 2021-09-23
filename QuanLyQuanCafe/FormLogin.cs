@@ -16,15 +16,15 @@ namespace QuanLyQuanCafe
         {
             InitializeComponent();
         }
-        bool Login(string userName, string password)
+        bool Login(string userName, string passWord)
         {
-            return AccountDAO.Instance.Login(userName, password);
+            return AccountDAO.Instance.Login(userName, passWord);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string userName = txbUserName.Text;
-            string password = txbPassword.Text;
+            string password = txbPassWord.Text;
             if (Login(userName,password))
             {
                 FormTableManager f = new FormTableManager();

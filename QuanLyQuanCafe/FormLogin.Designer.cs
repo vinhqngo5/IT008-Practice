@@ -34,7 +34,7 @@ namespace QuanLyQuanCafe
             this.btnExit = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.txbPassword = new System.Windows.Forms.TextBox();
+            this.txbPassWord = new System.Windows.Forms.TextBox();
             this.labelPassword = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.txbUserName = new System.Windows.Forms.TextBox();
@@ -94,7 +94,7 @@ namespace QuanLyQuanCafe
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.txbPassword);
+            this.panel4.Controls.Add(this.txbPassWord);
             this.panel4.Controls.Add(this.labelPassword);
             this.panel4.Location = new System.Drawing.Point(4, 134);
             this.panel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -102,13 +102,13 @@ namespace QuanLyQuanCafe
             this.panel4.Size = new System.Drawing.Size(430, 49);
             this.panel4.TabIndex = 2;
             // 
-            // txbPassword
+            // txbPassWord
             // 
-            this.txbPassword.Location = new System.Drawing.Point(122, 9);
-            this.txbPassword.Name = "txbPassword";
-            this.txbPassword.Size = new System.Drawing.Size(305, 34);
-            this.txbPassword.TabIndex = 2;
-            this.txbPassword.UseSystemPasswordChar = true;
+            this.txbPassWord.Location = new System.Drawing.Point(122, 9);
+            this.txbPassWord.Name = "txbPassWord";
+            this.txbPassWord.Size = new System.Drawing.Size(305, 34);
+            this.txbPassWord.TabIndex = 2;
+            this.txbPassWord.UseSystemPasswordChar = true;
             // 
             // labelPassword
             // 
@@ -200,7 +200,7 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox txbPassword;
+        private System.Windows.Forms.TextBox txbPassWord;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox txbUserName;
