@@ -18,7 +18,7 @@ namespace QuanLyQuanCafe
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             string userName = txbUserName.Text;
             string passWord = txbPassWord.Text;
@@ -43,7 +43,7 @@ namespace QuanLyQuanCafe
             return AccountDAO.Instance.Login(userName, passWord);
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void BtnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
