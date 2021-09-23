@@ -54,6 +54,9 @@ namespace QuanLyQuanCafe
             {
                 e.Cancel = true;
             }
+            else
+                e.Cancel = false;
         }
+
     }
 }
