@@ -86,14 +86,14 @@ namespace QuanLyQuanCafe
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(170, 22);
             this.tsmiAbout.Text = "Thông tin cá nhân";
             this.tsmiAbout.Click += new System.EventHandler(this.TsmiAbout_Click);
             // 
             // tsmiLogout
             // 
             this.tsmiLogout.Name = "tsmiLogout";
-            this.tsmiLogout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiLogout.Size = new System.Drawing.Size(170, 22);
             this.tsmiLogout.Text = "Đăng xuất";
             this.tsmiLogout.Click += new System.EventHandler(this.TsmiLogout_Click);
             // 
@@ -224,6 +224,7 @@ namespace QuanLyQuanCafe
             // 
             // flpTable
             // 
+            this.flpTable.AutoScroll = true;
             this.flpTable.Location = new System.Drawing.Point(12, 30);
             this.flpTable.Name = "flpTable";
             this.flpTable.Size = new System.Drawing.Size(429, 428);

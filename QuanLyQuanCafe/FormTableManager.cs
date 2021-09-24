@@ -1,4 +1,6 @@
-﻿using System;
+﻿using QuanLyQuanCafe.DAO;
+using QuanLyQuanCafe.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +17,32 @@ namespace QuanLyQuanCafe
         public FormTableManager()
         {
             InitializeComponent();
+
+            LoadTable();
         }
+
+        #region Method
+        void LoadTable()
+        {
+            List<Table> tableList = TableDAO.Instance.LoadTableList();
+
+            foreach (Table item in tableList)
+            {
+                Button btn = new Button()
+                {
+                    Text = item.Name + Environment.NewLine + (item.Status ? "Đầy" : "Trống"),
+                    BackColor = item.Status ? Color.LightPink : Color.Aqua,
+                    Width = TableDAO.TableWidth,
+                    Height = TableDAO.TableHeight
+                };
+                flpTable.Controls.Add(btn);
+
+            }
+        }
+        #endregion
+
+
+        #region Events
         private void TsmiLogout_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -32,5 +59,6 @@ namespace QuanLyQuanCafe
             FormAdmin f = new FormAdmin();
             f.ShowDialog();
         }
+        #endregion
     }
 }
