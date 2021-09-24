@@ -10,13 +10,13 @@ namespace QuanLyQuanCafe.DAO
 {
     public class DataProvider
     {
-        private static DataProvider _instance;
+        private static DataProvider s_instance;
 
         public static DataProvider Instance 
         {
-            get => _instance ?? (_instance = new DataProvider());
+            get => s_instance ?? (s_instance = new DataProvider());
 
-            private set => _instance = value; 
+            private set => s_instance = value; 
         }
 
         private DataProvider() { }
