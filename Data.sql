@@ -120,7 +120,41 @@ GO
 
 EXEC dbo.USP_GetAccountByUserName @userName = N'K9'
 --nvarchar(100)
+GO
 
 SELECT *
 FROM dbo.Account
 WHERE UserName = N'K9' AND PassWord = N'1'
+GO
+
+CREATE PROC USP_Login
+@userName nvarchar(100), @passWord nvarchar(100)
+AS
+BEGIN
+	SELECT * FROM dbo.Account WHERE @userName=UserName and @passWord=PassWord
+END
+GO
+
+USP_Login @userName='staff', @passWord='1'
+GO
+
+DECLARE @i INT = 11
+WHILE @i <= 20
+BEGIN
+	INSERT dbo.TableFood (Name) VALUES (N'Bàn ' + CAST (@i AS nvarchar(100)))
+	SET @i = @i+1
+END
+GO
+
+CREATE PROC USP_GetTableList
+AS SELECT * FROM dbo.TableFood
+GO
+
+UPDATE dbo.TableFood SET Status = 1 WHERE Id=9
+
+
+	
+
+
+
+
