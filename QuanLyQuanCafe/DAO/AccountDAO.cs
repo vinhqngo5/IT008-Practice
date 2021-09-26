@@ -11,19 +11,19 @@ namespace QuanLyQuanCafe.DAO
     {
         private static AccountDAO s_instance;
 
-        public static AccountDAO Instance 
-        { 
-            get => s_instance ?? (s_instance = new AccountDAO()); 
-            private set => s_instance = value; 
+        public static AccountDAO Instance
+        {
+            get => s_instance ?? (s_instance = new AccountDAO());
+            private set => s_instance = value;
         }
 
         private AccountDAO() { }
 
         public bool Login(string userName, string passWord)
         {
-            string query = "EXEC dbo.USP_Login @userName , @passWord";
+            string query = "USP_Login @userName , @passWord";
 
-            DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] {userName, passWord });
+            DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] { userName, passWord });
 
             return result.Rows.Count > 0;
         }
