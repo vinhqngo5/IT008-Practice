@@ -86,7 +86,6 @@ namespace QuanLyQuanCafe.DAO
 
             return data;
         }
-
         public object ExecuteScalar(string query, object[] parameter = null)
         {
             object data = new object();
