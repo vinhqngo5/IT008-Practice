@@ -133,3 +133,17 @@ BEGIN
 	SELECT * FROM dbo.Account WHERE UserName = @userName AND PassWord = @passWord
 END
 GO
+
+DECLARE @i INT = 11
+WHILE @i <=22
+BEGIN
+	INSERT dbo.TableFood (Name) VALUES (N'Bàn ' + CAST(@i AS nvarchar(100)))
+	SET @i = @i +1
+END
+GO
+
+CREATE PROC USP_GetTableList
+AS SELECT * FROM dbo.TableFood
+GO 
+
+UPDATE dbo.TableFood SET Status = 1 WHERE Id = 9
