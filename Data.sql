@@ -56,7 +56,7 @@ CREATE TABLE Bill
 	IdTable INT NOT NULL,
 	Status BIT NOT NULL DEFAULT 0 -- 1: đã thanh toán && 0: chưa thanh toán
 
-		FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
+	FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
 )
 GO
 
@@ -200,3 +200,41 @@ SELECT * FROM FoodCategory
 SELECT * FROM Food
 SELECT * FROM Bill
 SELECT * FROM BillInfo
+
+SELECT * FROM Bill WHERE IdTable = 53 AND STATUS = 0
+GO
+
+CREATE PROC USP_GetBill
+@idTable INT
+AS
+BEGIN
+	SELECT * FROM Bill WHERE IdTable = @idTable
+END
+GO
+
+EXEC USP_GetBill @idTable = 55
+GO
+
+CREATE PROC USP_GetBillInfo
+@idBill INT
+AS
+BEGIN
+	SELECT * FROM BillInfo WHERE IdBill = @idBill
+END
+GO
+
+EXEC USP_GetBillInfo @idBill = -1
+GO
+
+CREATE PROC USP_GetMenu
+@idTable INT
+AS 
+BEGIN
+	SELECT Name, Price, Count, Price * Count as TotalPrice FROM Food, Bill, BillInfo
+	WHERE Bill.IdTable = @idTable AND Bill.Id = BillInfo.IdBill AND BillInfo.IdFood = Food.Id
+END
+GO
+
+EXEC USP_GetMenu @idTable = 55
+
+
