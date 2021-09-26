@@ -1,5 +1,4 @@
-﻿using QuanLyQuanCafe.DAO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +17,7 @@ namespace QuanLyQuanCafe
             InitializeComponent();
         }
 
-        private void BtnLogin_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
             string userName = txbUserName.Text;
             string passWord = txbPassWord.Text;
@@ -31,19 +30,15 @@ namespace QuanLyQuanCafe
             }
             else
             {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", 
-                                "Đăng nhập không thành công", 
-                                MessageBoxButtons.OK, 
-                                MessageBoxIcon.Warning);
+                MessageBox.Show("Sai tên tài khoản hoặc mật khẩu!");
             }
+            
         }
-
         private bool Login(string userName, string passWord)
         {
             return AccountDAO.Instance.Login(userName, passWord);
         }
-
-        private void BtnExit_Click(object sender, EventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -54,9 +49,11 @@ namespace QuanLyQuanCafe
             {
                 e.Cancel = true;
             }
-            else
-                e.Cancel = false;
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

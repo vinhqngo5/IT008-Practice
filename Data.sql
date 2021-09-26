@@ -15,18 +15,16 @@ CREATE TABLE TableFood
 (
 	Id INT IDENTITY PRIMARY KEY,
 	Name NVARCHAR(100) NOT NULL DEFAULT N'Bàn chưa có tên',
-	Status BIT NOT NULL DEFAULT 0
-	-- Trống: 0 || Có người: 1
+	Status BIT NOT NULL DEFAULT 0	-- Trống: 0 || Có người: 1
 )
 GO
 
 CREATE TABLE Account
 (
-	UserName NVARCHAR(100) PRIMARY KEY,
+	UserName NVARCHAR(100) PRIMARY KEY,	
 	DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Staff',
 	PassWord NVARCHAR(1000) NOT NULL DEFAULT 0,
-	Type BIT NOT NULL DEFAULT 0
-	-- 1: admin && 0: staff
+	Type INT NOT NULL DEFAULT 0 -- 1: admin && 0: staff
 )
 GO
 
@@ -44,7 +42,7 @@ CREATE TABLE Food
 	IdCategory INT NOT NULL,
 	Price FLOAT NOT NULL DEFAULT 0
 
-		FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
+	FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
 )
 GO
 
@@ -55,8 +53,8 @@ CREATE TABLE Bill
 	DateCheckOut DATE,
 	IdTable INT NOT NULL,
 	Status BIT NOT NULL DEFAULT 0 -- 1: đã thanh toán && 0: chưa thanh toán
-
-		FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
+	
+	FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
 )
 GO
 
@@ -66,61 +64,43 @@ CREATE TABLE BillInfo
 	IdBill INT NOT NULL,
 	IdFood INT NOT NULL,
 	Count INT NOT NULL DEFAULT 0
-
-		FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
+	
+	FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
 	FOREIGN KEY (IdFood) REFERENCES dbo.Food(Id)
 )
 GO
 
--- INSERT VALUES
+INSERT INTO dbo.Account
+		(	UserName,
+			DisplayName,
+			PassWord,
+			Type
+		)
+VALUES	(	N'K9', -- Username -nvarchar(100)
+			N'RongK9',	--DisplayName - nvarchar(100)
+			N'1',	-- PassWord - nvarchar(1000)
+			1	-- Type -int
+		)
 
 INSERT INTO dbo.Account
-	(
-	UserName,
-	DisplayName,
-	PassWord,
-	Type
-	)
-VALUES
-	(
-		N'K9', -- UserName - nvarchar(100)
-		N'RongK9', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(1000)
-		1  -- Type - bit
-	)
-INSERT INTO dbo.Account
-	(
-	UserName,
-	DisplayName,
-	PassWord,
-	Type
-	)
-VALUES
-	(
-		N'staff', -- UserName - nvarchar(100)
-		N'staff', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(1000)
-		0  -- Type - bit
-	)
-GO
-
-SELECT *
-FROM dbo.Account 
+		(	UserName,
+			DisplayName,
+			PassWord,
+			Type
+		)
+VALUES	(	N'staff', -- Username -nvarchar(100)
+			N'staff',	--DisplayName - nvarchar(100)
+			N'1',	-- PassWord - nvarchar(1000)
+			0	-- Type -int
+		)
 GO
 
 CREATE PROC USP_GetAccountByUserName
-	@userName nvarchar(100)
+@userName nvarchar(100)
 AS
 BEGIN
-	SELECT *
-	FROM dbo.Account
-	WHERE UserName = @userName;
+	SELECT * FROM dbo.Account WHERE UserName = @userName
 END
 GO
 
-EXEC dbo.USP_GetAccountByUserName @userName = N'K9'
---nvarchar(100)
-
-SELECT *
-FROM dbo.Account
-WHERE UserName = N'K9' AND PassWord = N'1'
+EXEC dbo.USP_GetAccountByUserName @userName = N'K9' N'staff' --nvarchar(100)

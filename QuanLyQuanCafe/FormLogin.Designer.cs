@@ -79,7 +79,7 @@ namespace QuanLyQuanCafe
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "Thoát";
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // btnLogin
             // 
@@ -90,7 +90,7 @@ namespace QuanLyQuanCafe
             this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "Đăng nhập";
             this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // panel4
             // 
@@ -106,7 +106,7 @@ namespace QuanLyQuanCafe
             // 
             this.txbPassWord.Location = new System.Drawing.Point(122, 9);
             this.txbPassWord.Name = "txbPassWord";
-            this.txbPassWord.Size = new System.Drawing.Size(305, 29);
+            this.txbPassWord.Size = new System.Drawing.Size(305, 34);
             this.txbPassWord.TabIndex = 2;
             this.txbPassWord.UseSystemPasswordChar = true;
             // 
@@ -134,8 +134,9 @@ namespace QuanLyQuanCafe
             // 
             this.txbUserName.Location = new System.Drawing.Point(122, 9);
             this.txbUserName.Name = "txbUserName";
-            this.txbUserName.Size = new System.Drawing.Size(305, 29);
+            this.txbUserName.Size = new System.Drawing.Size(305, 34);
             this.txbUserName.TabIndex = 1;
+            this.txbUserName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // labelUsername
             // 
@@ -159,11 +160,11 @@ namespace QuanLyQuanCafe
             // labelTitle
             // 
             this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitle.Location = new System.Drawing.Point(84, 14);
             this.labelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(350, 39);
+            this.labelTitle.Size = new System.Drawing.Size(259, 31);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Coffee Management";
             // 

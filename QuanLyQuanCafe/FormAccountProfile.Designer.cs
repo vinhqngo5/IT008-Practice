@@ -67,18 +67,18 @@ namespace QuanLyQuanCafe
             this.txbUserName.Location = new System.Drawing.Point(139, 10);
             this.txbUserName.Name = "txbUserName";
             this.txbUserName.ReadOnly = true;
-            this.txbUserName.Size = new System.Drawing.Size(252, 22);
+            this.txbUserName.Size = new System.Drawing.Size(252, 20);
             this.txbUserName.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 21);
+            this.label1.Size = new System.Drawing.Size(130, 19);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Tên đăng nhập";
+            this.label1.Text = "Tên đăng nhập:";
             // 
             // panel1
             // 
@@ -93,18 +93,18 @@ namespace QuanLyQuanCafe
             // 
             this.txbDisplayName.Location = new System.Drawing.Point(139, 10);
             this.txbDisplayName.Name = "txbDisplayName";
-            this.txbDisplayName.Size = new System.Drawing.Size(252, 22);
+            this.txbDisplayName.Size = new System.Drawing.Size(252, 20);
             this.txbDisplayName.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label2.Location = new System.Drawing.Point(3, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 21);
+            this.label2.Size = new System.Drawing.Size(104, 19);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Tên hiển thị";
+            this.label2.Text = "Tên hiển thị:";
             // 
             // panel3
             // 
@@ -119,19 +119,19 @@ namespace QuanLyQuanCafe
             // 
             this.txbPassWord.Location = new System.Drawing.Point(139, 10);
             this.txbPassWord.Name = "txbPassWord";
-            this.txbPassWord.Size = new System.Drawing.Size(252, 22);
+            this.txbPassWord.Size = new System.Drawing.Size(252, 20);
             this.txbPassWord.TabIndex = 1;
             this.txbPassWord.UseSystemPasswordChar = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label3.Location = new System.Drawing.Point(3, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 21);
+            this.label3.Size = new System.Drawing.Size(84, 19);
             this.label3.TabIndex = 0;
-            this.label3.Text = "Mật khẩu";
+            this.label3.Text = "Mật khẩu:";
             // 
             // panel4
             // 
@@ -146,19 +146,19 @@ namespace QuanLyQuanCafe
             // 
             this.txbNewPass.Location = new System.Drawing.Point(139, 10);
             this.txbNewPass.Name = "txbNewPass";
-            this.txbNewPass.Size = new System.Drawing.Size(252, 22);
+            this.txbNewPass.Size = new System.Drawing.Size(252, 20);
             this.txbNewPass.TabIndex = 1;
             this.txbNewPass.UseSystemPasswordChar = true;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label4.Location = new System.Drawing.Point(3, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(116, 21);
+            this.label4.Size = new System.Drawing.Size(117, 19);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Mật khẩu mới";
+            this.label4.Text = "Mật khẩu mới:";
             // 
             // panel5
             // 
@@ -173,23 +173,22 @@ namespace QuanLyQuanCafe
             // 
             this.txbReEnterPass.Location = new System.Drawing.Point(139, 10);
             this.txbReEnterPass.Name = "txbReEnterPass";
-            this.txbReEnterPass.Size = new System.Drawing.Size(252, 22);
+            this.txbReEnterPass.Size = new System.Drawing.Size(252, 20);
             this.txbReEnterPass.TabIndex = 1;
             this.txbReEnterPass.UseSystemPasswordChar = true;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.label5.Location = new System.Drawing.Point(3, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 21);
+            this.label5.Size = new System.Drawing.Size(77, 19);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Nhập lại";
+            this.label5.Text = "Nhập lại:";
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdate.Location = new System.Drawing.Point(247, 262);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
@@ -223,7 +222,6 @@ namespace QuanLyQuanCafe
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "FormAccountProfile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thông tin cá nhân";
