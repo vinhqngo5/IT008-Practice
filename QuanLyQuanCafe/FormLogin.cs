@@ -58,5 +58,9 @@ namespace QuanLyQuanCafe
                 e.Cancel = false;
         }
 
+        private void txbUserName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
