@@ -67,7 +67,7 @@ CREATE TABLE BillInfo
 	IdFood INT NOT NULL,
 	Count INT NOT NULL DEFAULT 0
 
-		FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
+	FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
 	FOREIGN KEY (IdFood) REFERENCES dbo.Food(Id)
 )
 GO
@@ -165,3 +165,38 @@ AS
 GO
 
 EXEC USP_GetTableList
+GO
+
+-- Add categories
+INSERT dbo.FoodCategory ( Name )
+VALUES  ( N'Cà phê' ), ( N'Trà sữa' ), ( N'Sinh tố' ), ( N'Nước ép' )
+
+-- Add food
+INSERT dbo.Food ( Name, IdCategory, Price )
+VALUES  ( N'Cà phê đen', 1, 12000 ), 
+		( N'Cà phê sữa', 1, 15000 ),
+		( N'Trà sữa trân châu', 2, 20000 ),
+		( N'Sinh tố bơ', 3, 15000 ),
+		( N'Nước ép cam', 4, 10000 )
+
+-- Add bill
+INSERT	dbo.Bill
+        ( DateCheckIn , DateCheckOut , IdTable , Status )
+VALUES  ( GETDATE() , NULL , 61 , 0 ),
+		( GETDATE() , NULL , 53 , 0 ),
+        ( GETDATE() , GETDATE() , 55 , 1 )
+
+-- Add bill info
+INSERT	dbo.BillInfo
+        ( idBill, idFood, count )
+VALUES  ( 4, 1, 2 ),
+		( 2, 2, 1 ),
+		( 3, 3, 3 ),
+		( 3, 4, 5 )
+GO
+
+SELECT * FROM TableFood
+SELECT * FROM FoodCategory
+SELECT * FROM Food
+SELECT * FROM Bill
+SELECT * FROM BillInfo
