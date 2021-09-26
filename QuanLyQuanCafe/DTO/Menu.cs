@@ -13,7 +13,6 @@ namespace QuanLyQuanCafe.DTO
         private int _count;
         private float _price;
         private float _totalPrice;
-
         public string FoodName { get => _foodName; set => _foodName = value; }
         public int Count { get => _count; set => _count = value; }
         public float Price { get => _price; set => _price = value; }

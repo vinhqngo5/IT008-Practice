@@ -56,7 +56,6 @@ namespace QuanLyQuanCafe
                 lsvItem.SubItems.Add(item.TotalPrice.ToString());
                 lsvBill.Items.Add(lsvItem);
             }
-
         }
 
         #endregion
