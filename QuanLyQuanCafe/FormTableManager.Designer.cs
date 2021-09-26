@@ -86,14 +86,14 @@ namespace QuanLyQuanCafe
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(170, 22);
             this.tsmiAbout.Text = "Thông tin cá nhân";
             this.tsmiAbout.Click += new System.EventHandler(this.TsmiAbout_Click);
             // 
             // tsmiLogout
             // 
             this.tsmiLogout.Name = "tsmiLogout";
-            this.tsmiLogout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiLogout.Size = new System.Drawing.Size(170, 22);
             this.tsmiLogout.Text = "Đăng xuất";
             this.tsmiLogout.Click += new System.EventHandler(this.TsmiLogout_Click);
             // 
@@ -175,7 +175,7 @@ namespace QuanLyQuanCafe
             this.panel4.Controls.Add(this.btnAddFood);
             this.panel4.Controls.Add(this.cbFood);
             this.panel4.Controls.Add(this.cbCategory);
-            this.panel4.Location = new System.Drawing.Point(447, 27);
+            this.panel4.Location = new System.Drawing.Point(447, 25);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(338, 52);
             this.panel4.TabIndex = 4;
@@ -224,9 +224,10 @@ namespace QuanLyQuanCafe
             // 
             // flpTable
             // 
-            this.flpTable.Location = new System.Drawing.Point(12, 30);
+            this.flpTable.AutoScroll = true;
+            this.flpTable.Location = new System.Drawing.Point(12, 25);
             this.flpTable.Name = "flpTable";
-            this.flpTable.Size = new System.Drawing.Size(429, 428);
+            this.flpTable.Size = new System.Drawing.Size(429, 433);
             this.flpTable.TabIndex = 5;
             // 
             // FormTableManager
