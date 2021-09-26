@@ -27,6 +27,8 @@ namespace QuanLyQuanCafe
             {
                 Button btn = new Button() { Width = TableDAO.TableWidth, Height = TableDAO.TableHeight };
                 btn.Text = item.Name + Environment.NewLine;
+                btn.Click += Btn_Click;
+                btn.Tag = item;
                 if (item.Status)
                 {
                     btn.Text += "Có người";
@@ -37,12 +39,32 @@ namespace QuanLyQuanCafe
                     btn.Text += "Trống";
                     btn.BackColor = Color.Aqua;
                 }    
-                flpTable.Controls.Add(btn);
+                flpTable.Controls.Add(btn); 
 
             }    
         }
+        private void ShowBill(int id)
+        {
+            lsvBill.Items.Clear();
+            List<DTO.Menu> listMenu = MenuDAO.Instance.GetListMenuByTable(id);
+            foreach(DTO.Menu menu in listMenu )
+            {
+                ListViewItem lsvItem = new ListViewItem(menu.FoodName.ToString());
+                lsvItem.SubItems.Add(menu.Count.ToString());
+                lsvItem.SubItems.Add(menu.Price.ToString());
+                lsvItem.SubItems.Add(menu.TotalPrice.ToString());
+                lsvBill.Items.Add(lsvItem);
+            }    
+        }
+
+
         #endregion
         #region Events
+        private void Btn_Click(object sender, EventArgs e)
+        {
+            int tableID = ((sender as Button).Tag as Table).Id;
+            ShowBill(tableID);
+        }
         private void TsmiLogout_Click(object sender, EventArgs e)
         {
             this.Close();
