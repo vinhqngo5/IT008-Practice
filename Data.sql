@@ -151,10 +151,133 @@ AS SELECT * FROM dbo.TableFood
 GO
 
 UPDATE dbo.TableFood SET Status = 1 WHERE Id=9
+GO
 
+--Thêm category
+INSERT	dbo.FoodCategory(Name)
+VALUES (N'Hải sản') -- Name nvarchar(100)
+INSERT  dbo.FoodCategory(Name)
+VALUES (N'Nông sản') -- Name nvarchar(100))
+INSERT dbo.FoodCategory(Name)
+VALUES (N'Sản sản') -- Name nvarchar(100))
+INSERT dbo.FoodCategory(Name)
+VALUES (N'Lâm sản') -- Name nvarchar(100))
+INSERT dbo.FoodCategory(Name)
+VALUES (N'Nước') -- Name nvarchar(100))
+GO
+-- Thêm Food
+INSERT dbo.Food
+        ( Name, IdCategory, Price )
+VALUES  ( N'Mực một nắng nước sa tế', -- name - nvarchar(100)
+          1, -- idCategory - int
+          120000)
+INSERT dbo.Food
+        ( Name, IdCategory, Price )
+VALUES  ( N'Nghêu hấp xả', 1, 50000)
+INSERT dbo.Food
+        ( Name, IdCategory, Price )
+VALUES  ( N'Dú dê nướng sữa', 2, 60000)
+INSERT dbo.Food
+        ( Name, IdCategory, Price )
+VALUES  ( N'Heo rừng nướng muối ớt', 3, 75000)
+INSERT dbo.Food
+        ( Name, IdCategory, Price )
+VALUES  ( N'Cơm chiên mushi', 4, 999999)
+INSERT dbo.Food
+        ( Name, IdCategory, Price )
+VALUES  ( N'7Up', 5, 15000)
+INSERT dbo.Food
+        ( Name, IdCategory, Price )
+VALUES  ( N'Cafe', 5, 12000)
+GO
+--Thêm Bill
+INSERT	dbo.Bill
+        ( DateCheckIn ,
+          DateCheckOut ,
+          IdTable ,
+          Status
+        )
+VALUES  ( GETDATE() , -- DateCheckIn - date
+          NULL , -- DateCheckOut - date
+          4, -- idTable - int
+          0  -- status - bit
+        )
+INSERT	dbo.Bill
+        ( DateCheckIn ,
+          DateCheckOut ,
+          IdTable ,
+          Status
+        )
+VALUES  ( GETDATE() , -- DateCheckIn - date
+          GETDATE() , -- DateCheckOut - date
+          5 , -- idTable - int
+          1  -- status - bit
+        )
+GO
+--Thêm BillInfo
+INSERT	dbo.BillInfo
+        ( IdBill, IdFood, Count )
+VALUES  ( 1, -- idBill - int
+          1, -- idFood - int
+          2  -- count - int
+          )
+INSERT	dbo.BillInfo
+        ( IdBill, IdFood, Count )
+VALUES  ( 1, -- idBill - int
+          3, -- idFood - int
+          4  -- count - int
+          )
+INSERT	dbo.BillInfo
+        ( IdBill, IdFood, Count )
+VALUES  ( 1, -- idBill - int
+          5, -- idFood - int
+          1  -- count - int
+          )
+INSERT	dbo.BillInfo
+        ( IdBill, IdFood, Count )
+VALUES  ( 2, -- idBill - int
+          1, -- idFood - int
+          2  -- count - int
+          )
+INSERT	dbo.BillInfo
+        ( IdBill, IdFood, Count )
+VALUES  ( 2, -- idBill - int
+          6, -- idFood - int
+          2  -- count - int
+          )
+INSERT	dbo.BillInfo
+        ( IdBill, IdFood, Count )
+VALUES  ( 2, -- idBill - int
+          5, -- idFood - int
+          2  -- count - int
+          )       
+GO
 
-	
+select * from dbo.TableFood
+select * from dbo.Bill
+select * from dbo.Food
+select * from dbo.BillInfo
+select * from dbo.FoodCategory
+GO
 
+CREATE PROC USP_GetUncheckBillByTableId
+@idTable int, @status bit
+AS 
+BEGIN
+	SELECT * FROM dbo.Bill WHERE @idtable = IdTable and @status = Status
+END
+GO
+CREATE PROC USP_GetBillInfoByIdBill
+@idBill int
+AS 
+BEGIN
+	SELECT * FROM dbo.BillInfo WHERE @idBill =IdBill
+END
+GO
 
+USP_GetUncheckBillByTableId @idTable = 4, @status = 0
+USP_GetBillInfoByIdBill @idBill = 1
 
-
+select f.Name, bi.count, f.Price, bi.Count*f.Price as TotalPrice
+from Bill b, BillInfo bi, Food f
+where b.Id = bi.IdBill and bi.IdFood=f.Id and b.Status=0 and b.IdTable = 4
