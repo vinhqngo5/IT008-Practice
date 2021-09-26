@@ -21,7 +21,7 @@ namespace QuanLyQuanCafe.DAO
 
         private DataProvider() { }
 
-        private readonly string _connectionStr = "Data Source=.\\SQLEXPRESS;Initial Catalog=QUANLYQUANCAFE;Integrated Security=True";
+        private readonly string _connectionStr = "Data Source=.\\;Initial Catalog=QUANLYQUANCAFE;Integrated Security=True";
 
         public DataTable ExecuteQuery(string query, object[] parameter = null)
         {
