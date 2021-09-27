@@ -18,5 +18,12 @@ namespace QuanLyQuanCafe
         {
             InitializeComponent();
         }
+
+        private void FormAdmin_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

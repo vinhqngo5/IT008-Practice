@@ -106,7 +106,7 @@ namespace QuanLyQuanCafe
             // 
             this.txbPassWord.Location = new System.Drawing.Point(122, 9);
             this.txbPassWord.Name = "txbPassWord";
-            this.txbPassWord.Size = new System.Drawing.Size(305, 29);
+            this.txbPassWord.Size = new System.Drawing.Size(305, 39);
             this.txbPassWord.TabIndex = 2;
             this.txbPassWord.UseSystemPasswordChar = true;
             // 
@@ -116,7 +116,7 @@ namespace QuanLyQuanCafe
             this.labelPassword.Location = new System.Drawing.Point(4, 12);
             this.labelPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(75, 21);
+            this.labelPassword.Size = new System.Drawing.Size(116, 32);
             this.labelPassword.TabIndex = 0;
             this.labelPassword.Text = "Mật khẩu";
             // 
@@ -134,7 +134,7 @@ namespace QuanLyQuanCafe
             // 
             this.txbUserName.Location = new System.Drawing.Point(122, 9);
             this.txbUserName.Name = "txbUserName";
-            this.txbUserName.Size = new System.Drawing.Size(305, 29);
+            this.txbUserName.Size = new System.Drawing.Size(305, 39);
             this.txbUserName.TabIndex = 1;
             // 
             // labelUsername
@@ -143,7 +143,7 @@ namespace QuanLyQuanCafe
             this.labelUsername.Location = new System.Drawing.Point(4, 12);
             this.labelUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(111, 21);
+            this.labelUsername.Size = new System.Drawing.Size(175, 32);
             this.labelUsername.TabIndex = 0;
             this.labelUsername.Text = "Tên đăng nhập";
             // 
@@ -159,21 +159,21 @@ namespace QuanLyQuanCafe
             // labelTitle
             // 
             this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitle.Location = new System.Drawing.Point(84, 14);
             this.labelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(274, 30);
+            this.labelTitle.Size = new System.Drawing.Size(305, 37);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Coffee Management";
             // 
             // FormLogin
             // 
             this.AcceptButton = this.btnLogin;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(464, 273);
+            this.ClientSize = new System.Drawing.Size(477, 294);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -181,6 +181,7 @@ namespace QuanLyQuanCafe
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " Đăng nhập";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
+            this.Load += new System.EventHandler(this.FormLogin_Load);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);

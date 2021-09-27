@@ -120,7 +120,98 @@ GO
 
 EXEC dbo.USP_GetAccountByUserName @userName = N'K9'
 --nvarchar(100)
+GO
 
 SELECT *
 FROM dbo.Account
 WHERE UserName = N'K9' AND PassWord = N'1'
+GO
+
+CREATE PROC USP_Login
+	@userName nvarchar(100), @passWord nvarchar(100)
+AS
+BEGIN
+	SELECT * FROM dbo.Account WHERE UserName = @username AND PassWord = @passWord 
+END
+GO
+
+DECLARE @i INT = 0
+WHILE @i <= 10
+BEGIN
+	INSERT dbo.TableFood (nameTable) VALUES (N'Bàn ' + CAST(@i as nvarchar(100)))
+	SET @i = @i + 1
+END
+GO
+
+CREATE PROC USP_GetTableList
+AS SELECT * FROM dbo.TableFood
+GO
+
+-- Add categories
+INSERT dbo.FoodCategory
+	( Name )
+VALUES
+	( N'Cà phê' ),
+	( N'Trà sữa' ),
+	( N'Sinh tố' ),
+	( N'Nước ép' )
+
+-- Add food
+INSERT dbo.Food
+	( Name, IdCategory, Price )
+VALUES
+	( N'Cà phê đen', 1, 12000 ),
+	( N'Cà phê sữa', 1, 15000 ),
+	( N'Trà sữa trân châu', 2, 20000 ),
+	( N'Sinh tố bơ', 3, 15000 ),
+	( N'Nước ép cam', 4, 10000 )
+
+-- Add bill
+INSERT	dbo.Bill
+	( DateCheckIn , DateCheckOut , IdTable , Status )
+VALUES
+	( GETDATE() , NULL , 1 , 0 ),
+	( GETDATE() , NULL , 2 , 0 ),
+	( GETDATE() , GETDATE() , 3 , 1 )
+
+-- Add bill info
+INSERT	dbo.BillInfo
+	( idBill, idFood, count )
+VALUES
+	( 1, 1, 2 ),
+	( 1, 2, 1 ),
+	( 2, 3, 3 ),
+	( 3, 4, 5 )
+GO
+
+
+
+CREATE PROC USP_GetBill
+	@idTable INT
+AS
+BEGIN
+	SELECT *
+	FROM Bill
+	WHERE IdTable = @idTable
+END
+GO
+
+CREATE PROC USP_GetBillInfo
+	@idBill INT
+AS
+BEGIN
+	SELECT *
+	FROM BillInfo
+	WHERE IdBill = @idBill
+END
+GO
+
+CREATE PROC USP_GetMenu
+	@idTable INT
+AS
+BEGIN
+	SELECT Name, Price, Count, Price * Count as TotalPrice
+	FROM Food, Bill, BillInfo
+	WHERE Bill.IdTable = @idTable AND Bill.Id = BillInfo.IdBill AND BillInfo.IdFood = Food.Id AND Bill.Status = 0
+END
+GO

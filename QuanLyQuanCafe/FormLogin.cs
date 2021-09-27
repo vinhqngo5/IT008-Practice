@@ -55,5 +55,10 @@ namespace QuanLyQuanCafe
                 e.Cancel = true;
             }
         }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
