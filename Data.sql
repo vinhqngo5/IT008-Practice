@@ -201,7 +201,8 @@ VALUES
 	( N'Trà sữa' ),
 	( N'Sinh tố' ),
 	( N'Nước ép' )
-
+GO
+SELECT * FROM FoodCategory
 -- Add food
 INSERT dbo.Food
 	( Name, IdCategory, Price )
@@ -211,6 +212,7 @@ VALUES
 	( N'Trà sữa trân châu', 2, 20000 ),
 	( N'Sinh tố bơ', 3, 15000 ),
 	( N'Nước ép cam', 4, 10000 )
+SELECT * FROM Bill
 
 -- -- Add bill
 -- INSERT	dbo.Bill
