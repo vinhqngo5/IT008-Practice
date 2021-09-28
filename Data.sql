@@ -259,11 +259,11 @@ AS
 BEGIN
 	SELECT *
 	FROM Bill
-	WHERE IdTable = @idTable
+	WHERE IdTable = @idTable AND Status = 0
 END
 GO
 
-EXEC USP_GetBill @idTable = 55
+EXEC USP_GetBill @idTable = 54
 GO
 
 CREATE PROC USP_GetBillInfo
@@ -289,6 +289,83 @@ BEGIN
 END
 GO
 
-EXEC USP_GetMenu @idTable = 55
+EXEC USP_GetMenu @idTable = 53
+GO
 
+CREATE PROC USP_InsertBill
+@idTable INT
+AS
+BEGIN
+	INSERT	dbo.Bill
+			( DateCheckIn , DateCheckOut , IdTable , Status )
+	VALUES
+			( GETDATE() , NULL , @idTable , 0 )
+END
+GO
 
+CREATE PROC USP_InsertBillInfo
+@idBill INT, @idFood INT, @count INT
+AS
+BEGIN
+	DECLARE @isExistBillInfo INT,
+			@foodCount INT = 1
+	
+	SELECT @isExistBillInfo = Id, @foodCount = Count
+	FROM dbo.BillInfo
+	WHERE IdBill = @idBill AND IdFood = @idFood
+
+	IF (@isExistBillInfo > 0)
+	BEGIN
+		DECLARE @newCount INT = @count + @foodCount
+		IF @newCount > 0
+			UPDATE BillInfo SET Count = @newCount WHERE IdFood = @idFood
+		ELSE
+			DELETE FROM BillInfo WHERE IdFood = @idFood
+	END
+	ELSE
+	BEGIN
+		IF @count > 0
+			INSERT	BillInfo
+					( IdBill, IdFood, Count )
+			VALUES
+					( @idBill, @idFood, @count )
+	END
+END
+GO
+
+CREATE TRIGGER UTG_UpdateBillInfo
+ON dbo.BillInfo FOR INSERT, UPDATE
+AS
+BEGIN
+	DECLARE @idBill INT
+	
+	SELECT @idBill = IdBill FROM Inserted
+	
+	DECLARE @idTable INT
+	
+	SELECT @idTable = IdTable FROM dbo.Bill WHERE Id = @idBill AND Status = 0
+	
+	UPDATE dbo.TableFood SET Status = 1 WHERE Id = @idTable
+END
+GO
+
+CREATE TRIGGER UTG_UpdateBill
+ON dbo.Bill FOR UPDATE
+AS
+BEGIN	
+	DECLARE @idBill INT
+	
+	SELECT @idBill = Id FROM Inserted	
+	
+	DECLARE @idTable INT
+	
+	SELECT @idTable = IdTable FROM dbo.Bill WHERE Id = @idBill	
+	
+	DECLARE @count int = 0
+	
+	SELECT @count = COUNT(*) FROM dbo.Bill WHERE IdTable = @idTable AND Status = 0
+	
+	IF (@count = 0)
+		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable
+END
+GO
