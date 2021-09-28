@@ -34,5 +34,26 @@ namespace QuanLyQuanCafe.DAO
                                     );
             return (dataBill.Rows.Count > 0) ? new Bill(dataBill.Rows[0]).Id : -1;
         }
+        public void InsertBill(int id)
+        {
+            DataProvider.Instance.ExecuteNonQuery("USP_InsertBill @idTable ", new object[] { id});
+
+        }
+        public void Checkout(int id)
+        {
+            DataProvider.Instance.ExecuteNonQuery("USP_UpdateBillByIdTable @idBill ", new object[] { id });
+        }
+        public int GetMaxIdBill()
+        {
+            try
+            {
+                return Convert.ToInt32(DataProvider.Instance.ExecuteScalar("SELECT MAX(Id) from Bill"));
+            }
+            catch
+            {
+                return -1;
+            }
+            
+        }
     }
 }

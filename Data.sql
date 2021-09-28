@@ -1,6 +1,6 @@
-﻿-- CREATE DATABASE Temp
--- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
+﻿ --CREATE DATABASE Temp
+ --USE Temp
+ --DROP DATABASE QUANLYQUANCAFE
 CREATE DATABASE QUANLYQUANCAFE
 GO
 
@@ -146,8 +146,8 @@ GO
 -- Create value for TableFood
 DELETE FROM dbo.TableFood
 WHERE 1 = 1
-GO
 DBCC CHECKIDENT ('TableFood', RESEED, 0)
+GO
 DECLARE @i INT = 1
 WHILE @i <= 20
 BEGIN
@@ -253,13 +253,13 @@ FROM Bill
 WHERE IdTable = 53 AND STATUS = 0
 GO
 
-CREATE PROC USP_GetBill
+Alter PROC USP_GetBill
 	@idTable INT
 AS
 BEGIN
 	SELECT *
 	FROM Bill
-	WHERE IdTable = @idTable
+	WHERE IdTable = @idTable AND Status=0
 END
 GO
 
@@ -289,6 +289,95 @@ BEGIN
 END
 GO
 
-EXEC USP_GetMenu @idTable = 55
+EXEC USP_GetMenu @idTable = 1
+
+SELECT * FROM dbo.FoodCategory
+SELECT * FROM dbo.Food
+
+CREATE PROC USP_GetListFoodByIdCategory
+	@idCategory INT
+AS
+BEGIN
+	SELECT * FROM dbo.Food WHERE @idCategory = IdCategory
+END
+GO
+USP_GetListFoodByIdCategory @idCategory = 1
+GO
+CREATE PROC USP_InsertBill
+@idTable INT
+AS
+BEGIN
+	INSERT dbo.Bill (DateCheckOut,IdTable) VALUES (NULL,@idTable)
+END
+GO
+USP_InsertBill @idTable =5
+GO
+ALTER PROC USP_InsertBillInfo
+@idBill INT, @idFood INT, @count INT
+AS
+BEGIN
+	DECLARE @isExistBillInfo INT 
+	DECLARE @foodCount INT = 0
+	SELECT @isExistBillInfo = Id, @foodCount = BillInfo.Count FROM dbo.BillInfo WHERE IdBill=@idBill and IdFood=@idFood
+	IF (@isExistBillInfo >0)
+	BEGIN
+		DECLARE @newCount INT = @foodCount + @count
+		IF (@newCount>0)
+			UPDATE BillInfo SET Count = @newCount WHERE @idBill = IdBill and @idFood =IdFood
+		ELSE
+			DELETE BillInfo WHERE @idBill = IdBill and @idFood =IdFood
+	END
+	ELSE
+	BEGIN
+		INSERT dbo.BillInfo(IdBill,IdFood,Count) VALUES (@idBill,@idFood,@count)
+	END
+END
+GO
 
 
+
+
+ALTER PROC USP_UpdateBillByIdTable
+@idBill INT 
+AS
+BEGIN
+	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1 WHERE @idBill=Id
+END
+GO
+
+USP_UpdateBillByIdTable @idBill = =1 
+GO
+select * from bill
+select * from TableFood
+
+CREATE TRIGGER UTG_UpdateBillInfo
+ON BillInfo FOR INSERT, UPDATE
+AS
+BEGIN
+	DECLARE @idBill INT
+	SELECT @idBill = Id FROM inserted
+	DECLARE @idTable INT
+	SELECT @idTable = IdTable FROM Bill WHERE Id=@idBill AND Status=0
+	UPDATE TableFood SET Status = 1 WHERE id=@idTable
+END
+GO
+
+CREATE TRIGGER UTG_UpdateBill
+ON Bill FOR UPDATE
+AS
+BEGIN
+	DECLARE @idBill INT
+	SELECT @idBill = Id FROM inserted
+
+	DECLARE @idTable INT
+	SELECT @idTable = IdTable FROM Bill WHERE Id=@idBill
+
+	DECLARE @count INT = 0
+	SELECT @count = COUNT(*) FROM Bill WHERE IdTable=@idTable AND Status=0
+
+	IF (@count=0)
+		Update TableFood SET Status = 0 WHERE dbo.TableFood.Id=@idTable
+END
+GO
+
+select * from BillInfo
