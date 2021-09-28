@@ -22,6 +22,8 @@ namespace QuanLyQuanCafe
             InitializeComponent();
 
             LoadTable();
+
+            LoadCategories();
         }
 
         #region Methods
@@ -49,12 +51,20 @@ namespace QuanLyQuanCafe
 
         void LoadCategories()
         {
-            
+            List<Category> listCategories = CategoryDAO.Instance.GetListCategories();
+            cbCategory.DataSource = listCategories;
+            cbCategory.DisplayMember = "Name";
+            cbCategory.SelectedItem = null;
+            cbCategory.Text = "-- Chọn danh mục --";
+            cbFood.SelectedItem = null;
+            cbFood.Text = "-- Chọn món --";
         }
 
-        void LoadFoodByCategoryId()
+        void LoadFoodByCategoryId(int idCategory)
         {
-
+            List<Food> listFood = FoodDAO.Instance.GetFoodByCategoryId(idCategory);
+            cbFood.DataSource = listFood;
+            cbFood.DisplayMember = "Name";
         }
 
         void ShowBill(int idTable)
@@ -101,9 +111,10 @@ namespace QuanLyQuanCafe
         }
         #endregion
 
-        private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbCategory_SelectionChangeCommitted(object sender, EventArgs e)
         {
-
+            Category selectedCategory = cbCategory.SelectedItem as Category;
+            LoadFoodByCategoryId(selectedCategory.Id);
         }
     }
 }

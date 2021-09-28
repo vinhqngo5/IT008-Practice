@@ -279,7 +279,7 @@ namespace QuanLyQuanCafe
             this.cbCategory.Name = "cbCategory";
             this.cbCategory.Size = new System.Drawing.Size(205, 21);
             this.cbCategory.TabIndex = 0;
-            this.cbCategory.SelectedIndexChanged += new System.EventHandler(this.cbCategory_SelectedIndexChanged);
+            this.cbCategory.SelectionChangeCommitted += new System.EventHandler(this.cbCategory_SelectionChangeCommitted);
             // 
             // flpTable
             // 
