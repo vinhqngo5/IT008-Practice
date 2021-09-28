@@ -12,10 +12,10 @@ namespace QuanLyQuanCafe.DAO
     {
         private static BillInfoDAO s_instance;
 
-        public static BillInfoDAO Instance 
-        { 
-            get => s_instance ?? (s_instance = new BillInfoDAO()); 
-            private set => s_instance = value; 
+        public static BillInfoDAO Instance
+        {
+            get => s_instance ?? (s_instance = new BillInfoDAO());
+            private set => s_instance = value;
         }
 
         public List<BillInfo> GetListBillInfo(int idBill)
@@ -32,5 +32,11 @@ namespace QuanLyQuanCafe.DAO
             }
             return listBillInfo;
         }
+
+        public void InsertBillInfo(int idBill, int idFood, int count)
+        {
+            DataProvider.Instance.ExecuteNonQuery("USP_InsertBillInfo @idBill , @idFood , @count ", new object[] { idBill, idFood, count });
+        }
+
     }
 }
