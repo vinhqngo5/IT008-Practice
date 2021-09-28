@@ -289,6 +289,43 @@ BEGIN
 END
 GO
 
-EXEC USP_GetMenu @idTable = 55
+EXEC USP_GetMenu @idTable = 53
+GO
 
+CREATE PROC USP_InsertBill
+@idTable INT
+AS
+BEGIN
+	INSERT	dbo.Bill
+			( DateCheckIn , DateCheckOut , IdTable , Status )
+	VALUES
+			( GETDATE() , NULL , @idTable , 0 )
+END
+GO
 
+CREATE PROC USP_InsertBillInfo
+@idBill INT, @idFood INT, @count INT
+AS
+BEGIN
+	DECLARE @isExistBillInfo INT,
+			@foodCount INT = 1
+	
+	SELECT @isExistBillInfo = Id, @foodCount = Count
+	FROM dbo.BillInfo
+	WHERE IdBill = @idBill AND IdFood = @idFood
+
+	IF (@isExistBillInfo > 0)
+	BEGIN
+		DECLARE @newCount INT = @count + @foodCount
+		IF @newCount > 0
+			UPDATE BillInfo SET Count = @newCount WHERE IdFood = @idFood
+		ELSE
+			DELETE FROM BillInfo WHERE IdFood = @idFood
+	END
+	ELSE
+		INSERT	BillInfo
+				( IdBill, IdFood, Count )
+		VALUES
+				( @idBill, @idFood, @count )
+END
+GO
