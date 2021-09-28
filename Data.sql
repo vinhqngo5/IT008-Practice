@@ -1,6 +1,6 @@
-﻿-- CREATE DATABASE Temp
--- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
+﻿CREATE DATABASE Temp
+USE Temp
+DROP DATABASE QUANLYQUANCAFE
 CREATE DATABASE QUANLYQUANCAFE
 GO
 
@@ -179,20 +179,17 @@ GO
 
 -- Add data for FoodCategories, food, Bill, BillInfo
 -- Delete old data in table and reset id
-DELETE FROM dbo.BillInfo
-WHERE 1 = 1
+DELETE dbo.BillInfo
 DBCC CHECKIDENT ('BillInfo', RESEED, 0)
 GO
-DELETE FROM dbo.Bill
-WHERE 1 = 1
+DELETE dbo.Bill
 DBCC CHECKIDENT ('Bill', RESEED, 0)
 GO
-DELETE FROM dbo.Food
+DELETE dbo.Food
 WHERE 1 = 1
 DBCC CHECKIDENT ('Food', RESEED, 0)
 GO
-DELETE FROM dbo.FoodCategory
-WHERE 1 = 1
+DELETE dbo.FoodCategory
 DBCC CHECKIDENT ('FoodCategory', RESEED, 0)
 GO
 
@@ -215,23 +212,23 @@ VALUES
 	( N'Sinh tố bơ', 3, 15000 ),
 	( N'Nước ép cam', 4, 10000 )
 
--- Add bill
-INSERT	dbo.Bill
-	( DateCheckIn , DateCheckOut , IdTable , Status )
-VALUES
-	( GETDATE() , NULL , 1 , 0 ),
-	( GETDATE() , NULL , 2 , 0 ),
-	( GETDATE() , GETDATE() , 3 , 1 )
+-- -- Add bill
+-- INSERT	dbo.Bill
+-- 	( DateCheckIn , DateCheckOut , IdTable , Status )
+-- VALUES
+-- 	( GETDATE() , NULL , 1 , 0 ),
+-- 	( GETDATE() , NULL , 2 , 0 ),
+-- 	( GETDATE() , GETDATE() , 3 , 1 )
 
--- Add bill info
-INSERT	dbo.BillInfo
-	( idBill, idFood, count )
-VALUES
-	( 1, 1, 2 ),
-	( 1, 2, 1 ),
-	( 2, 3, 3 ),
-	( 3, 4, 5 )
-GO
+-- -- Add bill info
+-- INSERT	dbo.BillInfo
+-- 	( idBill, idFood, count )
+-- VALUES
+-- 	( 1, 1, 2 ),
+-- 	( 1, 2, 1 ),
+-- 	( 2, 3, 3 ),
+-- 	( 3, 4, 5 )
+-- GO
 
 SELECT *
 FROM TableFood
@@ -244,9 +241,9 @@ FROM Bill
 SELECT *
 FROM BillInfo
 
-UPDATE TableFood
-SET Status = 1
-WHERE Id = 6 OR Id = 9
+-- UPDATE TableFood
+-- SET Status = 0
+-- WHERE Id = 6 OR Id = 9
 
 SELECT *
 FROM Bill
@@ -293,23 +290,25 @@ EXEC USP_GetMenu @idTable = 53
 GO
 
 CREATE PROC USP_InsertBill
-@idTable INT
+	@idTable INT
 AS
 BEGIN
 	INSERT	dbo.Bill
-			( DateCheckIn , DateCheckOut , IdTable , Status )
+		( DateCheckOut , IdTable )
 	VALUES
-			( GETDATE() , NULL , @idTable , 0 )
+		( NULL , @idTable  )
 END
 GO
 
 CREATE PROC USP_InsertBillInfo
-@idBill INT, @idFood INT, @count INT
+	@idBill INT,
+	@idFood INT,
+	@count INT
 AS
 BEGIN
 	DECLARE @isExistBillInfo INT,
 			@foodCount INT = 1
-	
+
 	SELECT @isExistBillInfo = Id, @foodCount = Count
 	FROM dbo.BillInfo
 	WHERE IdBill = @idBill AND IdFood = @idFood
@@ -320,31 +319,98 @@ BEGIN
 		IF @newCount > 0
 			UPDATE BillInfo SET Count = @newCount WHERE IdFood = @idFood
 		ELSE
-			DELETE FROM BillInfo WHERE IdFood = @idFood
+			DELETE FROM BillInfo WHERE IdFood = @idFood AND IdBill = @idBill
 	END
 	ELSE
 	BEGIN
 		IF @count > 0
 			INSERT	BillInfo
-					( IdBill, IdFood, Count )
-			VALUES
-					( @idBill, @idFood, @count )
+			( IdBill, IdFood, Count )
+		VALUES
+			( @idBill, @idFood, @count )
 	END
 END
 GO
 
+SELECT *
+FROM FoodCategory
+SELECT *
+FROM Food
+GO
+-- proc for insert new bill
+
+-- CREATE PROC USP_InsertBill
+-- 	@idTable INT
+-- AS
+-- BEGIN
+-- 	INSERT dbo.Bill
+-- 		( DateCheckIn, DateCheckOut, idTable, Status )
+-- 	VALUES
+-- 		( GETDATE(), NULL, @idTable, 0 )
+-- END
+-- GO
+
+-- proc for insert new BillInfo
+-- CREATE PROC USP_InsertBillInfo
+-- 	@idBill INT,
+-- 	@idFood int,
+-- 	@count INT
+-- AS
+-- BEGIN
+-- 	INSERT	dbo.BillInfo
+-- 		( idBill, idFood, count )
+-- 	VALUES
+-- 		( @idBill, @idFood, @count )
+-- END
+-- GO
+-- -- Alter proc insert new BillInfo
+-- ALTER PROC USP_InsertBillInfo
+-- 	@idBill INT,
+-- 	@idFood int,
+-- 	@count INT
+-- AS
+-- BEGIN
+
+-- 	DECLARE @isExitBillInfo INT;
+-- 	DECLARE @foodCount INT = 1;
+-- 	SELECT @isExitBillInfo = dbo.BillInfo.Id, @foodCount = Count
+-- 	FROM dbo.BillInfo
+-- 	WHERE IdBill = @idBill AND IdFood = @idFood
+
+-- 	IF (@isExitBillInfo > 0) 
+-- 	BEGIN
+-- 		DECLARE @newCount INT = @foodCount + @count;
+-- 		IF (@newCount > 0)
+-- 			UPDATE dbo.BillInfo SET Count = @foodCount + @count WHERE IdBill = @idBill AND IdFood = @idFood
+-- 		ELSE 
+-- 			DELETE dbo.BillInfo WHERE IdBill = @idBill AND IdFood = @idFood
+-- 	END
+-- 	ELSE 
+-- 	BEGIN
+-- 		INSERT	dbo.BillInfo
+-- 			( idBill, idFood, count )
+-- 		VALUES
+-- 			( @idBill, @idFood, @count )
+-- 	END
+-- END
+-- GO
+
+-- Create trigger for update BillInfo
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
 AS
 BEGIN
 	DECLARE @idBill INT
-	
-	SELECT @idBill = IdBill FROM Inserted
-	
+
+	SELECT @idBill = IdBill
+	FROM Inserted
+
 	DECLARE @idTable INT
-	
-	SELECT @idTable = IdTable FROM dbo.Bill WHERE Id = @idBill AND Status = 0
-	
+
+	SELECT @idTable = IdTable
+	FROM dbo.Bill
+	WHERE Id = @idBill AND Status = 0
+
 	UPDATE dbo.TableFood SET Status = 1 WHERE Id = @idTable
 END
 GO
@@ -352,19 +418,24 @@ GO
 CREATE TRIGGER UTG_UpdateBill
 ON dbo.Bill FOR UPDATE
 AS
-BEGIN	
+BEGIN
 	DECLARE @idBill INT
-	
-	SELECT @idBill = Id FROM Inserted	
-	
+
+	SELECT @idBill = Id
+	FROM Inserted
+
 	DECLARE @idTable INT
-	
-	SELECT @idTable = IdTable FROM dbo.Bill WHERE Id = @idBill	
-	
+
+	SELECT @idTable = IdTable
+	FROM dbo.Bill
+	WHERE Id = @idBill
+
 	DECLARE @count int = 0
-	
-	SELECT @count = COUNT(*) FROM dbo.Bill WHERE IdTable = @idTable AND Status = 0
-	
+
+	SELECT @count = COUNT(*)
+	FROM dbo.Bill
+	WHERE IdTable = @idTable AND Status = 0
+
 	IF (@count = 0)
 		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable
 END
