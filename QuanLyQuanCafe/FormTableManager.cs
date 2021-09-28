@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
@@ -27,6 +26,15 @@ namespace QuanLyQuanCafe
         }
 
         #region Methods
+
+
+        void LoadFoodListBtCategoryId(int id)
+        {
+            List<Food> listFood = FoodDAO.Instance.GetFoodByCategoryId(id);
+
+            cbFood.DataSource = listFood;
+            cbFood.DisplayMember = "Name";
+        }
 
         void LoadTable()
         {
@@ -82,6 +90,10 @@ namespace QuanLyQuanCafe
                 totalPrice += item.TotalPrice;
                 lsvBill.Items.Add(lsvItem);
             }
+
+            //this will settings for this thread
+            //Thread.CurrentThread.CurrentCulture = _culture;
+            
             txbTotalPrice.Text = totalPrice.ToString("C0", _culture);
         }
 
@@ -111,7 +123,7 @@ namespace QuanLyQuanCafe
             FormAdmin f = new FormAdmin();
             f.ShowDialog();
         }
-        #endregion
+
 
         private void cbCategory_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -168,5 +180,7 @@ namespace QuanLyQuanCafe
                 LoadTable();
             }
         }
+        #endregion
+
     }
 }

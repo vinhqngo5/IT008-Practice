@@ -22,6 +22,14 @@ namespace QuanLyQuanCafe.DTO
             this.Price = Convert.ToSingle(row["Price"]);
         }
 
+        public Food(int id, string name, int idCategory, float price)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.IdCategory = idCategory;
+            this.Price = price;
+        }
+
         public int Id { get => _id; set => _id = value; }
         public int IdCategory { get => _idCategory; set => _idCategory = value; }
         public string Name { get => _name; set => _name = value; }

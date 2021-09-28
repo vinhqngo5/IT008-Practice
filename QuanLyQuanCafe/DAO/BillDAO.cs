@@ -12,10 +12,10 @@ namespace QuanLyQuanCafe.DAO
     {
         private static BillDAO s_instance;
 
-        public static BillDAO Instance 
-        { 
-            get => s_instance ?? (s_instance = new BillDAO()); 
-            private set => s_instance = value; 
+        public static BillDAO Instance
+        {
+            get => s_instance ?? (s_instance = new BillDAO());
+            private set => s_instance = value;
         }
 
         private BillDAO() { }
@@ -29,7 +29,7 @@ namespace QuanLyQuanCafe.DAO
         {
             DataTable dataBill = DataProvider.Instance.ExecuteQuery
                                     (
-                                     "EXEC USP_GetBill @idTable", 
+                                     "EXEC USP_GetBill @idTable",
                                      new object[] { idTable }
                                     );
             return (dataBill.Rows.Count > 0) ? new Bill(dataBill.Rows[0]).Id : -1;
