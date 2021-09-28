@@ -34,5 +34,10 @@ namespace QuanLyQuanCafe.DAO
                                     );
             return (dataBill.Rows.Count > 0) ? new Bill(dataBill.Rows[0]).Id : -1;
         }
+
+        public void InsertBill(int idTable)
+        {
+            DataProvider.Instance.ExecuteQuery("EXEC USP_InsertBill @idTable", new object[] { idTable });
+        }
     }
 }
