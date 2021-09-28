@@ -30,6 +30,7 @@ namespace QuanLyQuanCafe
 
         void LoadTable()
         {
+            flpTable.Controls.Clear();
             List<Table> tableList = TableDAO.Instance.LoadTableList();
             foreach (Table table in tableList)
             {
@@ -121,8 +122,19 @@ namespace QuanLyQuanCafe
         private void btnAddFood_Click(object sender, EventArgs e)
         {
             Table table = lsvBill.Tag as Table;
+            if (table == null)
+            {
+                MessageBox.Show("Vui lòng chọn bàn để thêm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             int idBill = BillDAO.Instance.GetBillIdByTableId(table.Id);
-            int idFood = (cbFood.SelectedItem as Food).Id;
+            Food selectedFood = cbFood.SelectedItem as Food;
+            if (selectedFood == null)
+            {
+                MessageBox.Show("Vui lòng chọn món để thêm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int idFood = (selectedFood).Id;
             int count = Convert.ToInt32(nmFoodCount.Value);
 
             if (idBill == -1)
@@ -136,6 +148,25 @@ namespace QuanLyQuanCafe
             }
 
             ShowBill(table.Id);
+            LoadTable();
+        }
+
+        private void btnCheckOut_Click(object sender, EventArgs e)
+        {
+            Table table = lsvBill.Tag as Table;
+            if (table == null)
+            {
+                MessageBox.Show("Vui lòng chọn bàn thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int idBill = BillDAO.Instance.GetBillIdByTableId(table.Id);
+
+            if (idBill != -1 && MessageBox.Show("Bạn có muốn thanh toán hóa đơn cho " + table.Name + "?", "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                BillDAO.Instance.CheckOut(idBill);
+                ShowBill(table.Id);
+                LoadTable();
+            }
         }
     }
 }
