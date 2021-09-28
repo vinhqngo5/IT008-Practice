@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace QuanLyQuanCafe
 {
     public partial class FormTableManager : Form
     {
+        private readonly CultureInfo _culture = new CultureInfo("vi-VN");
+
         public FormTableManager()
         {
             InitializeComponent();
@@ -44,18 +47,31 @@ namespace QuanLyQuanCafe
             }
         }
 
+        void LoadCategories()
+        {
+            
+        }
+
+        void LoadFoodByCategoryId()
+        {
+
+        }
+
         void ShowBill(int idTable)
         {
             lsvBill.Items.Clear();
             List<DTO.Menu> listMenu = MenuDAO.Instance.GetListMenuByTable(idTable);
+            float totalPrice = 0;
             foreach (DTO.Menu item in listMenu)
             {
                 ListViewItem lsvItem = new ListViewItem(item.FoodName);
                 lsvItem.SubItems.Add(item.Count.ToString());
-                lsvItem.SubItems.Add(item.Price.ToString());
-                lsvItem.SubItems.Add(item.TotalPrice.ToString());
+                lsvItem.SubItems.Add(item.Price.ToString("C0", _culture));
+                lsvItem.SubItems.Add(item.TotalPrice.ToString("C0", _culture));
+                totalPrice += item.TotalPrice;
                 lsvBill.Items.Add(lsvItem);
             }
+            txbTotalPrice.Text = totalPrice.ToString("C0", _culture);
         }
 
         #endregion
@@ -84,5 +100,10 @@ namespace QuanLyQuanCafe
             f.ShowDialog();
         }
         #endregion
+
+        private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
