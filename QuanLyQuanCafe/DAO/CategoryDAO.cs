@@ -10,12 +10,12 @@ namespace QuanLyQuanCafe.DAO
 {
     public class CategoryDAO
     {
-        private static CategoryDAO _instance;
+        private static CategoryDAO s_instance;
 
         public static CategoryDAO Instance 
         { 
-            get => _instance ?? (_instance = new CategoryDAO()); 
-            private set => _instance = value; 
+            get => s_instance ?? (s_instance = new CategoryDAO()); 
+            private set => s_instance = value; 
         }
 
         public List<Category> GetListCategories()

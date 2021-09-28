@@ -17,7 +17,6 @@ namespace QuanLyQuanCafe.DTO
             this.Id = Convert.ToInt32(row["Id"]);
             this.Name = Convert.ToString(row["Name"]);
         }
-
         public int Id { get => _id; set => _id = value; }
         public string Name { get => _name; set => _name = value; }
     }

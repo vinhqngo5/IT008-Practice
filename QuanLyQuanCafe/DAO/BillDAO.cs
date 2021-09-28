@@ -42,8 +42,7 @@ namespace QuanLyQuanCafe.DAO
 
         public void CheckOut(int idBill)
         {
-            string query = "UPDATE dbo.Bill SET Status = 1, DateCheckOut = GETDATE() WHERE Id = " + idBill;
-            DataProvider.Instance.ExecuteNonQuery(query);
+             DataProvider.Instance.ExecuteNonQuery("USP_UpdateBillByIdTable @idBill ", new object[] { idBill });
         }
     }
 }

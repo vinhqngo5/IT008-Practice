@@ -105,6 +105,7 @@ namespace QuanLyQuanCafe
         {
             lsvBill.Tag = (sender as Button).Tag;
             ShowBill(((sender as Button).Tag as Table).Id);
+            lsvBill.Tag = (sender as Button).Tag;
         }
 
         private void TsmiLogout_Click(object sender, EventArgs e)

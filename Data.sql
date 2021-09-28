@@ -1,4 +1,5 @@
-﻿CREATE DATABASE Temp
+﻿
+--CREATE DATABASE Temp
 USE Temp
 DROP DATABASE QUANLYQUANCAFE
 CREATE DATABASE QUANLYQUANCAFE
@@ -86,26 +87,25 @@ INSERT INTO dbo.Account
 	)
 VALUES
 	(
+		N'staff', -- UserName - nvarchar(100)
+		N'staff', -- DisplayName - nvarchar(100)
+		N'1', -- PassWord - nvarchar(1000)
+		0  -- Type - bit
+	),
+	(
+		N'Admin', -- UserName - nvarchar(100)
+		N'Admin', -- DisplayName - nvarchar(100)
+		N'1', -- PassWord - nvarchar(1000)
+		0  -- Type - bit
+	),
+	(
 		N'K9', -- UserName - nvarchar(100)
 		N'RongK9', -- DisplayName - nvarchar(100)
 		N'1', -- PassWord - nvarchar(1000)
 		1  -- Type - bit
 	)
-INSERT INTO dbo.Account
-	(
-	UserName,
-	DisplayName,
-	PassWord,
-	Type
-	)
-VALUES
-	(
-		N'staff', -- UserName - nvarchar(100)
-		N'staff', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(1000)
-		0  -- Type - bit
-	)
 GO
+
 
 SELECT *
 FROM dbo.Account 
@@ -146,8 +146,8 @@ GO
 -- Create value for TableFood
 DELETE FROM dbo.TableFood
 WHERE 1 = 1
-GO
 DBCC CHECKIDENT ('TableFood', RESEED, 0)
+GO
 DECLARE @i INT = 1
 WHILE @i <= 20
 BEGIN
@@ -332,6 +332,38 @@ BEGIN
 END
 GO
 
+
+SELECT *
+FROM dbo.FoodCategory
+SELECT *
+FROM dbo.Food
+
+CREATE PROC USP_GetFoodByCategoryId
+	@idCategory INT
+AS
+BEGIN
+	SELECT *
+	FROM dbo.Food
+	WHERE @idCategory = IdCategory
+END
+GO
+USP_GetFoodByCategoryId @idCategory = 1
+GO
+
+CREATE PROC USP_InsertBill
+	@idTable INT
+AS
+BEGIN
+	INSERT dbo.Bill
+		(DateCheckOut,IdTable)
+	VALUES
+		(NULL, @idTable)
+END
+GO
+USP_InsertBill @idTable =5
+GO
+
+
 SELECT *
 FROM FoodCategory
 SELECT *
@@ -439,4 +471,16 @@ BEGIN
 	IF (@count = 0)
 		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable
 END
+GO
+
+
+CREATE PROC USP_UpdateBillByIdTable
+	@idBill INT
+AS
+BEGIN
+	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1 WHERE Id = @idBill
+END
+GO
+
+USP_UpdateBillByIdTable @idBill = 1 
 GO

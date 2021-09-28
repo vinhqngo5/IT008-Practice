@@ -10,21 +10,24 @@ namespace QuanLyQuanCafe.DAO
 {
     public class FoodDAO
     {
-        private static FoodDAO _instance;
+        private static FoodDAO s_instance;
 
-        public static FoodDAO Instance
-        {
-            get => _instance ?? (_instance = new FoodDAO());
-            private set => _instance = value;
+        public static FoodDAO Instance 
+        { 
+            get => s_instance ?? (s_instance = new FoodDAO()); 
+            private set => s_instance = value; 
         }
+        private FoodDAO() { }
 
         public List<Food> GetFoodByCategoryId(int idCategory)
         {
+            string query = "USP_GetFoodByCategoryId @idCategory ";
             List<Food> listFood = new List<Food>();
-            DataTable dataFood = DataProvider.Instance.ExecuteQuery("SELECT * FROM Food WHERE IdCategory = " + idCategory);
-            foreach (DataRow row in dataFood.Rows)
+            DataTable data = DataProvider.Instance.ExecuteQuery(query, new object[] { idCategory });
+            foreach(DataRow row in data.Rows)
             {
-                listFood.Add(new Food(row));
+                Food food = new Food(row);
+                listFood.Add(food);
             }
             return listFood;
         }
