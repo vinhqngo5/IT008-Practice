@@ -90,6 +90,7 @@ namespace QuanLyQuanCafe
 
         private void BtnTable_Click(object sender, EventArgs e)
         {
+            lsvBill.Tag = (sender as Button).Tag;
             ShowBill(((sender as Button).Tag as Table).Id);
         }
 
@@ -115,6 +116,26 @@ namespace QuanLyQuanCafe
         {
             Category selectedCategory = cbCategory.SelectedItem as Category;
             LoadFoodByCategoryId(selectedCategory.Id);
+        }
+
+        private void btnAddFood_Click(object sender, EventArgs e)
+        {
+            Table table = lsvBill.Tag as Table;
+            int idBill = BillDAO.Instance.GetBillIdByTableId(table.Id);
+            int idFood = (cbFood.SelectedItem as Food).Id;
+            int count = Convert.ToInt32(nmFoodCount.Value);
+
+            if (idBill == -1)
+            {
+                BillDAO.Instance.InsertBill(table.Id);
+                BillInfoDAO.Instance.InsertBillInfo(BillDAO.Instance.GetBillIdByTableId(table.Id), idFood, count);
+            }
+            else
+            {
+                BillInfoDAO.Instance.InsertBillInfo(idBill, idFood, count);
+            }
+
+            ShowBill(table.Id);
         }
     }
 }
