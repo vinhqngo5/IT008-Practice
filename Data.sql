@@ -259,11 +259,11 @@ AS
 BEGIN
 	SELECT *
 	FROM Bill
-	WHERE IdTable = @idTable
+	WHERE IdTable = @idTable AND Status = 0
 END
 GO
 
-EXEC USP_GetBill @idTable = 55
+EXEC USP_GetBill @idTable = 54
 GO
 
 CREATE PROC USP_GetBillInfo
@@ -323,9 +323,49 @@ BEGIN
 			DELETE FROM BillInfo WHERE IdFood = @idFood
 	END
 	ELSE
-		INSERT	BillInfo
-				( IdBill, IdFood, Count )
-		VALUES
-				( @idBill, @idFood, @count )
+	BEGIN
+		IF @count > 0
+			INSERT	BillInfo
+					( IdBill, IdFood, Count )
+			VALUES
+					( @idBill, @idFood, @count )
+	END
+END
+GO
+
+CREATE TRIGGER UTG_UpdateBillInfo
+ON dbo.BillInfo FOR INSERT, UPDATE
+AS
+BEGIN
+	DECLARE @idBill INT
+	
+	SELECT @idBill = IdBill FROM Inserted
+	
+	DECLARE @idTable INT
+	
+	SELECT @idTable = IdTable FROM dbo.Bill WHERE Id = @idBill AND Status = 0
+	
+	UPDATE dbo.TableFood SET Status = 1 WHERE Id = @idTable
+END
+GO
+
+CREATE TRIGGER UTG_UpdateBill
+ON dbo.Bill FOR UPDATE
+AS
+BEGIN	
+	DECLARE @idBill INT
+	
+	SELECT @idBill = Id FROM Inserted	
+	
+	DECLARE @idTable INT
+	
+	SELECT @idTable = IdTable FROM dbo.Bill WHERE Id = @idBill	
+	
+	DECLARE @count int = 0
+	
+	SELECT @count = COUNT(*) FROM dbo.Bill WHERE IdTable = @idTable AND Status = 0
+	
+	IF (@count = 0)
+		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable
 END
 GO
