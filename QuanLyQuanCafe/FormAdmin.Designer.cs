@@ -29,6 +29,7 @@ namespace QuanLyQuanCafe
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tcAdmin = new System.Windows.Forms.TabControl();
             this.tpBill = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -197,6 +198,7 @@ namespace QuanLyQuanCafe
             this.btnViewBill.TabIndex = 2;
             this.btnViewBill.Text = "Thống kê";
             this.btnViewBill.UseVisualStyleBackColor = true;
+            this.btnViewBill.Click += new System.EventHandler(this.btnViewBill_Click);
             // 
             // dtpkToDate
             // 
@@ -222,9 +224,17 @@ namespace QuanLyQuanCafe
             // 
             // dtgvBill
             // 
+            this.dtgvBill.AllowUserToAddRows = false;
+            this.dtgvBill.AllowUserToDeleteRows = false;
+            this.dtgvBill.AllowUserToResizeRows = false;
+            this.dtgvBill.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dtgvBill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvBill.Location = new System.Drawing.Point(3, 3);
             this.dtgvBill.Name = "dtgvBill";
+            this.dtgvBill.RowHeadersVisible = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgvBill.Size = new System.Drawing.Size(632, 363);
             this.dtgvBill.TabIndex = 0;
             // 
