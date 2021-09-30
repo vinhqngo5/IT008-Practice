@@ -40,9 +40,14 @@ namespace QuanLyQuanCafe.DAO
             DataProvider.Instance.ExecuteQuery("EXEC USP_InsertBill @idTable", new object[] { idTable });
         }
 
-        public void CheckOut(int idBill, int discount)
+        public void CheckOut(int idBill, int discount, float totalPrice)
         {
-             DataProvider.Instance.ExecuteNonQuery("USP_UpdateBillByIdTable @idBill , @discount", new object[] { idBill, discount });
+             DataProvider.Instance.ExecuteNonQuery("USP_UpdateBillByIdTable @idBill , @discount , @totalPrice", new object[] { idBill, discount, totalPrice });
+        }
+
+        public DataTable GetBillListByDate(DateTime checkIn, DateTime checkOut)
+        {
+            return DataProvider.Instance.ExecuteQuery("EXEC USP_GetBillListByDate @checkIn , checkOut", new object[] { checkIn, checkOut });
         }
     }
 }

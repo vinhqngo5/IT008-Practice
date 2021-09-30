@@ -183,9 +183,9 @@ namespace QuanLyQuanCafe
             int discount = Convert.ToInt32(nmDisCount.Value);
             float totalPrice = Convert.ToSingle(txbTotalPrice.Text.Split(' ')[0]);
             float finalTotalPrice = totalPrice - (totalPrice / 100) * discount;
-            if (idBill != -1 && MessageBox.Show(string.Format("Bạn có muốn thanh toán hóa đơn cho {0}?\nTổng tiền phai thanh toan sau khi giam gia la {1}.000 VNĐ", table.Name, finalTotalPrice), "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (idBill != -1 && MessageBox.Show(string.Format("Bạn có muốn thanh toán hóa đơn cho {0}?\nTổng tiền phai thanh toan sau khi giam gia la {1} VNĐ", table.Name, finalTotalPrice), "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                BillDAO.Instance.CheckOut(idBill, discount);
+                BillDAO.Instance.CheckOut(idBill, discount, finalTotalPrice);
                 ShowBill(table.Id);
                 LoadTable();
             }
@@ -196,7 +196,7 @@ namespace QuanLyQuanCafe
         {
             int idTable1 = (lsvBill.Tag as Table).Id;
             int idTable2 = (cbSwitchTable.SelectedItem as Table).Id;
-            if (MessageBox.Show(string.Format("Bạn có thật sự muốn chuyển bàn {0} qua bàn {1}?", idTable1+1, idTable2+1), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+            if (MessageBox.Show(string.Format("Bạn có thật sự muốn chuyển {0} qua {1}?", (lsvBill.Tag as Table).Name, (cbSwitchTable.SelectedItem as Table).Name), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
             {
                 TableDAO.Instance.SwitchTable(idTable1, idTable2);
                 LoadTable();

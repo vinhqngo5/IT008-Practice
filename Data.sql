@@ -59,7 +59,8 @@ CREATE TABLE Bill
 	DateCheckOut DATE,
 	IdTable INT NOT NULL,
 	Status BIT NOT NULL DEFAULT 0, -- 1: đã thanh toán && 0: chưa thanh toán
-	Discount INT DEFAULT 0
+	Discount INT DEFAULT 0,
+	TotalPrice FLOAT DEFAULT 0
 
 		FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
 )
@@ -145,10 +146,16 @@ END
 GO
 
 -- Create value for TableFood
+INSERT dbo.TableFood
+	(Name)
+VALUES
+	(N'Bàn 0')
+
 DELETE FROM dbo.TableFood
 WHERE 1 = 1
 DBCC CHECKIDENT ('TableFood', RESEED, 0)
 GO
+
 DECLARE @i INT = 1
 WHILE @i <= 20
 BEGIN
@@ -488,10 +495,10 @@ GO
 
 
 CREATE PROC USP_UpdateBillByIdTable
-	@idBill INT, @discount INT
+	@idBill INT, @discount INT, @totalPrice FLOAT
 AS
 BEGIN
-	UPDATE Bill SET DateCheckOut = GETDATE(), Discount = @discount, Status = 1 WHERE Id = @idBill
+	UPDATE dbo.Bill SET DateCheckOut = GETDATE(), Discount = @discount, Status = 1, TotalPrice = @totalPrice WHERE Id = @idBill
 END
 GO
 
@@ -553,5 +560,15 @@ BEGIN
 END
 GO
 
+CREATE PROC USP_GetBillListByDate
+@checkIn DATE, @checkOut DATE
+AS
+BEGIN
+	SELECT t.Name AS [Tên bàn], b.TotalPrice AS [Tổng tiền], DateCheckIn , DateCheckOut , Discount AS [Giảm giá]
+	FROM dbo.Bill AS b, dbo.TableFood AS t
+	WHERE DateCheckIn >= @checkIn AND DateCheckOut <= @checkOut and b.Status = 1
+	AND t.Id = b.IdTable
+END
+GO
 
-
+SELECT * FROM BIll
