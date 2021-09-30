@@ -208,7 +208,7 @@ namespace QuanLyQuanCafe
                 {
                     return;
                 }
-                BillDAO.Instance.CheckOut(idBill, discount);
+                BillDAO.Instance.CheckOut(idBill, discount, finalTotalPrice);
                 ShowBill(table.Id);
                 ReloadTable();
             }

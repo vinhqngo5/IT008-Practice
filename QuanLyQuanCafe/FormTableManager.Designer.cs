@@ -113,6 +113,7 @@ namespace QuanLyQuanCafe
             // 
             // lsvBill
             // 
+            this.lsvBill.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid;
             this.lsvBill.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -124,7 +125,7 @@ namespace QuanLyQuanCafe
             this.lsvBill.Name = "lsvBill";
             this.lsvBill.Size = new System.Drawing.Size(332, 309);
             this.lsvBill.TabIndex = 0;
-            this.lsvBill.UseCompatibleStateImageBehavior = false;
+            //this.lsvBill.UseCompatibleStateImageBehavior = false;
             this.lsvBill.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
@@ -135,16 +136,19 @@ namespace QuanLyQuanCafe
             // columnHeader2
             // 
             this.columnHeader2.Text = "Số lượng";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnHeader2.Width = 61;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Đơn giá";
-            this.columnHeader3.Width = 70;
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader3.Width = 80;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Thành tiền";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnHeader4.Width = 80;
             // 
             // panel3
