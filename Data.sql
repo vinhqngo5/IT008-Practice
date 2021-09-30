@@ -1,8 +1,8 @@
 ﻿--CREATE DATABASE Temp
-USE Temp
-DROP DATABASE QUANLYQUANCAFE
-CREATE DATABASE QUANLYQUANCAFE
-GO
+-- USE Temp
+-- DROP DATABASE QUANLYQUANCAFE
+-- CREATE DATABASE QUANLYQUANCAFE
+-- GO
 
 USE QUANLYQUANCAFE
 GO
@@ -15,79 +15,71 @@ GO
 -- BillInfo
 
 
-BEGIN -- CREATE TABLE --
-CREATE TABLE TableFood
-(
-	Id INT IDENTITY(1, 1) PRIMARY KEY,
-	Name NVARCHAR(100) NOT NULL DEFAULT N'Bàn chưa có tên',
-	Status BIT NOT NULL DEFAULT 0
-	-- Trống: 0 || Có người: 1
-)
+BEGIN
+	-- CREATE TABLE --
+	CREATE TABLE TableFood
+	(
+		Id INT IDENTITY(1, 1) PRIMARY KEY,
+		Name NVARCHAR(100) NOT NULL DEFAULT N'Bàn chưa có tên',
+		Status BIT NOT NULL DEFAULT 0,
+		-- Trống: 0 || Có người: 1
+	)
 
-CREATE TABLE Account
-(
-	UserName NVARCHAR(100) PRIMARY KEY,
-	DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Staff',
-	PassWord NVARCHAR(1000) NOT NULL DEFAULT 0,
-	Type BIT NOT NULL DEFAULT 0
-	-- 1: admin && 0: staff
-)
+	CREATE TABLE Account
+	(
+		UserName NVARCHAR(100) PRIMARY KEY,
+		DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Staff',
+		PassWord NVARCHAR(1000) NOT NULL DEFAULT 0,
+		Type BIT NOT NULL DEFAULT 0
+		-- 1: admin && 0: staff
+	)
 
-CREATE TABLE FoodCategory
-(
-	Id INT IDENTITY(1, 1) PRIMARY KEY,
-	Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên'
-)
+	CREATE TABLE FoodCategory
+	(
+		Id INT IDENTITY(1, 1) PRIMARY KEY,
+		Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên'
+	)
 
-CREATE TABLE Food
-(
-	Id INT IDENTITY(1, 1) PRIMARY KEY,
-	Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
-	IdCategory INT NOT NULL,
-	Price FLOAT NOT NULL DEFAULT 0
+	CREATE TABLE Food
+	(
+		Id INT IDENTITY(1, 1) PRIMARY KEY,
+		Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
+		IdCategory INT NOT NULL,
+		Price FLOAT NOT NULL DEFAULT 0
 
-	FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
-)
+			FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
+	)
 
-CREATE TABLE Bill
-(
-	Id INT IDENTITY(1, 1) PRIMARY KEY,
-	DateCheckIn DATE NOT NULL DEFAULT GETDATE(),
-	DateCheckOut DATE,
-	IdTable INT NOT NULL,
-	Status BIT NOT NULL DEFAULT 0 -- 1: đã thanh toán && 0: chưa thanh toán
+	CREATE TABLE Bill
+	(
+		Id INT IDENTITY(1, 1) PRIMARY KEY,
+		DateCheckIn DATE NOT NULL DEFAULT GETDATE(),
+		DateCheckOut DATE,
+		IdTable INT NOT NULL,
+		Status BIT NOT NULL DEFAULT 0,
+		-- 1: đã thanh toán && 0: chưa thanh toán
+		Discount INT NOT NULL DEFAULT 0,
+		TotalPrice FLOAT NOT NULL DEFAULT 0,
 
-	FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
-)
+		FOREIGN KEY
+		(IdTable) REFERENCES dbo.TableFood
+		(Id)
+	)
 
-CREATE TABLE BillInfo
-(
-	Id INT IDENTITY(1, 1) PRIMARY KEY,
-	IdBill INT NOT NULL,
-	IdFood INT NOT NULL,
-	Count INT NOT NULL DEFAULT 0
+	CREATE TABLE BillInfo
+	(
+		Id INT IDENTITY(1, 1) PRIMARY KEY,
+		IdBill INT NOT NULL,
+		IdFood INT NOT NULL,
+		Count INT NOT NULL DEFAULT 0
 
-	FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
-	FOREIGN KEY (IdFood) REFERENCES dbo.Food(Id)
-)
+			FOREIGN KEY (IdBill) REFERENCES dbo.Bill(Id),
+		FOREIGN KEY (IdFood) REFERENCES dbo.Food(Id)
+	)
 END
 GO
 
--- ALTER TABLE
-ALTER TABLE Bill
-ADD Discount INT DEFAULT 0
-
---UPDATE Bill SET Discount = 0
-
-SELECT * FROM Bill
-GO
-
-ALTER TABLE Bill
-ADD TotalPrice FLOAT DEFAULT 0
-GO
-
 -- INSERT VALUES
-
 INSERT INTO dbo.Account
 	(
 	UserName,
@@ -115,11 +107,13 @@ VALUES
 		1  -- Type - bit
 	)
 
-SELECT * FROM dbo.Account 
-GO
+-- Insert for reseed
+INSERT dbo.TableFood
+	(Name)
+VALUES
+	(N'Bàn 1' )
 
 DELETE FROM dbo.TableFood
-WHERE 1 = 1
 DBCC CHECKIDENT ('TableFood', RESEED, 0)
 GO
 
@@ -135,6 +129,29 @@ END
 GO
 
 -- Add data for FoodCategories, food, Bill, BillInfo
+
+-- insert before reseed
+INSERT dbo.FoodCategory
+	( Name )
+VALUES
+	( N'Cà phê' )
+
+INSERT dbo.Food
+	( Name, IdCategory, Price )
+VALUES
+	( N'Cà phê đen', 1, 12000 )
+
+INSERT	dbo.Bill
+	( DateCheckIn , DateCheckOut , IdTable , Status )
+VALUES
+	( GETDATE() , NULL , 1 , 0 )
+
+INSERT	dbo.BillInfo
+	( idBill, idFood, count )
+VALUES
+	( 1, 1, 2 )
+
+
 -- Delete old data in table and reset id
 DELETE dbo.BillInfo
 DBCC CHECKIDENT ('BillInfo', RESEED, 0)
@@ -143,7 +160,6 @@ DELETE dbo.Bill
 DBCC CHECKIDENT ('Bill', RESEED, 0)
 GO
 DELETE dbo.Food
-WHERE 1 = 1
 DBCC CHECKIDENT ('Food', RESEED, 0)
 GO
 DELETE dbo.FoodCategory
@@ -159,7 +175,8 @@ VALUES
 	( N'Sinh tố' ),
 	( N'Nước ép' )
 
-SELECT * FROM FoodCategory
+SELECT *
+FROM FoodCategory
 GO
 
 -- Add food
@@ -174,31 +191,36 @@ VALUES
 
 GO
 
- -- Add bill
- INSERT	dbo.Bill
- 	( DateCheckIn , DateCheckOut , IdTable , Status )
- VALUES
- 	( GETDATE() , NULL , 1 , 0 ),
- 	( GETDATE() , NULL , 2 , 0 ),
- 	( GETDATE() , GETDATE() , 3 , 1 )
-GO
+-- Add bill
+-- INSERT	dbo.Bill
+-- 	( DateCheckIn , DateCheckOut , IdTable , Status )
+-- VALUES
+-- 	( GETDATE() , NULL , 1 , 0 ),
+-- 	( GETDATE() , NULL , 2 , 0 ),
+-- 	( GETDATE() , GETDATE() , 3 , 1 )
+-- GO
 
- -- Add bill info
- INSERT	dbo.BillInfo
- 	( idBill, idFood, count )
- VALUES
- 	( 1, 1, 2 ),
- 	( 1, 2, 1 ),
- 	( 2, 3, 3 ),
- 	( 3, 4, 5 )
- GO
+-- Add bill info
+-- INSERT	dbo.BillInfo
+-- 	( idBill, idFood, count )
+-- VALUES
+-- 	( 1, 1, 2 ),
+-- 	( 1, 2, 1 ),
+-- 	( 2, 3, 3 ),
+-- 	( 3, 4, 5 )
+--  GO
 
 -- SELECT *
-SELECT * FROM TableFood
---SELECT * FROM FoodCategory
---SELECT * FROM Food
-SELECT * FROM Bill
-SELECT * FROM BillInfo
+SELECT *
+FROM TableFood
+SELECT *
+FROM FoodCategory
+SELECT *
+FROM Food
+SELECT *
+FROM Bill
+SELECT *
+FROM BillInfo
 GO
 
 -- STORED PROCEDURES --
@@ -215,7 +237,8 @@ GO
 
 CREATE PROC USP_GetTableList
 AS
-SELECT * FROM TableFood
+SELECT *
+FROM TableFood
 
 EXEC USP_GetTableList
 GO
@@ -288,7 +311,7 @@ BEGIN
 	BEGIN
 		DECLARE @newCount INT = @count + @foodCount
 		IF @newCount > 0
-			UPDATE BillInfo SET Count = @newCount WHERE IdFood = @idFood
+			UPDATE BillInfo SET Count = @newCount WHERE IdFood = @idFood AND IdBill = @idBill
 		ELSE
 			DELETE FROM BillInfo WHERE IdFood = @idFood AND IdBill = @idBill
 	END
@@ -314,7 +337,9 @@ END
 GO
 
 CREATE PROC USP_CheckOut
-	@idBill INT, @discount INT, @totalPrice FLOAT
+	@idBill INT,
+	@discount INT,
+	@totalPrice FLOAT
 AS
 BEGIN
 	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1, Discount = @discount, TotalPrice = @totalPrice WHERE Id = @idBill
@@ -322,14 +347,19 @@ END
 GO
 
 CREATE PROC USP_SwitchTable
-	@idFirstTable INT, @idSecondTable INT
+	@idFirstTable INT,
+	@idSecondTable INT
 AS
 BEGIN
 	DECLARE @idFirstBill INT, @idSecondBill INT
 	DECLARE @dateCheckInFirstBill DATE, @dateCheckInSecondBill DATE
-	
-	SELECT @idFirstBill = Id, @dateCheckInFirstBill = DateCheckIn FROM Bill WHERE IdTable = @idFirstTable AND Status = 0
-	SELECT @idSecondBill = Id, @dateCheckInSecondBill = DateCheckIn FROM Bill WHERE IdTable = @idSecondTable AND Status = 0
+
+	SELECT @idFirstBill = Id, @dateCheckInFirstBill = DateCheckIn
+	FROM Bill
+	WHERE IdTable = @idFirstTable AND Status = 0
+	SELECT @idSecondBill = Id, @dateCheckInSecondBill = DateCheckIn
+	FROM Bill
+	WHERE IdTable = @idSecondTable AND Status = 0
 
 	IF @idFirstBill IS NULL
 	BEGIN
@@ -350,13 +380,14 @@ END
 GO
 
 CREATE PROC USP_GetListBillByDate
-	@dateCheckIn DATE, @dateCheckOut DATE
+	@dateCheckIn DATE,
+	@dateCheckOut DATE
 AS
 BEGIN
 	SELECT Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
-	FROM TableFood 
-	JOIN Bill ON Bill.IdTable = TableFood.Id 
-	JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	FROM TableFood
+		JOIN Bill ON Bill.IdTable = TableFood.Id
+		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
 	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
 	ORDER BY DateCheckIn, Name
 END
@@ -382,20 +413,27 @@ BEGIN
 END
 GO
 
-CREATE TRIGGER UTG_DeleteBillInfo
+ALTER TRIGGER UTG_DeleteBillInfo
 ON dbo.BillInfo AFTER DELETE
 AS
 BEGIN
+	PRINT('Run UTG_DeleteBillInfo')
 	DECLARE @idBill INT
 
-	SELECT @idBill = IdBill FROM Deleted
+	SELECT @idBill = IdBill
+	FROM Deleted
 
 	DECLARE @count INT
-	
-	SELECT @count = COUNT(*) FROM dbo.BillInfo WHERE IdBill = @idBill
+
+	SELECT @count = COUNT(*)
+	FROM dbo.BillInfo
+	WHERE IdBill = @idBill
 
 	IF @count = 0
+	BEGIN
 		DELETE FROM dbo.Bill WHERE Id = @idBill
+		PRINT('UPDATE' + CAST(@idBill AS nvarchar(100)))
+	END
 END
 GO
 
@@ -405,11 +443,14 @@ AS
 BEGIN
 	DECLARE @idBill INT
 
-	SELECT @idBill = Id FROM Inserted
+	SELECT @idBill = Id
+	FROM Inserted
 
 	DECLARE @idTable INT
 
-	SELECT @idTable = IdTable FROM dbo.Bill WHERE Id = @idBill
+	SELECT @idTable = IdTable
+	FROM dbo.Bill
+	WHERE Id = @idBill
 
 	DECLARE @count int = 0
 
@@ -424,16 +465,21 @@ BEGIN
 END
 GO
 
-CREATE TRIGGER UTG_DeleteBill
+ALTER TRIGGER UTG_DeleteBill
 ON dbo.Bill AFTER DELETE
 AS
 BEGIN
+	PRINT('Run delete bill')
 	DECLARE @idTable INT
 	DECLARE @status BIT
 
-	SELECT @idTable = IdTable, @status = Status FROM Deleted
+	SELECT @idTable = IdTable, @status = Status
+	FROM Deleted
 
 	IF @status = 0
+	BEGIN
 		UPDATE TableFood SET Status = 0 WHERE Id = @idTable
+		PRINT('UPDATE' + CAST(@idTable AS nvarchar(100)))
+	END
 END
 GO
