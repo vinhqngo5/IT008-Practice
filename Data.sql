@@ -1,4 +1,4 @@
-﻿--CREATE DATABASE Temp
+--CREATE DATABASE Temp
 -- USE Temp
 -- DROP DATABASE QUANLYQUANCAFE
 -- CREATE DATABASE QUANLYQUANCAFE
@@ -413,27 +413,27 @@ BEGIN
 END
 GO
 
-ALTER TRIGGER UTG_DeleteBillInfo
+CREATE TRIGGER UTG_DeleteBillInfo
 ON dbo.BillInfo AFTER DELETE
 AS
 BEGIN
-	PRINT('Run UTG_DeleteBillInfo')
-	DECLARE @idBill INT
+	DECLARE @tableIdBill TABLE(Id INT)
 
-	SELECT @idBill = IdBill
-	FROM Deleted
+	INSERT INTO @tableIdBill SELECT IdBill FROM Deleted
+	SELECT * FROM @tableIdBill
 
 	DECLARE @count INT
-
+	
 	SELECT @count = COUNT(*)
-	FROM dbo.BillInfo
-	WHERE IdBill = @idBill
+	FROM BillInfo 
+	JOIN @tableIdBill AS t
+	ON t.Id = BillInfo.IdBill
 
-	IF @count = 0
-	BEGIN
-		DELETE FROM dbo.Bill WHERE Id = @idBill
-		PRINT('UPDATE' + CAST(@idBill AS nvarchar(100)))
-	END
+	IF @count = 0  
+		DELETE FROM Bill
+		FROM dbo.Bill
+		INNER JOIN @tableIdBill AS t
+		ON Bill.Id = t.Id
 END
 GO
 
@@ -465,21 +465,18 @@ BEGIN
 END
 GO
 
-ALTER TRIGGER UTG_DeleteBill
+CREATE TRIGGER UTG_DeleteBill
 ON dbo.Bill AFTER DELETE
 AS
 BEGIN
-	PRINT('Run delete bill')
-	DECLARE @idTable INT
-	DECLARE @status BIT
+	DECLARE @tableIdBill TABLE(Id INT, Status INT)
 
-	SELECT @idTable = IdTable, @status = Status
-	FROM Deleted
+	INSERT INTO @tableIdBill SELECT IdTable, Status FROM Deleted
 
-	IF @status = 0
-	BEGIN
-		UPDATE TableFood SET Status = 0 WHERE Id = @idTable
-		PRINT('UPDATE' + CAST(@idTable AS nvarchar(100)))
-	END
+	UPDATE TableFood 
+	SET Status = 0 
+	FROM TableFood
+	JOIN @tableIdBill AS t
+	ON TableFood.Id = t.Id
 END
 GO
