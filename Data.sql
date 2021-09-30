@@ -360,6 +360,23 @@ BEGIN
 END
 GO
 
+CREATE TRIGGER UTG_DeleteBillInfo
+ON dbo.BillInfo AFTER DELETE
+AS
+BEGIN
+	DECLARE @idBill INT
+
+	SELECT @idBill = IdBill FROM Deleted
+
+	DECLARE @count INT
+	
+	SELECT @count = COUNT(*) FROM dbo.BillInfo WHERE IdBill = @idBill
+
+	IF @count = 0
+		DELETE FROM dbo.Bill WHERE Id = @idBill
+END
+GO
+
 CREATE TRIGGER UTG_UpdateBill
 ON dbo.Bill FOR UPDATE
 AS
@@ -382,5 +399,19 @@ BEGIN
 		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable
 	ELSE
 		UPDATE dbo.TableFood SET Status = 1 WHERE Id = @idTable
+END
+GO
+
+CREATE TRIGGER UTG_DeleteBill
+ON dbo.Bill AFTER DELETE
+AS
+BEGIN
+	DECLARE @idTable INT
+	DECLARE @status BIT
+
+	SELECT @idTable = IdTable, @status = Status FROM Deleted
+
+	IF @status = 0
+		UPDATE TableFood SET Status = 0 WHERE Id = @idTable
 END
 GO
