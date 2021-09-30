@@ -35,5 +35,10 @@ namespace QuanLyQuanCafe.DAO
 
             return tableList;
         }
+
+        public void SwitchTable(int idFirstTable, int idSecondTable)
+        {
+            DataProvider.Instance.ExecuteQuery("EXEC USP_SwitchTable @idFirstTable , @idSecondTable", new object[] { idFirstTable, idSecondTable });
+        }
     }
 }
