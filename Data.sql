@@ -380,10 +380,11 @@ GO
 
 CREATE PROC USP_UpdateBillByIdTable
 	@idBill INT,
-	@discount INT
+	@discount INT,
+	@totalPrice INT
 AS
 BEGIN
-	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1, Discount = @discount WHERE Id = @idBill
+	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1, Discount = @discount, TotalPrice = @totalPrice WHERE Id = @idBill
 END
 GO
 
@@ -474,5 +475,23 @@ BEGIN
 	IF(@isSecondTableEmpty = 0)
 		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable2
 
+END
+GO
+
+
+ALTER Table dbo.Bill ADD totalPrice FLOAT
+GO
+
+CREATE PROC USP_GetListBillByDate
+	@checkIn date,
+	@checkOut date
+AS
+BEGIN
+
+	SELECT t.name AS [Tên bàn], b.totalPrice AS [Tổng tiền],
+		DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], discount AS [Giảm giá]
+	FROM dbo.Bill AS b, dbo.TableFood AS t
+	WHERE DateCheckIn >= @checkIn AND DateCheckout <= @checkOut AND b.Status = 1
+		AND t.Id = b.IdTable
 END
 GO

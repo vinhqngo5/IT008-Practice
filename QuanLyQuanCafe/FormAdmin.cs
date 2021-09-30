@@ -17,6 +17,35 @@ namespace QuanLyQuanCafe
         public FormAdmin()
         {
             InitializeComponent();
+
+            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+
+            LoadDateTimePickerBill();
         }
+
+        #region methods
+
+        void LoadListBillByDate(DateTime checkIn, DateTime checkOut)
+        {
+            dtgvBill.DataSource = BillDAO.Instance.GetBillListByDate(checkIn, checkOut);
+
+        }
+
+        void LoadDateTimePickerBill()
+        {
+            DateTime today = DateTime.Now;
+            dtpkFromDate.Value = new DateTime(today.Year, today.Month, 1);
+            dtpkToDate.Value = dtpkFromDate.Value.AddMonths(1).AddDays(-1);
+        }
+
+        #endregion
+        #region events
+
+
+        private void btnViewBill_Click(object sender, EventArgs e)
+        {
+            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+        }
+        #endregion
     }
 }

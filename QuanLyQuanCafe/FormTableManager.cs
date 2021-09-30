@@ -181,7 +181,7 @@ namespace QuanLyQuanCafe
 
             if (idBill != -1 && MessageBox.Show($"Bạn có muốn thanh toán hóa đơn cho {table.Name}? Tổng tiền - Giảm giá = {finalTotalPrice}", "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                BillDAO.Instance.CheckOut(idBill, discount);
+                BillDAO.Instance.CheckOut(idBill, discount, finalTotalPrice);
                 ShowBill(table.Id);
                 LoadTable();
             }
