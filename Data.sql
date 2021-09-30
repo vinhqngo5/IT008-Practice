@@ -288,7 +288,7 @@ BEGIN
 	BEGIN
 		DECLARE @newCount INT = @count + @foodCount
 		IF @newCount > 0
-			UPDATE BillInfo SET Count = @newCount WHERE IdFood = @idFood
+			UPDATE BillInfo SET Count = @newCount WHERE IdFood = @idFood AND IdBill = @idBill
 		ELSE
 			DELETE FROM BillInfo WHERE IdFood = @idFood AND IdBill = @idBill
 	END
@@ -386,16 +386,23 @@ CREATE TRIGGER UTG_DeleteBillInfo
 ON dbo.BillInfo AFTER DELETE
 AS
 BEGIN
-	DECLARE @idBill INT
+	DECLARE @tableIdBill TABLE(Id INT)
 
-	SELECT @idBill = IdBill FROM Deleted
+	INSERT INTO @tableIdBill SELECT IdBill FROM Deleted
+	SELECT * FROM @tableIdBill
 
 	DECLARE @count INT
 	
-	SELECT @count = COUNT(*) FROM dbo.BillInfo WHERE IdBill = @idBill
+	SELECT @count = COUNT(*)
+	FROM BillInfo 
+	JOIN @tableIdBill AS t
+	ON t.Id = BillInfo.IdBill
 
-	IF @count = 0
-		DELETE FROM dbo.Bill WHERE Id = @idBill
+	IF @count = 0  
+		DELETE FROM Bill
+		FROM dbo.Bill
+		INNER JOIN @tableIdBill AS t
+		ON Bill.Id = t.Id
 END
 GO
 
@@ -428,12 +435,21 @@ CREATE TRIGGER UTG_DeleteBill
 ON dbo.Bill AFTER DELETE
 AS
 BEGIN
+	DECLARE @tableIdBill TABLE(Id INT, Status INT)
 	DECLARE @idTable INT
 	DECLARE @status BIT
 
-	SELECT @idTable = IdTable, @status = Status FROM Deleted
+	INSERT INTO @tableIdBill SELECT IdTable, Status FROM Deleted
 
-	IF @status = 0
-		UPDATE TableFood SET Status = 0 WHERE Id = @idTable
+	UPDATE TableFood 
+	SET Status = 0 
+	FROM TableFood
+	JOIN @tableIdBill AS t
+	ON TableFood.Id = t.Id
 END
 GO
+
+SELECT * FROM Bill
+SELECT * FROM BillInfo
+DELETE FROM BillInfo 
+DELETE FROM Bill
