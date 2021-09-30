@@ -10,16 +10,17 @@ namespace QuanLyQuanCafe.DTO
     public class Bill
     {
         private int _id;
-        private DateTime? _dateCheckIn;
+        private DateTime _dateCheckIn;
         private DateTime? _dateCheckOut;
         private int _idTable;
         private bool _status;
         private int _discount;
+        private float _totalPrice;
 
         public Bill(DataRow row)
         {
             this.Id = Convert.ToInt32(row["Id"]);
-            this.DateCheckIn = (DateTime?)row["DateCheckIn"];
+            this.DateCheckIn = (DateTime)row["DateCheckIn"];
             if (row["DateCheckOut"].ToString() != "")
             {
                 this.DateCheckOut = (DateTime?)row["DateCheckOut"];
@@ -31,13 +32,15 @@ namespace QuanLyQuanCafe.DTO
             this.IdTable = Convert.ToInt32(row["IdTable"]);
             this.Status = Convert.ToBoolean(row["Status"]);
             this.Discount = Convert.ToInt32(row["Discount"]);
+            this.TotalPrice = Convert.ToSingle(row["TotalPrice"]);
         }
 
         public int Id { get => _id; set => _id = value; }
-        public DateTime? DateCheckIn { get => _dateCheckIn; set => _dateCheckIn = value; }
+        public DateTime DateCheckIn { get => _dateCheckIn; set => _dateCheckIn = value; }
         public DateTime? DateCheckOut { get => _dateCheckOut; set => _dateCheckOut = value; }
         public int IdTable { get => _idTable; set => _idTable = value; }
         public bool Status { get => _status; set => _status = value; }
         public int Discount { get => _discount; set => _discount = value; }
+        public float TotalPrice { get => _totalPrice; set => _totalPrice = value; }
     }
 }
