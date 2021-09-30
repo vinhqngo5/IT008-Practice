@@ -327,7 +327,12 @@ BEGIN
 	SELECT @idFirstBill = Id, @dateCheckInFirstBill = DateCheckIn FROM Bill WHERE IdTable = @idFirstTable AND Status = 0
 	SELECT @idSecondBill = Id, @dateCheckInSecondBill = DateCheckIn FROM Bill WHERE IdTable = @idSecondTable AND Status = 0
 
-	IF @idSecondBill IS NULL
+	IF @idFirstBill IS NULL
+	BEGIN
+		UPDATE Bill SET IdTable = @idFirstTable WHERE Id = @idSecondBill
+		UPDATE TableFood SET Status = 0 WHERE Id = @idSecondTable
+	END
+	ELSE IF @idSecondBill IS NULL
 	BEGIN
 		UPDATE Bill SET IdTable = @idSecondTable WHERE Id = @idFirstBill
 		UPDATE TableFood SET Status = 0 WHERE Id = @idFirstTable
