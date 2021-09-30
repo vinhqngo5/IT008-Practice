@@ -106,11 +106,6 @@ VALUES
 	)
 GO
 
-
-SELECT *
-FROM dbo.Account 
-GO
-
 CREATE PROC USP_GetAccountByUserName
 	@userName nvarchar(100)
 AS
@@ -119,15 +114,6 @@ BEGIN
 	FROM dbo.Account
 	WHERE UserName = @userName;
 END
-GO
-
-EXEC dbo.USP_GetAccountByUserName @userName = N'K9'
---nvarchar(100)
-GO
-
-SELECT *
-FROM dbo.Account
-WHERE UserName = N'K9' AND PassWord = N'1'
 GO
 
 -- Create procedure for login
@@ -164,17 +150,10 @@ SET Status = 1 WHERE Id = 9 OR Id = 15
 GO
 
 -- Show value in TableFood
-SELECT *
-FROM dbo.TableFood
-GO
-
 CREATE PROC USP_GetTableList
 AS
 SELECT *
 FROM TableFood
-GO
-
-EXEC USP_GetTableList
 GO
 
 -- Add data for FoodCategories, food, Bill, BillInfo
@@ -186,7 +165,6 @@ DELETE dbo.Bill
 DBCC CHECKIDENT ('Bill', RESEED, 0)
 GO
 DELETE dbo.Food
-WHERE 1 = 1
 DBCC CHECKIDENT ('Food', RESEED, 0)
 GO
 DELETE dbo.FoodCategory
@@ -202,7 +180,8 @@ VALUES
 	( N'Sinh tố' ),
 	( N'Nước ép' )
 GO
-SELECT * FROM FoodCategory
+SELECT *
+FROM FoodCategory
 -- Add food
 INSERT dbo.Food
 	( Name, IdCategory, Price )
@@ -212,7 +191,8 @@ VALUES
 	( N'Trà sữa trân châu', 2, 20000 ),
 	( N'Sinh tố bơ', 3, 15000 ),
 	( N'Nước ép cam', 4, 10000 )
-SELECT * FROM Bill
+SELECT *
+FROM Bill
 
 -- -- Add bill
 -- INSERT	dbo.Bill
@@ -247,11 +227,6 @@ FROM BillInfo
 -- SET Status = 0
 -- WHERE Id = 6 OR Id = 9
 
-SELECT *
-FROM Bill
-WHERE IdTable = 53 AND STATUS = 0
-GO
-
 CREATE PROC USP_GetBill
 	@idTable INT
 AS
@@ -260,9 +235,6 @@ BEGIN
 	FROM Bill
 	WHERE IdTable = @idTable AND Status = 0
 END
-GO
-
-EXEC USP_GetBill @idTable = 54
 GO
 
 CREATE PROC USP_GetBillInfo
@@ -275,9 +247,6 @@ BEGIN
 END
 GO
 
-EXEC USP_GetBillInfo @idBill = -1
-GO
-
 CREATE PROC USP_GetMenu
 	@idTable INT
 AS
@@ -288,17 +257,14 @@ BEGIN
 END
 GO
 
-EXEC USP_GetMenu @idTable = 53
-GO
-
 CREATE PROC USP_InsertBill
 	@idTable INT
 AS
 BEGIN
 	INSERT	dbo.Bill
-		( DateCheckOut , IdTable )
+		( DateCheckOut , IdTable, Discount)
 	VALUES
-		( NULL , @idTable  )
+		( NULL , @idTable, 0  )
 END
 GO
 
@@ -334,12 +300,6 @@ BEGIN
 END
 GO
 
-
-SELECT *
-FROM dbo.FoodCategory
-SELECT *
-FROM dbo.Food
-
 CREATE PROC USP_GetFoodByCategoryId
 	@idCategory INT
 AS
@@ -366,69 +326,6 @@ USP_InsertBill @idTable =5
 GO
 
 
-SELECT *
-FROM FoodCategory
-SELECT *
-FROM Food
-GO
--- proc for insert new bill
-
--- CREATE PROC USP_InsertBill
--- 	@idTable INT
--- AS
--- BEGIN
--- 	INSERT dbo.Bill
--- 		( DateCheckIn, DateCheckOut, idTable, Status )
--- 	VALUES
--- 		( GETDATE(), NULL, @idTable, 0 )
--- END
--- GO
-
--- proc for insert new BillInfo
--- CREATE PROC USP_InsertBillInfo
--- 	@idBill INT,
--- 	@idFood int,
--- 	@count INT
--- AS
--- BEGIN
--- 	INSERT	dbo.BillInfo
--- 		( idBill, idFood, count )
--- 	VALUES
--- 		( @idBill, @idFood, @count )
--- END
--- GO
--- -- Alter proc insert new BillInfo
--- ALTER PROC USP_InsertBillInfo
--- 	@idBill INT,
--- 	@idFood int,
--- 	@count INT
--- AS
--- BEGIN
-
--- 	DECLARE @isExitBillInfo INT;
--- 	DECLARE @foodCount INT = 1;
--- 	SELECT @isExitBillInfo = dbo.BillInfo.Id, @foodCount = Count
--- 	FROM dbo.BillInfo
--- 	WHERE IdBill = @idBill AND IdFood = @idFood
-
--- 	IF (@isExitBillInfo > 0) 
--- 	BEGIN
--- 		DECLARE @newCount INT = @foodCount + @count;
--- 		IF (@newCount > 0)
--- 			UPDATE dbo.BillInfo SET Count = @foodCount + @count WHERE IdBill = @idBill AND IdFood = @idFood
--- 		ELSE 
--- 			DELETE dbo.BillInfo WHERE IdBill = @idBill AND IdFood = @idFood
--- 	END
--- 	ELSE 
--- 	BEGIN
--- 		INSERT	dbo.BillInfo
--- 			( idBill, idFood, count )
--- 		VALUES
--- 			( @idBill, @idFood, @count )
--- 	END
--- END
--- GO
-
 -- Create trigger for update BillInfo
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -444,6 +341,11 @@ BEGIN
 	SELECT @idTable = IdTable
 	FROM dbo.Bill
 	WHERE Id = @idBill AND Status = 0
+
+	DECLARE @countBillInfo Int
+	SELECT @countBillInfo = COUNT(*)
+	FROM dbo.BillInfo
+	WHERE idBill = @idBill
 
 	UPDATE dbo.TableFood SET Status = 1 WHERE Id = @idTable
 END
@@ -477,12 +379,100 @@ GO
 
 
 CREATE PROC USP_UpdateBillByIdTable
-	@idBill INT
+	@idBill INT,
+	@discount INT
 AS
 BEGIN
-	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1 WHERE Id = @idBill
+	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1, Discount = @discount WHERE Id = @idBill
 END
 GO
 
-USP_UpdateBillByIdTable @idBill = 1 
+USP_UpdateBillByIdTable @idBill = 1, @discount = 5
+GO
+
+
+ALTER TABLE dbo.Bill
+ADD Discount INT DEFAULT 0
+
+UPDATE dbo.Bill SET Discount = 0
+
+SELECT *
+FROM dbo.Bill
+GO
+
+ALTER PROC USP_SwitchTable
+	@idTable1 INT,
+	@idTable2 INT
+AS
+BEGIN
+
+	DECLARE @idFirstBill INT
+	DECLARE @idSecondBill INT
+	DECLARE @isFirstTableEmpty INT  = 1
+	DECLARE @isSecondTableEmpty INT  = 1
+
+
+	-- Find bill id of table
+	SELECT @idFirstBill = Id
+	FROM Bill
+	WHERE IdTable = @idTable1 AND Status = 0
+
+
+	SELECT @idSecondBill = Id
+	FROM Bill
+	WHERE IdTable = @idTable2 AND Status = 0
+
+	-- If not exist bill in table -> create bill
+	IF (@idFirstBill IS NULL) 
+	BEGIN
+		EXEC USP_InsertBill @idTable = @idTable1
+		SELECT @idFirstBill = Id
+		FROM Bill
+		WHERE IdTable = @idTable1 AND Status = 0
+
+	END
+
+	IF (@idSecondBill IS NULL) 
+	BEGIN
+		EXEC USP_InsertBill @idTable = @idTable2
+		SELECT @idSecondBill = Id
+		FROM Bill
+		WHERE IdTable = @idTable2 AND Status = 0
+
+	END
+
+	PRINT @idFirstBill
+	PRINT @idSecondBill
+
+	-- declare table instead of create new table then drop
+	DECLARE @billInfoIdRange TABLE(Id INT)
+
+	INSERT INTO @billInfoIdRange
+	SELECT Id
+	FROM dbo.BillInfo
+	WHERE IdBill = @IdSecondBill
+
+	SELECT *
+	FROM @billInfoIdRange
+
+	UPDATE dbo.BillInfo SET IdBill = @IdSecondBill WHERE IdBill = @IdFirstBill
+
+	UPDATE dbo.BillInfo SET IdBill = @IdFirstBill WHERE Id
+	IN (SELECT *
+	FROM @billInfoIdRange)
+
+	SELECT @isFirstTableEmpty = COUNT(*)
+	FROM dbo.BillInfo
+	WHERE idBill = @idFirstBill
+
+	SELECT @isSecondTableEmpty = COUNT(*)
+	FROM dbo.BillInfo
+	WHERE idBill = @idSecondBill
+
+	IF(@isFirstTableEmpty = 0)
+		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable1
+	IF(@isSecondTableEmpty = 0)
+		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable2
+
+END
 GO

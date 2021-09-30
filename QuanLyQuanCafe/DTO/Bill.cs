@@ -14,6 +14,7 @@ namespace QuanLyQuanCafe.DTO
         private DateTime? _dateCheckOut;
         private int _idTable;
         private bool _status;
+        private int _discount;
 
         public Bill(DataRow row)
         {
@@ -29,6 +30,8 @@ namespace QuanLyQuanCafe.DTO
             }
             this.IdTable = Convert.ToInt32(row["IdTable"]);
             this.Status = Convert.ToBoolean(row["Status"]);
+            if (Convert.ToString(row["Discount"]) != "")
+                this.Discount = Convert.ToInt32(row["Discount"]);
         }
 
         public int Id { get => _id; set => _id = value; }
@@ -36,5 +39,6 @@ namespace QuanLyQuanCafe.DTO
         public DateTime? DateCheckOut { get => _dateCheckOut; set => _dateCheckOut = value; }
         public int IdTable { get => _idTable; set => _idTable = value; }
         public bool Status { get => _status; set => _status = value; }
+        public int Discount { get => _discount; set => _discount = value; }
     }
 }

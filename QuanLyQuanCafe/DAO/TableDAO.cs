@@ -15,13 +15,18 @@ namespace QuanLyQuanCafe.DAO
 
         private static TableDAO s_instance;
 
-        public static TableDAO Instance 
-        { 
-            get => s_instance ?? (s_instance = new TableDAO()); 
-            private set => s_instance = value; 
+        public static TableDAO Instance
+        {
+            get => s_instance ?? (s_instance = new TableDAO());
+            private set => s_instance = value;
         }
 
         private TableDAO() { }
+
+        public void SwitchTable(int idTable1, int idTable2)
+        {
+            DataProvider.Instance.ExecuteQuery("USP_SwitchTable @idTable1 , @idTable2", new object[] { idTable1, idTable2 });
+        }
 
         public List<Table> LoadTableList()
         {

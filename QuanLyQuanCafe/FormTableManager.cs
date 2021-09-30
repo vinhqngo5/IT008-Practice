@@ -23,18 +23,11 @@ namespace QuanLyQuanCafe
             LoadTable();
 
             LoadCategories();
+
+            LoadComboboxTable(cbSwitchTable);
         }
 
         #region Methods
-
-
-        void LoadFoodListBtCategoryId(int id)
-        {
-            List<Food> listFood = FoodDAO.Instance.GetFoodByCategoryId(id);
-
-            cbFood.DataSource = listFood;
-            cbFood.DisplayMember = "Name";
-        }
 
         void LoadTable()
         {
@@ -93,8 +86,14 @@ namespace QuanLyQuanCafe
 
             //this will settings for this thread
             //Thread.CurrentThread.CurrentCulture = _culture;
-            
+
             txbTotalPrice.Text = totalPrice.ToString("C0", _culture);
+        }
+
+        void LoadComboboxTable(ComboBox cb)
+        {
+            cb.DataSource = TableDAO.Instance.LoadTableList();
+            cb.DisplayMember = "Name";
         }
 
         #endregion
@@ -174,14 +173,36 @@ namespace QuanLyQuanCafe
             }
             int idBill = BillDAO.Instance.GetBillIdByTableId(table.Id);
 
-            if (idBill != -1 && MessageBox.Show("Bạn có muốn thanh toán hóa đơn cho " + table.Name + "?", "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            int discount = Convert.ToInt32(nmDisCount.Value);
+
+            double totalPrice = Convert.ToDouble(txbTotalPrice.Text.Split(' ')[0].Replace(".", ""));
+
+            double finalTotalPrice = totalPrice - totalPrice / 100 * discount;
+
+            if (idBill != -1 && MessageBox.Show($"Bạn có muốn thanh toán hóa đơn cho {table.Name}? Tổng tiền - Giảm giá = {finalTotalPrice}", "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                BillDAO.Instance.CheckOut(idBill);
+                BillDAO.Instance.CheckOut(idBill, discount);
                 ShowBill(table.Id);
                 LoadTable();
             }
         }
-        #endregion
 
+
+
+        private void btnSwitchTable_Click(object sender, EventArgs e)
+        {
+            Table table1 = (lsvBill.Tag as Table);
+            Table table2 = (cbSwitchTable.SelectedItem as Table);
+
+            if (MessageBox.Show($"Bạn có thật sự muốn chuyển từ bàn {table1.Name} sang bàn {table2.Name} không?", "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+
+                TableDAO.Instance.SwitchTable(table1.Id, table2.Id);
+                LoadTable();
+            }
+
+
+        }
+        #endregion
     }
 }
