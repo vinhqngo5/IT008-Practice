@@ -1,6 +1,6 @@
 ﻿
 --CREATE DATABASE Temp
-USE Temp
+--USE Temp
 DROP DATABASE QUANLYQUANCAFE
 CREATE DATABASE QUANLYQUANCAFE
 GO
@@ -58,7 +58,8 @@ CREATE TABLE Bill
 	DateCheckIn DATE NOT NULL DEFAULT GETDATE(),
 	DateCheckOut DATE,
 	IdTable INT NOT NULL,
-	Status BIT NOT NULL DEFAULT 0 -- 1: đã thanh toán && 0: chưa thanh toán
+	Status BIT NOT NULL DEFAULT 0, -- 1: đã thanh toán && 0: chưa thanh toán
+	Discount INT DEFAULT 0
 
 		FOREIGN KEY (IdTable) REFERENCES dbo.TableFood(Id)
 )
@@ -160,7 +161,7 @@ END
 GO
 
 UPDATE  dbo.TableFood
-SET Status = 1 WHERE Id = 9 OR Id = 15
+SET Status = 0 
 GO
 
 -- Show value in TableFood
@@ -179,6 +180,24 @@ GO
 
 -- Add data for FoodCategories, food, Bill, BillInfo
 -- Delete old data in table and reset id
+INSERT dbo.FoodCategory
+	( Name )
+VALUES
+	( N'Cà phê' ),
+	( N'Trà sữa' ),
+	( N'Sinh tố' ),
+	( N'Nước ép' )
+GO
+SELECT * FROM FoodCategory
+-- Add food
+INSERT dbo.Food
+	( Name, IdCategory, Price )
+VALUES
+	( N'Cà phê đen', 1, 12000 ),
+	( N'Cà phê sữa', 1, 15000 ),
+	( N'Trà sữa trân châu', 2, 20000 ),
+	( N'Sinh tố bơ', 3, 15000 ),
+	( N'Nước ép cam', 3, 10000 )
 DELETE dbo.BillInfo
 DBCC CHECKIDENT ('BillInfo', RESEED, 0)
 GO
@@ -296,7 +315,7 @@ CREATE PROC USP_InsertBill
 AS
 BEGIN
 	INSERT	dbo.Bill
-		( DateCheckOut , IdTable )
+		( DateCheckOut , IdTable)
 	VALUES
 		( NULL , @idTable  )
 END
@@ -339,6 +358,7 @@ SELECT *
 FROM dbo.FoodCategory
 SELECT *
 FROM dbo.Food
+GO
 
 CREATE PROC USP_GetFoodByCategoryId
 	@idCategory INT
@@ -352,18 +372,7 @@ GO
 USP_GetFoodByCategoryId @idCategory = 1
 GO
 
-CREATE PROC USP_InsertBill
-	@idTable INT
-AS
-BEGIN
-	INSERT dbo.Bill
-		(DateCheckOut,IdTable)
-	VALUES
-		(NULL, @idTable)
-END
-GO
-USP_InsertBill @idTable =5
-GO
+
 
 
 SELECT *
@@ -450,39 +459,99 @@ END
 GO
 
 CREATE TRIGGER UTG_UpdateBill
-ON dbo.Bill FOR UPDATE
+ON dbo.Bill AFTER UPDATE
 AS
 BEGIN
-	DECLARE @idBill INT
-
-	SELECT @idBill = Id
-	FROM Inserted
-
-	DECLARE @idTable INT
-
-	SELECT @idTable = IdTable
+	DECLARE @idTableOld INT
+	SELECT @idTableOld = idTable FROM deleted
+	DECLARE @countOld INT = 0
+	SELECT @countOld = COUNT(*)
 	FROM dbo.Bill
-	WHERE Id = @idBill
+	WHERE IdTable = @idTableOld AND Status = 0
+	IF (@countOld = 0)
+		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTableOld
+	ELSE
+		UPDATE dbo.TableFood SET Status = 1 WHERE Id = @idTableOld
 
-	DECLARE @count int = 0
-
-	SELECT @count = COUNT(*)
+	DECLARE @idTableNew INT
+	SELECT @idTableNew = idTable FROM inserted
+	DECLARE @countNew INT = 0
+	SELECT @countNew = COUNT(*)
 	FROM dbo.Bill
-	WHERE IdTable = @idTable AND Status = 0
-
-	IF (@count = 0)
-		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable
+	WHERE IdTable = @idTableNew AND Status = 0
+	IF (@countNew = 0)
+		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTableNew
+	ELSE
+		UPDATE dbo.TableFood SET Status = 1 WHERE Id = @idTableNew
 END
 GO
 
 
 CREATE PROC USP_UpdateBillByIdTable
-	@idBill INT
+	@idBill INT, @discount INT
 AS
 BEGIN
-	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1 WHERE Id = @idBill
+	UPDATE Bill SET DateCheckOut = GETDATE(), Discount = @discount, Status = 1 WHERE Id = @idBill
 END
 GO
 
-USP_UpdateBillByIdTable @idBill = 1 
+
+
+CREATE PROC USP_SwitchTable
+@idTable1 INT, @idTable2 INT
+AS
+BEGIN
+	DECLARE @idBill1 INT 
+	DECLARE @idBill2 INT
+	SELECT @idBill1 = Id FROM dbo.Bill WHERE IdTable = @idTable1 AND Status = 0
+	SELECT @idBill2 = Id FROM dbo.Bill WHERE IdTable = @idTable2 AND Status = 0
+	IF (@idBill1 IS NOT NULL) 
+	BEGIN
+		UPDATE dbo.Bill
+		SET IdTable = @idTable2
+		WHERE Id = @idBill1
+	END
+	IF (@idBill2 IS NOT NULL) 
+	BEGIN
+		UPDATE dbo.Bill
+		SET IdTable = @idTable1
+		WHERE Id = @idBill2
+	END
+END
 GO
+
+CREATE TRIGGER UTG_DeleteBillInfo
+ON dbo.BillInfo
+AFTER DELETE
+AS
+BEGIN
+	DECLARE @idBill INT
+	SELECT @idBill = IdBill FROM deleted
+
+	DECLARE @count INT = 0
+	SELECT @count = COUNT(*) FROM dbo.BillInfo
+	WHERE IdBill = @idBill
+
+	IF (@count <= 0)
+		DELETE FROM Bill WHERE Id = @idBill AND Status = 0
+END
+GO
+
+CREATE TRIGGER UTG_DeleteBill
+ON dbo.Bill
+AFTER DELETE
+AS
+BEGIN
+	DECLARE @idTable INT
+	SELECT @idTable = IdTable FROM deleted
+
+	DECLARE @status BIT
+	SELECT @status = Status FROM deleted
+
+	IF (@status = 0)
+		UPDATE dbo.TableFood SET Status = 0 WHERE Id = @idTable
+END
+GO
+
+
+

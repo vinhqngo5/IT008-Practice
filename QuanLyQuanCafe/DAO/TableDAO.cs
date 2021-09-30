@@ -22,7 +22,10 @@ namespace QuanLyQuanCafe.DAO
         }
 
         private TableDAO() { }
-
+        public void SwitchTable(int idTable1, int idTable2)
+        {
+            DataProvider.Instance.ExecuteNonQuery("USP_SwitchTable @idTable1 , @idTable2", new object[] { idTable1, idTable2 });
+        }
         public List<Table> LoadTableList()
         {
             List<Table> tableList = new List<Table>();

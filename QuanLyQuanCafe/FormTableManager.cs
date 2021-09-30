@@ -23,6 +23,8 @@ namespace QuanLyQuanCafe
             LoadTable();
 
             LoadCategories();
+
+            LoadComboBoxTable(cbSwitchTable);
         }
 
         #region Methods
@@ -96,7 +98,12 @@ namespace QuanLyQuanCafe
             
             txbTotalPrice.Text = totalPrice.ToString("C0", _culture);
         }
-
+        
+        void LoadComboBoxTable(ComboBox cb)
+        {
+            cb.DataSource = TableDAO.Instance.LoadTableList();
+            cb.DisplayMember = "Name";
+        }
         #endregion
 
         #region Events
@@ -173,15 +180,29 @@ namespace QuanLyQuanCafe
                 return;
             }
             int idBill = BillDAO.Instance.GetBillIdByTableId(table.Id);
-
-            if (idBill != -1 && MessageBox.Show("Bạn có muốn thanh toán hóa đơn cho " + table.Name + "?", "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            int discount = Convert.ToInt32(nmDisCount.Value);
+            float totalPrice = Convert.ToSingle(txbTotalPrice.Text.Split(' ')[0]);
+            float finalTotalPrice = totalPrice - (totalPrice / 100) * discount;
+            if (idBill != -1 && MessageBox.Show(string.Format("Bạn có muốn thanh toán hóa đơn cho {0}?\nTổng tiền phai thanh toan sau khi giam gia la {1}.000 VNĐ", table.Name, finalTotalPrice), "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                BillDAO.Instance.CheckOut(idBill);
+                BillDAO.Instance.CheckOut(idBill, discount);
                 ShowBill(table.Id);
                 LoadTable();
             }
         }
-        #endregion
+        
 
+        private void btnSwitchTable_Click(object sender, EventArgs e)
+        {
+            int idTable1 = (lsvBill.Tag as Table).Id;
+            int idTable2 = (cbSwitchTable.SelectedItem as Table).Id;
+            if (MessageBox.Show(string.Format("Bạn có thật sự muốn chuyển bàn {0} qua bàn {1}?", idTable1+1, idTable2+1), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+            {
+                TableDAO.Instance.SwitchTable(idTable1, idTable2);
+                LoadTable();
+            }
+                
+        }
+        #endregion
     }
 }
