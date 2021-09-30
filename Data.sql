@@ -82,6 +82,10 @@ ADD Discount INT DEFAULT 0
 SELECT * FROM Bill
 GO
 
+ALTER TABLE Bill
+ADD TotalPrice FLOAT DEFAULT 0
+GO
+
 -- INSERT VALUES
 
 INSERT INTO dbo.Account
@@ -310,10 +314,10 @@ END
 GO
 
 CREATE PROC USP_CheckOut
-	@idBill INT, @discount INT
+	@idBill INT, @discount INT, @totalPrice FLOAT
 AS
 BEGIN
-	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1, Discount = @discount WHERE Id = @idBill
+	UPDATE Bill SET DateCheckOut = GETDATE(), Status = 1, Discount = @discount, TotalPrice = @totalPrice WHERE Id = @idBill
 END
 GO
 
@@ -342,6 +346,19 @@ BEGIN
 		UPDATE Bill SET IdTable = @idSecondTable, DateCheckIn = @dateCheckInSecondBill WHERE Id = @idFirstBill
 		UPDATE Bill SET IdTable = @idFirstTable, DateCheckIn = @dateCheckInFirstBill WHERE Id = @idSecondBill
 	END
+END
+GO
+
+CREATE PROC USP_GetListBillByDate
+	@dateCheckIn DATE, @dateCheckOut DATE
+AS
+BEGIN
+	SELECT Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
+	FROM TableFood 
+	JOIN Bill ON Bill.IdTable = TableFood.Id 
+	JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
+	ORDER BY DateCheckIn, Name
 END
 GO
 
