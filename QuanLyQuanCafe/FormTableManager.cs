@@ -218,7 +218,7 @@ namespace QuanLyQuanCafe
             Table table = lsvBill.Tag as Table;
             if (table == null)
             {
-                MessageBox.Show("Vui lòng chọn bàn cần chuyển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Chọn bàn để chuyển đi chứ!?", "Nhắc hoài z tr", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             LoadSwitchTable(table.Id);
@@ -230,15 +230,10 @@ namespace QuanLyQuanCafe
             Table tableSwitchedTo = cbSwitchTable.SelectedItem as Table;
             if (tableSwitchedTo == null)
             {
-                MessageBox.Show("Vui lòng chọn bàn chuyển tới!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Chưa chọn bàn chuyển tới mà bạn ơi!??", "Éo chuyển được đâu bạn ơi :))", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (BillDAO.Instance.GetBillIdByTableId(table.Id) == -1)
-            {
-                MessageBox.Show("Bàn trống mà chuyển đi đâu nữa bạn!??", "Éo chuyển được đâu bạn ơi :))", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (MessageBox.Show(string.Format("Bạn có muốn chuyển từ {0} qua {1}?", table.Name, tableSwitchedTo.Name), "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show(string.Format("Chuyển từ {0} qua {1} hử?", table.Name, tableSwitchedTo.Name), "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 TableDAO.Instance.SwitchTable(table.Id, tableSwitchedTo.Id);
                 lsvBill.Tag = tableSwitchedTo;
