@@ -191,6 +191,7 @@ namespace QuanLyQuanCafe
             this.cbSwitchTable.Name = "cbSwitchTable";
             this.cbSwitchTable.Size = new System.Drawing.Size(74, 21);
             this.cbSwitchTable.TabIndex = 6;
+            this.cbSwitchTable.Click += new System.EventHandler(this.cbSwitchTable_Click);
             // 
             // btnSwitchTable
             // 
@@ -200,6 +201,7 @@ namespace QuanLyQuanCafe
             this.btnSwitchTable.TabIndex = 5;
             this.btnSwitchTable.Text = "Chuyển bàn";
             this.btnSwitchTable.UseVisualStyleBackColor = true;
+            this.btnSwitchTable.Click += new System.EventHandler(this.btnSwitchTable_Click);
             // 
             // nmDisCount
             // 
