@@ -39,13 +39,32 @@ namespace QuanLyQuanCafe
                     Height = TableDAO.TableHeight,
                     Text = table.Name + "\n" + (table.Status ? "Có người" : "Trống"),
                     BackColor = table.Status ? Color.LightPink : Color.LightGreen,
-                    Tag = table,
-
+                    Tag = table
                 };
 
                 btnTable.Click += BtnTable_Click;
 
                 flpTable.Controls.Add(btnTable);
+            }
+        }
+
+        void ReloadTable()
+        {
+            List<Table> newTableList = TableDAO.Instance.LoadTableList();
+            List<Button> currentTableList = flpTable.Controls.OfType<Button>().ToList();
+            Table selectedTable = lsvBill.Tag as Table;
+
+            foreach (Button button in currentTableList)
+            {
+                Table tableOfButton = button.Tag as Table;
+                Table newTable = newTableList.Find(table => table.Id == tableOfButton.Id);
+                button.Text = newTable.Name + "\n" + (newTable.Status ? "Có người" : "Trống");
+                if (selectedTable.Id == tableOfButton.Id)
+                {
+                    button.BackColor = Color.Yellow;
+                    continue;
+                }
+                button.BackColor = newTable.Status ? Color.LightPink : Color.LightGreen;
             }
         }
 
@@ -102,9 +121,10 @@ namespace QuanLyQuanCafe
 
         private void BtnTable_Click(object sender, EventArgs e)
         {
-            lsvBill.Tag = (sender as Button).Tag;
-            ShowBill(((sender as Button).Tag as Table).Id);
-            lsvBill.Tag = (sender as Button).Tag;
+            Button buttonTable = sender as Button;
+            lsvBill.Tag = buttonTable.Tag;
+            ReloadTable();
+            ShowBill((lsvBill.Tag as Table).Id);
         }
 
         private void TsmiLogout_Click(object sender, EventArgs e)
@@ -160,7 +180,7 @@ namespace QuanLyQuanCafe
             }
 
             ShowBill(table.Id);
-            LoadTable();
+            ReloadTable();
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)
@@ -190,7 +210,7 @@ namespace QuanLyQuanCafe
                 }
                 BillDAO.Instance.CheckOut(idBill, discount);
                 ShowBill(table.Id);
-                LoadTable();
+                ReloadTable();
             }
         }
         private void cbSwitchTable_Click(object sender, EventArgs e)
@@ -207,16 +227,22 @@ namespace QuanLyQuanCafe
         private void btnSwitchTable_Click(object sender, EventArgs e)
         {
             Table table = lsvBill.Tag as Table;
-            if (table == null)
+            Table tableSwitchedTo = cbSwitchTable.SelectedItem as Table;
+            if (tableSwitchedTo == null)
             {
-                MessageBox.Show("Vui lòng chọn bàn cần chuyển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn bàn chuyển tới!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            Table tableSwitchedTo = cbSwitchTable.SelectedItem as Table;
-            if (MessageBox.Show(string.Format("Bạn có muốn chuyển từ {0} qua {1}", table.Name, tableSwitchedTo.Name), "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (BillDAO.Instance.GetBillIdByTableId(table.Id) == -1)
+            {
+                MessageBox.Show("Bàn trống mà chuyển đi đâu nữa bạn!??", "Éo chuyển được đâu bạn ơi :))", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show(string.Format("Bạn có muốn chuyển từ {0} qua {1}?", table.Name, tableSwitchedTo.Name), "Thông báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 TableDAO.Instance.SwitchTable(table.Id, tableSwitchedTo.Id);
-                LoadTable();
+                lsvBill.Tag = tableSwitchedTo;
+                ReloadTable();
             }
         }
 
