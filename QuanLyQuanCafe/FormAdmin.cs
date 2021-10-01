@@ -1,4 +1,5 @@
 ﻿using QuanLyQuanCafe.DAO;
+using QuanLyQuanCafe.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,8 @@ namespace QuanLyQuanCafe
 {
     public partial class FormAdmin : Form
     {
+        private BindingSource foodList = new BindingSource();
+
         public FormAdmin()
         {
             InitializeComponent();
@@ -21,6 +24,14 @@ namespace QuanLyQuanCafe
             LoadDateTimePickerBill();
 
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+
+            dtgvFood.DataSource = foodList;
+
+            LoadCategoryIntoComboBox();
+
+            LoadListFood();
+
+            AddFoodBinding();
         }
 
         #region Methods
@@ -37,6 +48,26 @@ namespace QuanLyQuanCafe
             dtpkToDate.Value = dtpkFromDate.Value.AddMonths(1).AddDays(-1);
         }
 
+        void LoadListFood()
+        {
+            foodList.DataSource = FoodDAO.Instance.GetListFood();
+            dtgvFood.Columns["IdCategory"].Visible = false;
+        }
+
+        void AddFoodBinding()
+        {
+            txbFoodID.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Id"));
+            txbFoodName.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Name"));
+            nmFoodPrice.DataBindings.Add(new Binding("Value", dtgvFood.DataSource, "Price"));
+            cbFoodCategory.DataBindings.Add(new Binding("SelectedIndex", dtgvFood.DataSource, "IdCategory"));
+        }
+
+        void LoadCategoryIntoComboBox()
+        {
+            cbFoodCategory.DataSource = CategoryDAO.Instance.GetListCategories();
+            cbFoodCategory.DisplayMember = "Name";
+        }
+
         #endregion
 
         #region Events
@@ -46,6 +77,12 @@ namespace QuanLyQuanCafe
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
         }
 
+        private void btnShowFood_Click(object sender, EventArgs e)
+        {
+            LoadListFood();
+        }
+
         #endregion
+
     }
 }
