@@ -1,4 +1,5 @@
 ﻿using QuanLyQuanCafe.DAO;
+using QuanLyQuanCafe.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace QuanLyQuanCafe
 {
     public partial class FormAdmin : Form
     {
+        BindingSource foodList = new BindingSource();
         public FormAdmin()
         {
             InitializeComponent();
@@ -25,6 +27,9 @@ namespace QuanLyQuanCafe
             LoadDateTimePickerBill();
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
             LoadListFood();
+            dtgvFood.DataSource = foodList;
+            AddFoodBiding();
+            LoadCategoryIntoCombobox(cbFoodCategory);
         }
         #region Methods
 
@@ -41,7 +46,18 @@ namespace QuanLyQuanCafe
         }
         void LoadListFood()
         {
-            dtgvFood.DataSource = FoodDAO.Instance.GetListFood();
+            foodList.DataSource = FoodDAO.Instance.GetListFood();
+        }
+        void AddFoodBiding()
+        {
+            txbFoodName.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Tên món ăn"));
+            txbFoodID.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "ID"));
+            nmFoodPrice.DataBindings.Add(new Binding("Value", dtgvFood.DataSource, "Giá"));
+        }
+        void LoadCategoryIntoCombobox (ComboBox cb)
+        {
+            cb.DataSource = CategoryDAO.Instance.GetListCategories();
+            cb.DisplayMember = "Name";
         }
         #endregion
 
@@ -51,12 +67,20 @@ namespace QuanLyQuanCafe
         {
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
         }
-
-        #endregion
-
         private void btnShowFood_Click(object sender, EventArgs e)
         {
             LoadListFood();
         }
+
+        private void txbFoodID_TextChanged(object sender, EventArgs e)
+        {
+            int id = (int)dtgvFood.SelectedCells[0].OwningRow.Cells["Loại món ăn"].Value;
+            Category category = CategoryDAO.Instance.GetCategoryById(id);
+            cbFoodCategory.SelectedIndex = category.Id-1;
+        }
+
+        #endregion
+
+
     }
 }

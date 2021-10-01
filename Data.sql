@@ -511,4 +511,15 @@ BEGIN
 	SELECT Id AS ID, Name AS [Tên món ăn], IdCategory AS [Loại món ăn], Price AS [Giá] FROM Food
 END
 GO
-USP_GetListFood
+
+CREATE PROC USP_GetListFoodById
+@id INT
+AS
+BEGIN
+	SELECT * FROM FoodCategory WHERE Id = @id
+END
+GO
+
+
+
+
