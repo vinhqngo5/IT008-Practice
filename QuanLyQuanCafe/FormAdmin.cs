@@ -75,8 +75,7 @@ namespace QuanLyQuanCafe
         private void txbFoodID_TextChanged(object sender, EventArgs e)
         {
             int id = (int)dtgvFood.SelectedCells[0].OwningRow.Cells["Loại món ăn"].Value;
-            Category category = CategoryDAO.Instance.GetCategoryById(id);
-            cbFoodCategory.SelectedIndex = category.Id-1;
+            cbFoodCategory.SelectedIndex = id-1;
         }
 
         #endregion
