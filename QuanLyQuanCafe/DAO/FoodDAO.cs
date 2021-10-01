@@ -26,7 +26,19 @@ namespace QuanLyQuanCafe.DAO
             DataTable data = DataProvider.Instance.ExecuteQuery(query, new object[] { idCategory });
             foreach(DataRow row in data.Rows)
             {
+                listFood.Add(new Food(row));
+            }
+            return listFood;
+        }
+
+        public List<Food> GetListFood()
+        {
+            List<Food> listFood = new List<Food>();
+            DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM Food");
+            foreach (DataRow row in data.Rows)
+            {
                 Food food = new Food(row);
+                food.IdCategory--;
                 listFood.Add(food);
             }
             return listFood;
