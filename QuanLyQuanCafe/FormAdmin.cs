@@ -15,7 +15,7 @@ namespace QuanLyQuanCafe
 {
     public partial class FormAdmin : Form
     {
-        private BindingSource foodList = new BindingSource();
+        private readonly BindingSource _foodList = new BindingSource();
 
         public FormAdmin()
         {
@@ -24,8 +24,6 @@ namespace QuanLyQuanCafe
             LoadDateTimePickerBill();
 
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
-
-            dtgvFood.DataSource = foodList;
 
             LoadCategoryIntoComboBox();
 
@@ -50,7 +48,8 @@ namespace QuanLyQuanCafe
 
         void LoadListFood()
         {
-            foodList.DataSource = FoodDAO.Instance.GetListFood();
+            dtgvFood.DataSource = _foodList;
+            _foodList.DataSource = FoodDAO.Instance.GetListFood();
             dtgvFood.Columns["IdCategory"].Visible = false;
         }
 
