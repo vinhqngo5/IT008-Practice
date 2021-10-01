@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
--- CREATE DATABASE QUANLYQUANCAFE
--- GO
+ --DROP DATABASE QUANLYQUANCAFE
+ --CREATE DATABASE QUANLYQUANCAFE
+ --GO
 
 USE QUANLYQUANCAFE
 GO
@@ -98,13 +98,13 @@ VALUES
 		N'Admin', -- UserName - nvarchar(100)
 		N'Admin', -- DisplayName - nvarchar(100)
 		N'1', -- PassWord - nvarchar(1000)
-		0  -- Type - bit
+		1  -- Type - bit
 	),
 	(
 		N'K9', -- UserName - nvarchar(100)
 		N'RongK9', -- DisplayName - nvarchar(100)
 		N'1', -- PassWord - nvarchar(1000)
-		1  -- Type - bit
+		0  -- Type - bit
 	)
 
 -- Insert for reseed
@@ -478,5 +478,13 @@ BEGIN
 	FROM TableFood
 	JOIN @tableIdBill AS t
 	ON TableFood.Id = t.Id
+END
+GO
+
+CREATE PROC USP_GetAccountByUserName
+@userName nvarchar(100)
+AS
+BEGIN
+	SELECT * FROM Account WHERE UserName = @userName
 END
 GO
