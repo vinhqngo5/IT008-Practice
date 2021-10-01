@@ -15,6 +15,7 @@ namespace QuanLyQuanCafe
     public partial class FormTableManager : Form
     {
         private readonly CultureInfo _culture = new CultureInfo("vi-VN");
+        private Account _loginAccount;
 
         public FormTableManager()
         {
@@ -26,6 +27,18 @@ namespace QuanLyQuanCafe
         }
 
         #region Methods
+
+        void UpdateAccountInfo(string displayName)
+        {
+            tsmiAccountInfo.Text = "Thông tin tài khoản (" + displayName + ")";
+        }
+
+        public void LoadAccount(string userName)
+        {
+            _loginAccount = AccountDAO.Instance.GetAccountByUserName(userName);
+            tsmiAdmin.Enabled = _loginAccount.Type == true;
+            UpdateAccountInfo(_loginAccount.DisplayName);
+        }
 
         void LoadTable()
         {
@@ -134,8 +147,10 @@ namespace QuanLyQuanCafe
 
         private void TsmiAbout_Click(object sender, EventArgs e)
         {
-            FormAccountProfile f = new FormAccountProfile();
-            f.ShowDialog();
+            FormAccountProfile formAccount = new FormAccountProfile();
+            formAccount.LoadAccount(_loginAccount);
+            formAccount.UpdateInfo = UpdateAccountInfo;
+            formAccount.ShowDialog();
         }
 
         private void TsmiAdmin_Click(object sender, EventArgs e)
@@ -143,7 +158,6 @@ namespace QuanLyQuanCafe
             FormAdmin f = new FormAdmin();
             f.ShowDialog();
         }
-
 
         private void cbCategory_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -213,6 +227,7 @@ namespace QuanLyQuanCafe
                 ReloadTable();
             }
         }
+
         private void cbSwitchTable_Click(object sender, EventArgs e)
         {
             Table table = lsvBill.Tag as Table;

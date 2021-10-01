@@ -26,6 +26,7 @@ namespace QuanLyQuanCafe
             {
                 FormTableManager f = new FormTableManager();
                 this.Hide();
+                f.LoadAccount(userName);
                 f.ShowDialog();
                 this.Show();
             }
