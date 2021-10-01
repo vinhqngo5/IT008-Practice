@@ -488,3 +488,27 @@ BEGIN
 	SELECT * FROM Account WHERE UserName = @userName
 END
 GO
+
+CREATE PROC USP_UpdateAccount
+@userName NVARCHAR(100), @displayName NVARCHAR(100), @passWord NVARCHAR(100), @newPassWord NVARCHAR(100)
+AS
+BEGIN
+	DECLARE @isRightPass INT = 0
+	SELECT @isRightPass = COUNT(*) FROM Account WHERE UserName = @userName and PassWord = @passWord
+	IF (@isRightPass>0)
+	BEGIN
+		IF (@newPassWord is NULL OR @newPassWord = '')
+			UPDATE Account SET DisplayName = @displayName WHERE UserName = @userName
+		ELSE
+			UPDATE Account SET DisplayName = @displayName, PassWord = @newPassWord WHERE UserName = @userName
+	END
+END
+GO
+
+CREATE PROC USP_GetListFood
+AS
+BEGIN
+	SELECT Id AS ID, Name AS [Tên món ăn], IdCategory AS [Loại món ăn], Price AS [Giá] FROM Food
+END
+GO
+USP_GetListFood
