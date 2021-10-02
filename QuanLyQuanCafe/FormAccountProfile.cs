@@ -14,52 +14,68 @@ namespace QuanLyQuanCafe
 {
     public partial class FormAccountProfile : Form
     {
-        private Account _loginAccount;
-        public Action<string> UpdateInfo;
 
-        public FormAccountProfile()
+        private Account _loginAccount;
+
+        public Account LoginAccount
         {
-            InitializeComponent();
+            get => _loginAccount;
+            set
+            {
+                _loginAccount = value;
+                ChangeAccount(LoginAccount);
+            }
         }
 
-        #region Methods
-        
-        public void LoadAccount(Account account)
+        public FormAccountProfile(Account loginAccount)
         {
-            _loginAccount = account;
-            txbUserName.Text = _loginAccount.UserName;
-            txbDisplayName.Text = _loginAccount.DisplayName;
+
+            InitializeComponent();
+
+            this.LoginAccount = loginAccount;
+        }
+
+        void ChangeAccount(Account loginAccount)
+        {
+            txbUserName.Text = loginAccount.UserName;
+            txbDisplayName.Text = loginAccount.DisplayName;
+
         }
 
         void UpdateAccountInfo()
         {
-            string userName = txbUserName.Text;
             string displayName = txbDisplayName.Text;
-            string passWord = txbPassWord.Text;
-            string newPass = txbNewPass.Text;
-            string reEnterPass = txbReEnterPass.Text;
+            string password = txbPassWord.Text;
+            string newpass = txbNewPass.Text;
+            string reenterPass = txbReEnterPass.Text;
+            string userName = txbUserName.Text;
 
-            if (newPass != reEnterPass)
+            if (!newpass.Equals(reenterPass))
             {
-                MessageBox.Show("Vui lòng nhập lại mật khẩu đúng với mật khẩu mới!", "Không thành công");
+                MessageBox.Show("Vui lòng nhập lại mật khẩu đúng với mật khẩu mới", "Cập nhật");
             }
             else
             {
-                if (AccountDAO.Instance.UpdateAccount(userName, displayName, passWord, newPass))
+                if (AccountDAO.Instance.UpdateAccount(userName, displayName, password, newpass))
                 {
-                    MessageBox.Show("Cập nhật thành công", "Thành công");
-                    UpdateInfo(displayName);
+                    MessageBox.Show("Cập nhật thành công!", "Cập nhật");
+
+                    _updateAccount?.Invoke(this, new AccountEvent(AccountDAO.Instance.GetAccountByUserName(userName)));
                 }
                 else
                 {
-                    MessageBox.Show("Vui lòng điền đúng mật khẩu", "Không thành công");
+                    MessageBox.Show("Vui lòng nhập đúng mật khẩu", "Cập nhật");
                 }
             }
         }
 
-        #endregion
-
-        #region Events
+        // event and event accessor in c#
+        private event EventHandler<AccountEvent> _updateAccount;
+        public event EventHandler<AccountEvent> UpdateAccount
+        {
+            add { _updateAccount += value; }
+            remove { _updateAccount -= value; }
+        }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -71,6 +87,16 @@ namespace QuanLyQuanCafe
             this.Close();
         }
 
-        #endregion
+        public class AccountEvent : EventArgs
+        {
+            private Account _acc;
+
+            public AccountEvent(Account acc)
+            {
+                this.Acc = acc;
+            }
+
+            public Account Acc { get => _acc; set => _acc = value; }
+        }
     }
 }

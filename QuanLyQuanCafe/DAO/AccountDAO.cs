@@ -29,15 +29,22 @@ namespace QuanLyQuanCafe.DAO
             return result.Rows.Count > 0;
         }
 
+        public bool UpdateAccount(string userName, string displayName, string pass, string newPass)
+        {
+            int result = DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @password , @newPassword", new object[] { userName, displayName, pass, newPass });
+
+            return result > 0;
+        }
         public Account GetAccountByUserName(string userName)
         {
-            DataTable accountData = DataProvider.Instance.ExecuteQuery("USP_GetAccountByUserName @userName", new object[] { userName });
-            return new Account(accountData.Rows[0]);
-        }
+            DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM Account WHERE userName = '" + userName + "'");
 
-        public bool UpdateAccount(string userName, string displayName, string passWord, string newPass)
-        {
-            return DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @passWord , @newPassWord", new object[] { userName, displayName, passWord, newPass }) > 0;
+            foreach (DataRow item in data.Rows)
+            {
+                return new Account(item);
+            }
+
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using QuanLyQuanCafe.DAO;
+using QuanLyQuanCafe.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,17 +25,18 @@ namespace QuanLyQuanCafe
             string passWord = txbPassWord.Text;
             if (Login(userName, passWord))
             {
-                FormTableManager f = new FormTableManager();
+                Account loginAccount = AccountDAO.Instance.GetAccountByUserName(userName);
+
+                FormTableManager f = new FormTableManager(loginAccount);
                 this.Hide();
-                f.LoadAccount(userName);
                 f.ShowDialog();
                 this.Show();
             }
             else
             {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", 
-                                "Đăng nhập không thành công", 
-                                MessageBoxButtons.OK, 
+                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!",
+                                "Đăng nhập không thành công",
+                                MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
             }
         }

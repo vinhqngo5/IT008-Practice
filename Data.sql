@@ -1,4 +1,4 @@
---CREATE DATABASE Temp
+﻿--CREATE DATABASE Temp
 -- USE Temp
 -- DROP DATABASE QUANLYQUANCAFE
 -- CREATE DATABASE QUANLYQUANCAFE
@@ -29,7 +29,7 @@ BEGIN
 	(
 		UserName NVARCHAR(100) PRIMARY KEY,
 		DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Staff',
-		PassWord NVARCHAR(100) NOT NULL DEFAULT 0,
+		PassWord NVARCHAR(1000) NOT NULL DEFAULT 0,
 		Type BIT NOT NULL DEFAULT 0
 		-- 1: admin && 0: staff
 	)
@@ -91,19 +91,19 @@ VALUES
 	(
 		N'staff', -- UserName - nvarchar(100)
 		N'staff', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
+		N'1', -- PassWord - nvarchar(1000)
 		0  -- Type - bit
 	),
 	(
 		N'Admin', -- UserName - nvarchar(100)
 		N'Admin', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
-		0  -- Type - bit
+		N'1', -- PassWord - nvarchar(1000)
+		1  -- Type - bit
 	),
 	(
 		N'K9', -- UserName - nvarchar(100)
 		N'RongK9', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
+		N'1', -- PassWord - nvarchar(1000)
 		1  -- Type - bit
 	)
 
@@ -393,26 +393,6 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_UpdateAccount
-@userName NVARCHAR(100), @displayName NVARCHAR(100), @passWord NVARCHAR(100), @newPassWord NVARCHAR(100)
-AS
-BEGIN
-	DECLARE @isRightPass INT = 0
-	
-	SELECT @isRightPass = COUNT(*) FROM dbo.Account WHERE UserName = @userName AND PassWord = @passWord
-	
-	IF (@isRightPass = 1)
-	BEGIN
-		IF (@newPassWord = NULL OR @newPassWord = '')
-		BEGIN
-			UPDATE dbo.Account SET DisplayName = @displayName WHERE UserName = @userName
-		END		
-		ELSE
-			UPDATE dbo.Account SET DisplayName = @displayName, PassWord = @newPassWord WHERE UserName = @userName
-	END
-END
-GO
-
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -439,15 +419,18 @@ AS
 BEGIN
 	DECLARE @tableIdBill TABLE(Id INT)
 
-	INSERT INTO @tableIdBill SELECT IdBill FROM Deleted
-	SELECT * FROM @tableIdBill
+	INSERT INTO @tableIdBill
+	SELECT IdBill
+	FROM Deleted
+	SELECT *
+	FROM @tableIdBill
 
 	DECLARE @count INT
-	
+
 	SELECT @count = COUNT(*)
-	FROM BillInfo 
-	JOIN @tableIdBill AS t
-	ON t.Id = BillInfo.IdBill
+	FROM BillInfo
+		JOIN @tableIdBill AS t
+		ON t.Id = BillInfo.IdBill
 
 	IF @count = 0  
 		DELETE FROM Bill
@@ -489,14 +472,47 @@ CREATE TRIGGER UTG_DeleteBill
 ON dbo.Bill AFTER DELETE
 AS
 BEGIN
-	DECLARE @tableIdBill TABLE(Id INT, Status INT)
+	DECLARE @tableIdBill TABLE(Id INT,
+		Status INT)
 
-	INSERT INTO @tableIdBill SELECT IdTable, Status FROM Deleted
+	INSERT INTO @tableIdBill
+	SELECT IdTable, Status
+	FROM Deleted
 
 	UPDATE TableFood 
 	SET Status = 0 
 	FROM TableFood
-	JOIN @tableIdBill AS t
-	ON TableFood.Id = t.Id
+		JOIN @tableIdBill AS t
+		ON TableFood.Id = t.Id
+END
+GO
+
+SELECT *
+FROM Account
+WHERE userName = 'admin'
+GO
+
+CREATE PROC USP_UpdateAccount
+@userName NVARCHAR(100),
+@displayName NVARCHAR(100),
+@password NVARCHAR(100),
+@newPassword NVARCHAR(100)
+AS
+BEGIN
+	DECLARE @isRightPass INT
+
+	SELECT @isRightPass = COUNT(*)
+	FROM dbo.Account
+	WHERE UserName = @userName AND PassWord = @password
+
+	IF (@isRightPass = 1) 
+	BEGIN
+		IF (@newPassword = NULL OR @newPassword = '')
+		BEGIN
+			UPDATE dbo.Account SET DisplayName = @DisplayName WHERE UserName = @userName
+		END
+		ELSE
+			UPDATE dbo.Account SET DisplayName=@displayName, PassWord = @newPassword WHERE UserName = @userName
+	END
 END
 GO
