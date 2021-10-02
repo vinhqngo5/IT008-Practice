@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
--- CREATE DATABASE QUANLYQUANCAFE
--- GO
+ --DROP DATABASE QUANLYQUANCAFE
+ --CREATE DATABASE QUANLYQUANCAFE
+ --GO
 
 USE QUANLYQUANCAFE
 GO
@@ -103,8 +103,8 @@ VALUES
 	(
 		N'K9', -- UserName - nvarchar(100)
 		N'RongK9', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
-		1  -- Type - bit
+		N'1', -- PassWord - nvarchar(1000)
+		0  -- Type - bit
 	)
 
 -- Insert for reseed
@@ -413,6 +413,21 @@ BEGIN
 END
 GO
 
+CREATE PROC USP_GetListFood
+AS
+BEGIN
+	SELECT Id AS ID, Name AS [Tên món ăn], IdCategory AS [Loại món ăn], Price AS [Giá] FROM Food
+END
+GO
+
+CREATE PROC USP_GetListCategoryFoodById
+@id INT
+AS
+BEGIN
+	SELECT * FROM FoodCategory WHERE Id = @id
+END
+GO
+
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -500,3 +515,18 @@ BEGIN
 	ON TableFood.Id = t.Id
 END
 GO
+
+CREATE PROC USP_GetAccountByUserName
+@userName nvarchar(100)
+AS
+BEGIN
+	SELECT * FROM Account WHERE UserName = @userName
+END
+GO
+
+
+
+
+
+
+

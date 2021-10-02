@@ -32,7 +32,7 @@ namespace QuanLyQuanCafe.DAO
         public Account GetAccountByUserName(string userName)
         {
             DataTable accountData = DataProvider.Instance.ExecuteQuery("USP_GetAccountByUserName @userName", new object[] { userName });
-            return new Account(accountData.Rows[0]);
+            return accountData == null ? null : (new Account(accountData.Rows[0]));
         }
 
         public bool UpdateAccount(string userName, string displayName, string passWord, string newPass)

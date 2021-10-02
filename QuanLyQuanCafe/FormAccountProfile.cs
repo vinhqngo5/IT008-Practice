@@ -15,15 +15,28 @@ namespace QuanLyQuanCafe
     public partial class FormAccountProfile : Form
     {
         private Account _loginAccount;
-        public Action<string> UpdateInfo;
+        private event EventHandler<AccountEvent> _updateAccount;
+        public event EventHandler<AccountEvent> UpdateAccount
+        {
+            add {_updateAccount += value; }
+            remove { _updateAccount -= value; }
+        }
+
 
         public FormAccountProfile()
         {
             InitializeComponent();
         }
+        #region Method
+        //void UpdateAccount()
+        //{
+        //    string displayName = txbDisplayName.Text;
+        //    string userName = txbUserName.Text;
+        //    string passWord = txbPassWord.Text;
+        //    string newPassWord = txbNewPass.Text;
+        //    string reEnterPass = txbReEnterPass.Text;
 
-        #region Methods
-        
+        //}
         public void LoadAccount(Account account)
         {
             _loginAccount = account;
@@ -48,7 +61,7 @@ namespace QuanLyQuanCafe
                 if (AccountDAO.Instance.UpdateAccount(userName, displayName, passWord, newPass))
                 {
                     MessageBox.Show("Cập nhật thành công", "Thành công");
-                    UpdateInfo(displayName);
+                    _updateAccount?.Invoke(this, new AccountEvent(AccountDAO.Instance.GetAccountByUserName(userName)));
                 }
                 else
                 {
@@ -70,7 +83,18 @@ namespace QuanLyQuanCafe
         {
             this.Close();
         }
-
         #endregion
     }
+    public class AccountEvent : EventArgs
+    {
+        private Account _account;
+
+        public Account Account { get => _account; set => _account = value; }
+
+        public AccountEvent(Account account)
+        {
+            this.Account = account;
+        }
+    }
+
 }

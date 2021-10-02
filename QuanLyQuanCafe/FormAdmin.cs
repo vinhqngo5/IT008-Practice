@@ -20,9 +20,7 @@ namespace QuanLyQuanCafe
         public FormAdmin()
         {
             InitializeComponent();
-
             LoadDateTimePickerBill();
-
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
 
             LoadCategoryIntoComboBox();
@@ -30,8 +28,9 @@ namespace QuanLyQuanCafe
             LoadListFood();
 
             AddFoodBinding();
-        }
 
+        }
+   
         #region Methods
 
         void LoadListBillByDate(DateTime dateCheckIn, DateTime dateCheckOut)
@@ -75,11 +74,11 @@ namespace QuanLyQuanCafe
         {
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
         }
-
         private void btnShowFood_Click(object sender, EventArgs e)
         {
             LoadListFood();
         }
+
 
         #endregion
 

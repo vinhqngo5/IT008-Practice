@@ -34,7 +34,7 @@ namespace QuanLyQuanCafe.DAO
         public List<Food> GetListFood()
         {
             List<Food> listFood = new List<Food>();
-            DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM Food");
+            DataTable data = DataProvider.Instance.ExecuteQuery("USP_GetListFood");
             foreach (DataRow row in data.Rows)
             {
                 Food food = new Food(row);

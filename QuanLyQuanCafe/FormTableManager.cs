@@ -16,11 +16,9 @@ namespace QuanLyQuanCafe
     {
         private readonly CultureInfo _culture = new CultureInfo("vi-VN");
         private Account _loginAccount;
-
         public FormTableManager()
         {
             InitializeComponent();
-
             LoadTable();
 
             LoadCategories();
@@ -149,8 +147,13 @@ namespace QuanLyQuanCafe
         {
             FormAccountProfile formAccount = new FormAccountProfile();
             formAccount.LoadAccount(_loginAccount);
-            formAccount.UpdateInfo = UpdateAccountInfo;
+            formAccount.UpdateAccount += f_UpdateAccount;
             formAccount.ShowDialog();
+        }
+
+        private void f_UpdateAccount(object sender, AccountEvent e)
+        {
+            tsmiAccountInfo.Text =  "Thông tin tài khoản (" + e.Account.DisplayName + ")";
         }
 
         private void TsmiAdmin_Click(object sender, EventArgs e)
