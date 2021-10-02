@@ -16,9 +16,23 @@ namespace QuanLyQuanCafe
     {
         private readonly CultureInfo _culture = new CultureInfo("vi-VN");
 
-        public FormTableManager()
+        private Account _loginAccount;
+
+        public Account LoginAccount
+        {
+            get => _loginAccount;
+            set
+            {
+                _loginAccount = value;
+                ChangeAccount(_loginAccount.Type);
+            }
+        }
+
+        public FormTableManager(Account loginAccount)
         {
             InitializeComponent();
+
+            this.LoginAccount = loginAccount;
 
             LoadTable();
 
@@ -27,6 +41,11 @@ namespace QuanLyQuanCafe
 
         #region Methods
 
+        void ChangeAccount(int type)
+        {
+            tsmiAdmin.Enabled = (type == 1);
+            tsmiAccountInfo.Text += " (" + LoginAccount.DisplayName + ")";
+        }
         void LoadTable()
         {
             flpTable.Controls.Clear();
@@ -134,8 +153,14 @@ namespace QuanLyQuanCafe
 
         private void TsmiAbout_Click(object sender, EventArgs e)
         {
-            FormAccountProfile f = new FormAccountProfile();
+            FormAccountProfile f = new FormAccountProfile(LoginAccount);
+            f.UpdateAccount += F_UpdateAccount; ;
             f.ShowDialog();
+        }
+
+        private void F_UpdateAccount(object sender, AccountEvent e)
+        {
+            tsmiAccountInfo.Text = "Thông tin tài khoản (" + e.Account.DisplayName + ")";
         }
 
         private void TsmiAdmin_Click(object sender, EventArgs e)

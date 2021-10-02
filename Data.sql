@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
--- CREATE DATABASE QUANLYQUANCAFE
--- GO
+DROP DATABASE QUANLYQUANCAFE
+CREATE DATABASE QUANLYQUANCAFE
+GO
 
 USE QUANLYQUANCAFE
 GO
@@ -392,6 +392,26 @@ BEGIN
 	ORDER BY DateCheckIn, Name
 END
 GO
+
+CREATE PROC USP_UpdateAccount
+	@userName NVARCHAR(100),
+	@displayName NVARCHAR(100),
+	@passWord NVARCHAR(1000),
+	@newPassWord NVARCHAR(1000)
+AS
+BEGIN
+	DECLARE @isRightPass INT
+	SELECT @isRightPass = COUNT(*) FROM dbo.Account WHERE UserName = @userName AND PassWord = @passWord
+	IF (@isRightPass = 1)
+	BEGIN
+		IF (@newPassWord is NULL OR @newPassWord = '')
+			UPDATE dbo.Account SET DisplayName = @displayName WHERE UserName = @userName
+		ELSE
+			UPDATE dbo.Account SET DisplayName = @displayName, PassWord = @newPassWord WHERE UserName = @userName
+	END
+END
+GO
+
 
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
