@@ -28,5 +28,16 @@ namespace QuanLyQuanCafe.DAO
             }
             return listCategories;
         }
+        public Category GetCategoryById(int id)
+        {
+            Category category = null;
+            DataTable dataCategories = DataProvider.Instance.ExecuteQuery("SELECT * FROM FoodCategory WHERE Id = " + id);
+            foreach (DataRow row in dataCategories.Rows)
+            {
+                category = new Category(row);
+                return category;
+            }
+            return category;
+        }
     }
 }
