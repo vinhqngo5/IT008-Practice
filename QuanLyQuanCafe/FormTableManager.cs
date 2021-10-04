@@ -178,6 +178,7 @@ namespace QuanLyQuanCafe
                 UpdateFood = UpdateFood,
                 LoginAccount = _loginAccount
             };
+            f.UpdateAccount += UpdateAccount;
             f.ShowDialog();
         }
 
