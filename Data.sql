@@ -475,6 +475,55 @@ AS
 BEGIN
 	SELECT * FROM Food WHERE dbo.fuConvertToUnsign1(Name) LIKE '%' + dbo.fuConvertToUnsign1(@strSerch) + '%'
 END
+GO
+
+CREATE PROC USP_GetListAccount
+AS
+BEGIN
+	SELECT  * FROM Account
+END
+GO
+
+CREATE PROC USP_GetListTypeAccount
+AS
+BEGIN
+	SELECT DISTINCT TYPE FROM Account
+END
+GO
+
+CREATE PROC USP_InsertAccount
+@userName NVARCHAR(100), @displayName NVARCHAR(100), @type BIT
+AS
+BEGIN
+	INSERT  Account(UserName, DisplayName, Type)
+	VALUES (@userName, @displayName, @type)
+END
+GO
+
+CREATE PROC USP_UpdateAccountInAdminForm
+@userName NVARCHAR(100), @displayName NVARCHAR(100), @type BIT
+AS
+BEGIN
+	UPDATE Account SET DisplayName = @displayName, Type = @type WHERE UserName = @userName 
+END
+GO
+
+CREATE PROC USP_DeleteAccount
+@userName NVARCHAR(100)
+AS
+BEGIN
+	DELETE FROM Account WHERE UserName = @userName
+END
+GO
+
+CREATE PROC USP_ResetAccount 
+@userName NVARCHAR(100)
+AS
+BEGIN
+	UPDATE Account SET PassWord = 0 WHERE UserName = @userName
+END
+GO
+select * from Account
 
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
