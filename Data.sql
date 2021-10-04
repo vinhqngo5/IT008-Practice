@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
- --DROP DATABASE QUANLYQUANCAFE
- --CREATE DATABASE QUANLYQUANCAFE
- --GO
+ DROP DATABASE QUANLYQUANCAFE
+ CREATE DATABASE QUANLYQUANCAFE
+ GO
 
 USE QUANLYQUANCAFE
 GO
@@ -98,7 +98,7 @@ VALUES
 		N'Admin', -- UserName - nvarchar(100)
 		N'Admin', -- DisplayName - nvarchar(100)
 		N'1', -- PassWord - nvarchar(100)
-		0  -- Type - bit
+		1  -- Type - bit
 	),
 	(
 		N'K9', -- UserName - nvarchar(100)
@@ -416,7 +416,7 @@ GO
 CREATE PROC USP_GetListFood
 AS
 BEGIN
-	SELECT Id AS ID, Name AS [Tên món ăn], IdCategory AS [Loại món ăn], Price AS [Giá] FROM Food
+	SELECT Id , Name, IdCategory , Price FROM Food
 END
 GO
 
@@ -427,6 +427,88 @@ BEGIN
 	SELECT * FROM FoodCategory WHERE Id = @id
 END
 GO
+
+CREATE PROC USP_InsertFood
+	@name NVARCHAR(100),
+	@idCategory INT,
+	@price FLOAT
+AS
+BEGIN
+	INSERT dbo.Food (Name, IdCategory, Price)
+	VALUES	(@name, @idCategory, @price)
+END
+GO
+
+CREATE PROC USP_UpdateFood
+	@id INT,
+	@name NVARCHAR(100),
+	@idCategory INT,
+	@price FLOAT
+AS
+BEGIN
+	UPDATE dbo.Food
+	SET Name = @name, IdCategory = @idCategory, Price = @price
+	WHERE Id = @id
+END
+GO
+
+CREATE PROC USP_GetListFoodByName
+	@name NVARCHAR(100)
+AS
+BEGIN
+	SELECT * FROM dbo.Food WHERE Name like N'%' + @name + N'%'
+END
+GO
+
+CREATE PROC USP_GetListAccount
+AS
+BEGIN
+	SELECT UserName, DisplayName, Type FROM dbo.Account
+END
+GO
+
+CREATE PROC USP_InsertAccount
+	@userName NVARCHAR(100),
+	@displayName NVARCHAR(100),
+	@type BIT
+AS
+BEGIN
+	INSERT dbo.Account (UserName, DisplayName, Type)
+	VALUES (@userName, @displayName, @type)
+END
+GO
+
+CREATE PROC USP_EditAccount
+	@userName NVARCHAR(100),
+	@displayName NVARCHAR(100),
+	@type BIT
+AS
+BEGIN
+	UPDATE dbo.Account 
+	SET DisplayName = @displayName, Type = @type
+	WHERE UserName = @userName
+END
+GO
+
+CREATE PROC USP_DeleteAccount
+	@userName NVARCHAR(100)
+AS
+BEGIN
+	DELETE dbo.Account 
+	WHERE UserName = @userName
+END
+GO
+
+CREATE PROC USP_ResetPassWord
+	@userName NVARCHAR(100)
+AS
+BEGIN
+	UPDATE dbo.Account 
+	SET PassWord = N'0'
+	WHERE UserName = @userName
+END
+GO
+
 
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
@@ -516,13 +598,6 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_GetAccountByUserName
-@userName nvarchar(100)
-AS
-BEGIN
-	SELECT * FROM Account WHERE UserName = @userName
-END
-GO
 
 
 
