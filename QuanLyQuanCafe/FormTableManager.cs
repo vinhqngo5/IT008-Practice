@@ -122,14 +122,15 @@ namespace QuanLyQuanCafe
 
             //this will settings for this thread
             //Thread.CurrentThread.CurrentCulture = _culture;
-            
+
             txbTotalPrice.Text = totalPrice.ToString("C0", _culture);
         }
 
         void UpdateFood()
         {
             Category selectedCategory = cbCategory.SelectedItem as Category;
-            LoadFoodByCategoryId(selectedCategory.Id);
+            if (selectedCategory != null)
+                LoadFoodByCategoryId(selectedCategory.Id);
             if (lsvBill.Tag != null)
             {
                 ShowBill((lsvBill.Tag as Table).Id);
@@ -168,7 +169,7 @@ namespace QuanLyQuanCafe
 
         private void UpdateAccount(object sender, AccountEvent e)
         {
-            tsmiAccountInfo.Text =  "Thông tin tài khoản (" + e.Account.DisplayName + ")";
+            tsmiAccountInfo.Text = "Thông tin tài khoản (" + e.Account.DisplayName + ")";
         }
 
         private void TsmiAdmin_Click(object sender, EventArgs e)

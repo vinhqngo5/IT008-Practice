@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
- --DROP DATABASE QUANLYQUANCAFE
- --CREATE DATABASE QUANLYQUANCAFE
- --GO
+-- DROP DATABASE QUANLYQUANCAFE
+-- CREATE DATABASE QUANLYQUANCAFE
+-- GO
 
 USE QUANLYQUANCAFE
 GO
@@ -400,13 +400,18 @@ END
 GO
 
 CREATE PROC USP_UpdateAccount
-@userName NVARCHAR(100), @displayName NVARCHAR(100), @passWord NVARCHAR(100), @newPassWord NVARCHAR(100)
+	@userName NVARCHAR(100),
+	@displayName NVARCHAR(100),
+	@passWord NVARCHAR(100),
+	@newPassWord NVARCHAR(100)
 AS
 BEGIN
 	DECLARE @isRightPass INT = 0
-	
-	SELECT @isRightPass = COUNT(*) FROM dbo.Account WHERE UserName = @userName AND PassWord = @passWord
-	
+
+	SELECT @isRightPass = COUNT(*)
+	FROM dbo.Account
+	WHERE UserName = @userName AND PassWord = @passWord
+
 	IF (@isRightPass = 1)
 	BEGIN
 		IF (@newPassWord = NULL OR @newPassWord = '')
@@ -422,49 +427,62 @@ GO
 CREATE PROC USP_GetListFood
 AS
 BEGIN
-	SELECT Id, Name, IdCategory, Price FROM Food WHERE Status = 1
+	SELECT Id, Name, IdCategory, Price
+	FROM Food
+	WHERE Status = 1
 END
 GO
 
 CREATE PROC USP_GetListCategoryFoodById
-@id INT
+	@id INT
 AS
 BEGIN
-	SELECT * FROM FoodCategory WHERE Id = @id
+	SELECT *
+	FROM FoodCategory
+	WHERE Id = @id
 END
 GO
 
 CREATE PROC USP_InsertFood
-	@name NVARCHAR(100), @idCategory INT, @price FLOAT
+	@name NVARCHAR(100),
+	@idCategory INT,
+	@price FLOAT
 AS
 BEGIN
 	DECLARE @idFood INT
 
-	SELECT @idFood = Id FROM Food WHERE Name = @name AND IdCategory = @idCategory
+	SELECT @idFood = Id
+	FROM Food
+	WHERE Name = @name AND IdCategory = @idCategory
 
 	IF @idFood IS NULL
 		INSERT	dbo.Food
-			( Name , IdCategory , Price )
-		VALUES
-			( @name , @idCategory , @price  )
+		( Name , IdCategory , Price )
+	VALUES
+		( @name , @idCategory , @price  )
 	ELSE
 		UPDATE Food SET Status = 1, Price = @price WHERE Id = @idFood
 END
 GO
 
 CREATE PROC USP_UpdateFood
-	@id INT, @name NVARCHAR(100), @idCategory INT, @price FLOAT
+	@id INT,
+	@name NVARCHAR(100),
+	@idCategory INT,
+	@price FLOAT
 AS
 BEGIN
 	DECLARE @idFood INT
 
-	SELECT @idFood = Id FROM Food WHERE Name = @name AND IdCategory = @idCategory
+	SELECT @idFood = Id
+	FROM Food
+	WHERE Name = @name AND IdCategory = @idCategory
 	IF @idFood IS NULL
 		UPDATE Food SET Name = @name, IdCategory = @idCategory, Price = @price WHERE Id = @id
 	ELSE
 	BEGIN
 		UPDATE Food SET Status = 1, Price = @price WHERE Id = @idFood
-		DELETE FROM Food WHERE Id = @id
+		UPDATE Food SET Status = 0, Price = @price WHERE Id = @id
 	END
 END
 GO
@@ -474,11 +492,11 @@ CREATE PROC USP_DeleteFood
 AS
 BEGIN
 	UPDATE Food SET Status = 0 WHERE Id = @id
-	
+
 	DECLARE @idBill INT
-	
-	SELECT @idBill = Bill.Id 
-	FROM Bill, BillInfo 
+
+	SELECT @idBill = Bill.Id
+	FROM Bill, BillInfo
 	WHERE BillInfo.IdFood = @id AND BillInfo.IdBill = Bill.Id AND Bill.Status = 0
 
 	IF @idBill IS NOT NULL
@@ -490,27 +508,41 @@ CREATE PROC USP_SearchFood
 	@name NVARCHAR(100)
 AS
 BEGIN
-	SELECT * 
-	FROM dbo.Food 
+	SELECT *
+	FROM dbo.Food
 	WHERE dbo.fuConvertToUnsign1(name) LIKE '%' + dbo.fuConvertToUnsign1(@name) + '%'
 END
 GO
 
 CREATE PROC USP_GetListAccount
-AS SELECT UserName, DisplayName, Type FROM dbo.Account
+AS
+SELECT UserName, DisplayName, Type
+FROM dbo.Account
 GO
 
 CREATE PROC USP_InsertAccount
-	@userName NVARCHAR(100), @displayName NVARCHAR(100), @type BIT
+	@userName NVARCHAR(100),
+	@displayName NVARCHAR(100),
+	@type BIT
 AS
 BEGIN
-	INSERT dbo.Account (Username, DisplayName, Type) 
-	VALUES ( @userName, @displayName, @type )
+	DECLARE @isExist NVARCHAR(100)
+	SELECT @isExist = UserName
+	FROM Account
+	WHERE UserName = @userName
+
+	IF @isExist IS NULL
+		INSERT dbo.Account
+		(Username, DisplayName, Type)
+	VALUES
+		( @userName, @displayName, @type )
 END
 GO
 
 CREATE PROC USP_EditAccount
-	@userName NVARCHAR(100), @displayName NVARCHAR(100), @type BIT
+	@userName NVARCHAR(100),
+	@displayName NVARCHAR(100),
+	@type BIT
 AS
 BEGIN
 	UPDATE dbo.Account 
@@ -561,15 +593,18 @@ AS
 BEGIN
 	DECLARE @tableIdBill TABLE(Id INT)
 
-	INSERT INTO @tableIdBill SELECT IdBill FROM Deleted
-	SELECT * FROM @tableIdBill
+	INSERT INTO @tableIdBill
+	SELECT IdBill
+	FROM Deleted
+	SELECT *
+	FROM @tableIdBill
 
 	DECLARE @count INT
-	
+
 	SELECT @count = COUNT(*)
-	FROM BillInfo 
-	JOIN @tableIdBill AS t
-	ON t.Id = BillInfo.IdBill
+	FROM BillInfo
+		JOIN @tableIdBill AS t
+		ON t.Id = BillInfo.IdBill
 
 	IF @count = 0  
 		DELETE FROM Bill
@@ -611,15 +646,18 @@ CREATE TRIGGER UTG_DeleteBill
 ON dbo.Bill AFTER DELETE
 AS
 BEGIN
-	DECLARE @tableIdBill TABLE(Id INT, Status INT)
+	DECLARE @tableIdBill TABLE(Id INT,
+		Status INT)
 
-	INSERT INTO @tableIdBill SELECT IdTable, Status FROM Deleted
+	INSERT INTO @tableIdBill
+	SELECT IdTable, Status
+	FROM Deleted
 
 	UPDATE TableFood 
 	SET Status = 0 
 	FROM TableFood
-	JOIN @tableIdBill AS t
-	ON TableFood.Id = t.Id
+		JOIN @tableIdBill AS t
+		ON TableFood.Id = t.Id
 END
 GO
 
@@ -627,34 +665,39 @@ GO
 CREATE FUNCTION [dbo].[fuConvertToUnsign1] ( @strInput NVARCHAR(4000) ) 
 RETURNS NVARCHAR(4000) 
 AS 
-BEGIN 
-	IF @strInput IS NULL RETURN @strInput 
-	IF @strInput = '' RETURN @strInput 
-	DECLARE @RT NVARCHAR(4000) 
-	DECLARE @SIGN_CHARS NCHAR(136) 
-	DECLARE @UNSIGN_CHARS NCHAR (136) 
-	SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệế ìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵý ĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍ ÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ' +NCHAR(272)+ NCHAR(208) 
-	SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeee iiiiiooooooooooooooouuuuuuuuuuyyyyy AADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIII OOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD' 
-	DECLARE @COUNTER int 
-	DECLARE @COUNTER1 int 
-	SET @COUNTER = 1 
+BEGIN
+	IF @strInput IS NULL RETURN @strInput
+	IF @strInput = '' RETURN @strInput
+	DECLARE @RT NVARCHAR(4000)
+	DECLARE @SIGN_CHARS NCHAR(136)
+	DECLARE @UNSIGN_CHARS NCHAR (136)
+	SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệế ìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵý ĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍ ÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ' +NCHAR(272)+ NCHAR(208)
+	SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeee iiiiiooooooooooooooouuuuuuuuuuyyyyy AADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIII OOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
+	DECLARE @COUNTER int
+	DECLARE @COUNTER1 int
+	SET @COUNTER = 1
 	WHILE (@COUNTER <=LEN(@strInput)) 
-	BEGIN 
-		SET @COUNTER1 = 1 
+	BEGIN
+		SET @COUNTER1 = 1
 		WHILE (@COUNTER1 <=LEN(@SIGN_CHARS)+1) 
-			BEGIN 
-				IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@strInput,@COUNTER ,1) ) 
-					BEGIN 
-						IF @COUNTER=1 
+			BEGIN
+			IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@strInput,@COUNTER ,1) ) 
+					BEGIN
+				IF @COUNTER=1 
 							SET @strInput = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)-1) 
 						ELSE 
-							SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER) 
-						BREAK 
-					END 
-				SET @COUNTER1 = @COUNTER1 +1 
-			END 
-		SET @COUNTER = @COUNTER +1 
-	END 
-	SET @strInput = replace(@strInput,' ','-') 
-	RETURN @strInput 
+							SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER)
+				BREAK
+			END
+			SET @COUNTER1 = @COUNTER1 +1
+		END
+		SET @COUNTER = @COUNTER +1
+	END
+	SET @strInput = replace(@strInput,' ','-')
+	RETURN @strInput
 END
+
+
+SELECT *
+FROM dbo.Account
+UPDATE dbo.Account SET Type = 1 WHERE UserName= N'admin'
