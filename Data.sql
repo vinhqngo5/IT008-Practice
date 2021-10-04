@@ -504,8 +504,12 @@ CREATE PROC USP_InsertAccount
 	@userName NVARCHAR(100), @displayName NVARCHAR(100), @type BIT
 AS
 BEGIN
-	INSERT dbo.Account (Username, DisplayName, Type) 
-	VALUES ( @userName, @displayName, @type )
+	DECLARE @isExist NVARCHAR(100)
+	SELECT @isExist = UserName FROM Account WHERE UserName = @userName
+
+	IF @isExist IS NULL
+		INSERT dbo.Account (Username, DisplayName, Type) 
+		VALUES ( @userName, @displayName, @type )
 END
 GO
 
