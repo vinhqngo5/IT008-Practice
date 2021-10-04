@@ -16,7 +16,14 @@ namespace QuanLyQuanCafe
     public partial class FormAdmin : Form
     {
         private readonly BindingSource _foodList = new BindingSource();
-
+        private readonly BindingSource _accountList = new BindingSource();
+        private Account _loginAccount;
+        private event EventHandler<AccountEvent> _updateAccount;
+        public event EventHandler<AccountEvent> UpdateAccount
+        {
+            add { _updateAccount += value; }
+            remove { _updateAccount -= value; }
+        }
         public FormAdmin()
         {
             InitializeComponent();
@@ -29,10 +36,16 @@ namespace QuanLyQuanCafe
 
             AddFoodBinding();
 
+            LoadListAccount();
+            LoadAccountTypeIntoComboBox();
+            AddAccountBinding();
         }
    
         #region Methods
-
+        public void LoadAccount(Account account)
+        {
+            _loginAccount = account;
+        }
         void LoadListBillByDate(DateTime dateCheckIn, DateTime dateCheckOut)
         {
             dtgvBill.DataSource = BillDAO.Instance.GetListBillByDate(dateCheckIn, dateCheckOut);
@@ -53,6 +66,13 @@ namespace QuanLyQuanCafe
             dtgvFood.Columns["Status"].Visible = false;
         }
 
+        void LoadListAccount()
+        {
+            dtgvAccount.DataSource = _accountList;
+            _accountList.DataSource = AccountDAO.Instance.GetListAccount();
+            dtgvAccount.Columns["PassWord"].Visible = false;
+        }
+
         void AddFoodBinding()
         {
             txbFoodID.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Id",true, DataSourceUpdateMode.Never));
@@ -60,11 +80,22 @@ namespace QuanLyQuanCafe
             nmFoodPrice.DataBindings.Add(new Binding("Value", dtgvFood.DataSource, "Price", true, DataSourceUpdateMode.Never));
             cbFoodCategory.DataBindings.Add(new Binding("SelectedIndex", dtgvFood.DataSource, "IdCategory", true, DataSourceUpdateMode.Never));
         }
+        void AddAccountBinding()
+        {
+            txbUserName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "UserName", true, DataSourceUpdateMode.Never));
+            txbDisplayName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "DisplayName", true, DataSourceUpdateMode.Never));
+            cbAccountType.DataBindings.Add(new Binding("SelectedIndex",dtgvAccount.DataSource,"Type", true, DataSourceUpdateMode.Never));
+        }
 
         void LoadCategoryIntoComboBox()
         {
             cbFoodCategory.DataSource = CategoryDAO.Instance.GetListCategories();
             cbFoodCategory.DisplayMember = "Name";
+        }
+        void LoadAccountTypeIntoComboBox()
+        {
+            cbAccountType.DataSource = AccountDAO.Instance.GetListTypeAccount();
+            cbAccountType.DisplayMember = "Type";
         }
 
         void SerchFoodByString (string strSerch)
@@ -138,6 +169,10 @@ namespace QuanLyQuanCafe
         {
             SerchFoodByString(Convert.ToString(txbSearchFoodName.Text));
         }
+        private void btnShowAccount_Click(object sender, EventArgs e)
+        {
+            LoadListAccount();
+        }
 
         private event EventHandler _insertFood;
         public event EventHandler InsertFood
@@ -159,9 +194,64 @@ namespace QuanLyQuanCafe
         }
 
 
-
         #endregion
 
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text;
+            string displayName = txbDisplayName.Text;
+            bool type = Convert.ToBoolean(cbAccountType.SelectedIndex);
+            if (AccountDAO.Instance.GetAccountByUserName(userName)!=null)
+            {
+                MessageBox.Show("Tên tài khoản đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }    
+            if (AccountDAO.Instance.InsertAccount(userName, displayName, type))
+            {
+                MessageBox.Show("Thêm tài khoản thành công", "Thông báo", MessageBoxButtons.OK);
+            }
+            else
+                MessageBox.Show("Có lỗi khi thêm tài khoản", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            LoadListAccount();
+        }
+        private void btnEditAccount_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text;
+            string displayName = txbDisplayName.Text;
+            bool type = Convert.ToBoolean(cbAccountType.SelectedIndex);
+            if (AccountDAO.Instance.UpdateAccountInAdminForm(userName, displayName, type))
+            {
+                MessageBox.Show("Sửa tài khoản thành công", "Thông báo", MessageBoxButtons.OK);
+                if (_loginAccount.UserName.Equals(userName))
+                    _updateAccount?.Invoke(this, new AccountEvent(AccountDAO.Instance.GetAccountByUserName(userName)));
+            }
+            else
+                MessageBox.Show("Có lỗi khi sửa tài khoản", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            LoadListAccount();
+        }
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text;
+            if (userName.Equals(_loginAccount.UserName))
+            {
+                MessageBox.Show("Tài khoản bạn xoá là tài khoản đang sử dụng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(AccountDAO.Instance.DeleteAccount(userName))
+                MessageBox.Show("Xoá tài khoản thành công", "Thông báo", MessageBoxButtons.OK);
+            else
+                MessageBox.Show("Có lỗi khi xoá tài khoản", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            LoadListAccount();
+        }
 
+        private void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text; ;
+            if (AccountDAO.Instance.ResetAccount(userName))
+                MessageBox.Show("Đặt lại mật khẩu thành công", "Thông báo", MessageBoxButtons.OK);
+            else
+                MessageBox.Show("Có lỗi khi đặt lại mật khẩu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            LoadListAccount();
+        }
     }
 }

@@ -20,7 +20,6 @@ namespace QuanLyQuanCafe.DTO
             this.PassWord = Convert.ToString(row["PassWord"]);
             this.DisplayName = Convert.ToString(row["DisplayName"]);
             this.Type = Convert.ToBoolean(row["Type"]);
-
         }
 
         public string UserName { get => _userName; set => _userName = value; }

@@ -162,7 +162,15 @@ namespace QuanLyQuanCafe
             f.InsertFood += F_InsertFood;
             f.UpdateFood += F_UpdateFood;
             f.DeleteFood += F_DeleteFood;
+            f.LoadAccount(_loginAccount);
+            f.UpdateAccount += F_UpdateAccount;
             f.ShowDialog();
+        }
+
+        private void F_UpdateAccount(object sender, AccountEvent e)
+        {
+            tsmiAccountInfo.Text = "Thông tin tài khoản (" + e.Account.DisplayName + ")";
+            tsmiAdmin.Enabled = e.Account.Type== true;
         }
 
         private void F_UpdateFood(object sender, EventArgs e)
