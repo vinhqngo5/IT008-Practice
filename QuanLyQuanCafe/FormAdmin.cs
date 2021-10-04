@@ -35,6 +35,13 @@ namespace QuanLyQuanCafe
 
         #region Methods
 
+        List<Food> SearchFoodByName(string name)
+        {
+            List<Food> listFood = FoodDAO.Instance.SearchFoodByName(name);
+
+            return listFood;
+        }
+
         void LoadListBillByDate(DateTime dateCheckIn, DateTime dateCheckOut)
         {
             dtgvBill.DataSource = BillDAO.Instance.GetListBillByDate(dateCheckIn, dateCheckOut);
@@ -154,6 +161,11 @@ namespace QuanLyQuanCafe
         {
             add { _updateFood += value; }
             remove { _updateFood -= value; }
+        }
+
+        private void btnSearchFood_Click(object sender, EventArgs e)
+        {
+            _foodList.DataSource = SearchFoodByName(txbSearchFoodName.Text);
         }
 
         #endregion
