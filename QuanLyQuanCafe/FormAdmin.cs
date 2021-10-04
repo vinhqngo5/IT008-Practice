@@ -67,6 +67,14 @@ namespace QuanLyQuanCafe
             cbFoodCategory.DisplayMember = "Name";
         }
 
+        void SerchFoodByString (string strSerch)
+        {
+            dtgvFood.DataSource = _foodList;
+            _foodList.DataSource = FoodDAO.Instance.SerchFoodByString(strSerch);
+            dtgvFood.Columns["IdCategory"].Visible = false;
+            dtgvFood.Columns["Status"].Visible = false;
+        }
+
         #endregion
 
         #region Events
@@ -79,20 +87,16 @@ namespace QuanLyQuanCafe
         {
             LoadListFood();
         }
-
-
-        #endregion
-
         private void btnAddFood_Click(object sender, EventArgs e)
         {
             string name = txbFoodName.Text;
             int idCategory = cbFoodCategory.SelectedIndex + 1;
-            float price = Convert.ToSingle(nmFoodPrice.Value);    
+            float price = Convert.ToSingle(nmFoodPrice.Value);
             if (FoodDAO.Instance.InsertFood(name, idCategory, price))
             {
                 MessageBox.Show("Thêm thức ăn thành công", "Thông báo", MessageBoxButtons.OK);
                 _insertFood?.Invoke(this, new EventArgs());
-            }    
+            }
             else
                 MessageBox.Show("Có lỗi khi thêm thức ăn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             LoadListFood();
@@ -108,7 +112,7 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Sửa thức ăn thành công", "Thông báo", MessageBoxButtons.OK);
                 _updateFood?.Invoke(this, new EventArgs());
-            }    
+            }
             else
                 MessageBox.Show("Có lỗi khi sửa thức ăn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             LoadListFood();
@@ -124,12 +128,17 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Xoá ăn thành công", "Thông báo", MessageBoxButtons.OK);
                 _deleteFood?.Invoke(this, new EventArgs());
-            }    
-                
+            }
+
             else
                 MessageBox.Show("Có lỗi khi xoá thức ăn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             LoadListFood();
         }
+        private void btnSearchFood_Click(object sender, EventArgs e)
+        {
+            SerchFoodByString(Convert.ToString(txbSearchFoodName.Text));
+        }
+
         private event EventHandler _insertFood;
         public event EventHandler InsertFood
         {
@@ -148,6 +157,10 @@ namespace QuanLyQuanCafe
             add { _deleteFood += value; }
             remove { _deleteFood -= value; }
         }
+
+
+
+        #endregion
 
 
     }
