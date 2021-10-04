@@ -62,6 +62,7 @@ namespace QuanLyQuanCafe
                 {
                     MessageBox.Show("Cập nhật thành công", "Thành công");
                     _updateAccount?.Invoke(this, new AccountEvent(AccountDAO.Instance.GetAccountByUserName(userName)));
+                    this.Close();
                 }
                 else
                 {

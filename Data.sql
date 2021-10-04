@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
--- USE Temp
+ --USE Temp
  --DROP DATABASE QUANLYQUANCAFE
- --CREATE DATABASE QUANLYQUANCAFE
- --GO
+ CREATE DATABASE QUANLYQUANCAFE
+ GO
 
 USE QUANLYQUANCAFE
 GO
@@ -45,7 +45,8 @@ BEGIN
 		Id INT IDENTITY(1, 1) PRIMARY KEY,
 		Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
 		IdCategory INT NOT NULL,
-		Price FLOAT NOT NULL DEFAULT 0
+		Price FLOAT NOT NULL DEFAULT 0,
+		Status BIT NOT NULL DEFAULT 1,
 
 			FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
 	)
@@ -98,7 +99,7 @@ VALUES
 		N'Admin', -- UserName - nvarchar(100)
 		N'Admin', -- DisplayName - nvarchar(100)
 		N'1', -- PassWord - nvarchar(100)
-		0  -- Type - bit
+		1  -- Type - bit
 	),
 	(
 		N'K9', -- UserName - nvarchar(100)
@@ -332,7 +333,7 @@ AS
 BEGIN
 	SELECT *
 	FROM dbo.Food
-	WHERE @idCategory = IdCategory
+	WHERE @idCategory = IdCategory and Status = 1
 END
 GO
 
@@ -416,7 +417,7 @@ GO
 CREATE PROC USP_GetListFood
 AS
 BEGIN
-	SELECT Id AS ID, Name AS [Tên món ăn], IdCategory AS [Loại món ăn], Price AS [Giá] FROM Food
+	SELECT * FROM Food WHERE Status = 
 END
 GO
 
@@ -425,6 +426,46 @@ CREATE PROC USP_GetListCategoryFoodById
 AS
 BEGIN
 	SELECT * FROM FoodCategory WHERE Id = @id
+END
+GO
+
+CREATE PROC USP_IsValidFood
+@name NVARCHAR(100)
+AS
+BEGIN
+	SELECT * FROM Food WHERE Name = @name
+END
+GO
+
+CREATE PROC USP_InserFood
+@name NVARCHAR(100), @idCategory INT, @price FLOAT
+AS
+BEGIN
+	DECLARE @idFood INT = -1
+	SELECT @idFood = Id FROM Food WHERE Name = @name
+	IF (@idFood>0)
+		UPDATE Food SET Status = 1, Price = @price WHERE Id = @idFood
+	ELSE
+		INSERT Food (Name, IdCategory, Price)
+	VALUES (@name,@idCategory,@price)
+END
+GO
+
+CREATE PROC USP_UpdateFood
+@id INT, @name NVARCHAR(100), @idCategory INT, @price FLOAT
+AS
+BEGIN
+	UPDATE Food
+	SET Name = @name, IdCategory = IdCategory, Price = @price WHERE Id = @id
+END
+GO
+
+CREATE PROC USP_DeleteFood
+@id INT
+AS
+BEGIN
+	UPDATE Food SET Status = 0 WHERE Id = @id
+	DELETE FROM BillInfo WHERE IdFood = @id AND IdBill IN (SELECT Id FROM Bill WHERE Status = 0)
 END
 GO
 
@@ -515,15 +556,6 @@ BEGIN
 	ON TableFood.Id = t.Id
 END
 GO
-
-CREATE PROC USP_GetAccountByUserName
-@userName nvarchar(100)
-AS
-BEGIN
-	SELECT * FROM Account WHERE UserName = @userName
-END
-GO
-
 
 
 

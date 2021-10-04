@@ -159,7 +159,31 @@ namespace QuanLyQuanCafe
         private void TsmiAdmin_Click(object sender, EventArgs e)
         {
             FormAdmin f = new FormAdmin();
+            f.InsertFood += F_InsertFood;
+            f.UpdateFood += F_UpdateFood;
+            f.DeleteFood += F_DeleteFood;
             f.ShowDialog();
+        }
+
+        private void F_UpdateFood(object sender, EventArgs e)
+        {
+            if (cbCategory.SelectedItem != null) 
+                LoadFoodByCategoryId((cbCategory.SelectedItem as Category).Id);
+            ShowBill(((lsvBill).Tag as Table).Id);
+        }
+
+        private void F_DeleteFood(object sender, EventArgs e)
+        {
+            ReloadTable();
+            if (cbCategory.SelectedItem != null) 
+                LoadFoodByCategoryId((cbCategory.SelectedItem as Category).Id);
+            ShowBill(((lsvBill).Tag as Table).Id);
+        }
+
+        private void F_InsertFood(object sender, EventArgs e)
+        {
+            if (cbCategory.SelectedItem != null) 
+                LoadFoodByCategoryId((cbCategory.SelectedItem as Category).Id);
         }
 
         private void cbCategory_SelectionChangeCommitted(object sender, EventArgs e)
