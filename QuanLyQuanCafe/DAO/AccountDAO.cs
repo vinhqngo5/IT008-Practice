@@ -39,5 +39,20 @@ namespace QuanLyQuanCafe.DAO
         {
             return DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @passWord , @newPassWord", new object[] { userName, displayName, passWord, newPass }) > 0;
         }
+
+        public DataTable GetListAccount()
+        {
+            string query = "SELECT UserName, DisplayName, Type FROM dbo.Account";
+
+            return DataProvider.Instance.ExecuteQuery(query);
+        }
+
+        public DataTable GetListAccountType()
+        {
+            string query = "SELECT DISTINCT Type FROM dbo.Account";
+
+            return DataProvider.Instance.ExecuteQuery(query);
+        }
+
     }
 }

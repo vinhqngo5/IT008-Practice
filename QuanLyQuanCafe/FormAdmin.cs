@@ -17,23 +17,51 @@ namespace QuanLyQuanCafe
     {
         private readonly BindingSource _foodList = new BindingSource();
 
+        BindingSource _accountList = new BindingSource();
+
         public FormAdmin()
         {
             InitializeComponent();
 
+            Load();
+        }
+
+        #region Methods
+
+        void Load()
+        {
             LoadDateTimePickerBill();
 
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
 
             LoadCategoryIntoComboBox();
 
+            LoadAccountTypeIntoComboBox();
+
             LoadListFood();
+
+            LoadAccount();
 
             AddFoodBinding();
 
+            AddAccountBinding();
         }
 
-        #region Methods
+        void AddAccountBinding()
+        {
+            txbUserName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "UserName", true, DataSourceUpdateMode.Never));
+
+            txbDisplayName.DataBindings.Add(new Binding("Text", dtgvAccount.DataSource, "DisplayName", true, DataSourceUpdateMode.Never));
+
+            cbAccountType.DataBindings.Add(new Binding("SelectedIndex", dtgvAccount.DataSource, "Type", true, DataSourceUpdateMode.Never));
+        }
+
+        void LoadAccount()
+        {
+            _accountList.DataSource = AccountDAO.Instance.GetListAccount();
+
+            dtgvAccount.DataSource = _accountList;
+        }
 
         List<Food> SearchFoodByName(string name)
         {
@@ -73,6 +101,12 @@ namespace QuanLyQuanCafe
         {
             cbFoodCategory.DataSource = CategoryDAO.Instance.GetListCategories();
             cbFoodCategory.DisplayMember = "Name";
+        }
+
+        void LoadAccountTypeIntoComboBox()
+        {
+            cbAccountType.DataSource = AccountDAO.Instance.GetListAccountType();
+            cbAccountType.DisplayMember = "Type";
         }
 
         #endregion
@@ -169,5 +203,10 @@ namespace QuanLyQuanCafe
         }
 
         #endregion
+
+        private void btnShowAccount_Click(object sender, EventArgs e)
+        {
+            LoadAccount();
+        }
     }
 }
