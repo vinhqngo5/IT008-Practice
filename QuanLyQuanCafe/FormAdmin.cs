@@ -54,10 +54,10 @@ namespace QuanLyQuanCafe
 
         void AddFoodBinding()
         {
-            txbFoodID.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Id"));
-            txbFoodName.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Name"));
-            nmFoodPrice.DataBindings.Add(new Binding("Value", dtgvFood.DataSource, "Price"));
-            cbFoodCategory.DataBindings.Add(new Binding("SelectedIndex", dtgvFood.DataSource, "IdCategory"));
+            txbFoodID.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Id", true, DataSourceUpdateMode.Never));
+            txbFoodName.DataBindings.Add(new Binding("Text", dtgvFood.DataSource, "Name", true, DataSourceUpdateMode.Never));
+            nmFoodPrice.DataBindings.Add(new Binding("Value", dtgvFood.DataSource, "Price", true, DataSourceUpdateMode.Never));
+            cbFoodCategory.DataBindings.Add(new Binding("SelectedIndex", dtgvFood.DataSource, "IdCategory", true, DataSourceUpdateMode.Never));
         }
 
         void LoadCategoryIntoComboBox()
@@ -82,5 +82,21 @@ namespace QuanLyQuanCafe
 
         #endregion
 
+        private void btnAddFood_Click(object sender, EventArgs e)
+        {
+            string name = txbFoodName.Text;
+            int idCategory = (cbFoodCategory.SelectedItem as Category).Id;
+            float price = Convert.ToSingle(nmFoodPrice.Value);
+
+            if (FoodDAO.Instance.InsertFood(name, idCategory, price))
+            {
+                MessageBox.Show("Thêm món thành công!", "Thêm món");
+                LoadListFood();
+            }
+            else
+            {
+                MessageBox.Show("Thêm món không thành công!", "Thêm món");
+            }
+        }
     }
 }
