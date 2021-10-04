@@ -162,6 +162,8 @@ namespace QuanLyQuanCafe
             f.InsertFood += f_InsertFood;
             f.DeleteFood += f_DeleteFood;
             f.UpdateFood += f_UpdateFood;
+            f.currentLoginAccount = this._loginAccount;
+
             f.ShowDialog();
         }
 

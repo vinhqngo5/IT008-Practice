@@ -569,3 +569,9 @@ CREATE FUNCTION [dbo].[fuConvertToUnsign1] ( @strInput NVARCHAR(4000) ) RETURNS 
 	RETURN @strInput
 END
 GO
+
+SELECT *
+FROM Account
+INSERT INTO Account
+(Username, DisplayName, Type) VALUES
+(N'admin', N'admin', 1)

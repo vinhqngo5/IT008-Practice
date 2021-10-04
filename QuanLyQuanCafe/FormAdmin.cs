@@ -19,6 +19,8 @@ namespace QuanLyQuanCafe
 
         BindingSource _accountList = new BindingSource();
 
+        public Account currentLoginAccount;
+
         public FormAdmin()
         {
             InitializeComponent();
@@ -107,6 +109,68 @@ namespace QuanLyQuanCafe
         {
             cbAccountType.DataSource = AccountDAO.Instance.GetListAccountType();
             cbAccountType.DisplayMember = "Type";
+        }
+
+        void AddAccount(string userName, string displayName, bool type)
+        {
+            if (AccountDAO.Instance.InsertAccount(userName, displayName, type))
+            {
+                MessageBox.Show("Thêm tài khoản thành công");
+            }
+            else
+            {
+                MessageBox.Show("Thêm tài khoản thất bại");
+            }
+
+            LoadAccount();
+        }
+
+        void UpdateAccount(string userName, string displayName, bool type)
+        {
+            if (AccountDAO.Instance.UpdateAccount(userName, displayName, type))
+            {
+                MessageBox.Show("Cập nhật tài khoản thành công");
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật tài khoản thất bại");
+            }
+
+            LoadAccount();
+        }
+
+        void DeleteAccount(string userName)
+        {
+            if (currentLoginAccount.UserName.Equals(userName))
+            {
+                MessageBox.Show("Vui lòng đừng xóa chính bạn chứ!!!");
+                return;
+            }
+
+            if (AccountDAO.Instance.DeleteAccount(userName))
+            {
+                MessageBox.Show("Xóa tài khoản thành công");
+            }
+            else
+            {
+                MessageBox.Show("Xóa tài khoản thất bại");
+            }
+
+            LoadAccount();
+        }
+
+        void ResetPassword(string userName)
+        {
+            if (AccountDAO.Instance.ResetPassword(userName))
+            {
+                MessageBox.Show("Đặt lại mật khẩu thành công");
+            }
+            else
+            {
+                MessageBox.Show("Đặt lại mật khẩu thất bại");
+            }
+
+            LoadAccount();
         }
 
         #endregion
@@ -202,11 +266,44 @@ namespace QuanLyQuanCafe
             _foodList.DataSource = SearchFoodByName(txbSearchFoodName.Text);
         }
 
-        #endregion
 
         private void btnShowAccount_Click(object sender, EventArgs e)
         {
             LoadAccount();
+        }
+
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text;
+            string displayName = txbDisplayName.Text;
+            bool type = Convert.ToBoolean(cbAccountType.SelectedIndex);
+
+            AddAccount(userName, displayName, type);
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text;
+
+            DeleteAccount(userName);
+        }
+
+        private void btnEditAccount_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text;
+            string displayName = txbDisplayName.Text;
+            bool type = Convert.ToBoolean(cbAccountType.SelectedIndex);
+
+            UpdateAccount(userName, displayName, type);
+        }
+
+        #endregion
+
+        private void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            string userName = txbUserName.Text;
+
+            ResetPassword(userName);
         }
     }
 }
