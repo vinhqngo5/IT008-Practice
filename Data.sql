@@ -496,6 +496,45 @@ BEGIN
 END
 GO
 
+CREATE PROC USP_GetListAccount
+AS SELECT UserName, DisplayName, Type FROM dbo.Account
+GO
+
+CREATE PROC USP_InsertAccount
+	@userName NVARCHAR(100), @displayName NVARCHAR(100), @type BIT
+AS
+BEGIN
+	INSERT dbo.Account (Username, DisplayName, Type) 
+	VALUES ( @userName, @displayName, @type )
+END
+GO
+
+CREATE PROC USP_EditAccount
+	@userName NVARCHAR(100), @displayName NVARCHAR(100), @type BIT
+AS
+BEGIN
+	UPDATE dbo.Account 
+	SET DisplayName = @displayName, Type = @type
+	WHERE UserName = @userName
+END
+GO
+
+CREATE PROC USP_DeleteAccount
+	@userName NVARCHAR(100)
+AS
+BEGIN
+	DELETE dbo.Account WHERE UserName = @userName
+END
+GO
+
+CREATE PROC USP_ResetPassword
+	@userName NVARCHAR(100)
+AS
+BEGIN
+	UPDATE dbo.Account SET PassWord = '0' WHERE UserName = @userName
+END
+GO
+
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
