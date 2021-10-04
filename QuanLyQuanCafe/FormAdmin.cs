@@ -19,6 +19,12 @@ namespace QuanLyQuanCafe
         private readonly BindingSource _accountList = new BindingSource();
         private Account _loginAccount;
         public Action UpdateFood;
+        private event EventHandler<AccountEvent> _updateAccount;
+        public event EventHandler<AccountEvent> UpdateAccount
+        {
+            add {_updateAccount += value; }
+            remove { _updateAccount -= value; }
+        }
         
         public Account LoginAccount { get => _loginAccount; set => _loginAccount = value; }
 
@@ -101,11 +107,16 @@ namespace QuanLyQuanCafe
             LoadAccount();
         }
 
-        void UpdateAccount(string userName, string displayName, bool type)
+        void EditAccount(string userName, string displayName, bool type)
         {
+            if (LoginAccount.UserName == userName)
+                type = true;
+
             if (AccountDAO.Instance.UpdateAccount(userName, displayName, type))
             {
                 MessageBox.Show("Cập nhật tài khoản thành công");
+                if (LoginAccount.UserName == userName)
+                    _updateAccount?.Invoke(this, new AccountEvent(AccountDAO.Instance.GetAccountByUserName(userName)));
             }
             else
             {
@@ -246,7 +257,7 @@ namespace QuanLyQuanCafe
             string displayName = txbDisplayName.Text;
             bool type = chkAccountType.Checked;
 
-            UpdateAccount(userName, displayName, type);
+            EditAccount(userName, displayName, type);
         }
 
         private void btnResetPassword_Click(object sender, EventArgs e)
