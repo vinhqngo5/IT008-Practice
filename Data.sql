@@ -416,7 +416,7 @@ GO
 CREATE PROC USP_GetListFood
 AS
 BEGIN
-	SELECT Id AS ID, Name AS [Tên món ăn], IdCategory AS [Loại món ăn], Price AS [Giá] FROM Food
+	SELECT * FROM Food
 END
 GO
 
@@ -427,6 +427,17 @@ BEGIN
 	SELECT * FROM FoodCategory WHERE Id = @id
 END
 GO
+
+CREATE PROC USP_InsertFood
+	@name NVARCHAR(100), @idCategory INT, @price FLOAT
+AS
+BEGIN
+	INSERT	dbo.Food
+		( Name , IdCategory , Price )
+	VALUES
+		( @name , @idCategory , @price  )
+END
+Go
 
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
@@ -515,18 +526,3 @@ BEGIN
 	ON TableFood.Id = t.Id
 END
 GO
-
-CREATE PROC USP_GetAccountByUserName
-@userName nvarchar(100)
-AS
-BEGIN
-	SELECT * FROM Account WHERE UserName = @userName
-END
-GO
-
-
-
-
-
-
-
