@@ -28,15 +28,6 @@ namespace QuanLyQuanCafe
             InitializeComponent();
         }
         #region Method
-        //void UpdateAccount()
-        //{
-        //    string displayName = txbDisplayName.Text;
-        //    string userName = txbUserName.Text;
-        //    string passWord = txbPassWord.Text;
-        //    string newPassWord = txbNewPass.Text;
-        //    string reEnterPass = txbReEnterPass.Text;
-
-        //}
         public void LoadAccount(Account account)
         {
             _loginAccount = account;

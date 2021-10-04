@@ -126,6 +126,22 @@ namespace QuanLyQuanCafe
             txbTotalPrice.Text = totalPrice.ToString("C0", _culture);
         }
 
+        void UpdateFood()
+        {
+            Category selectedCategory = cbCategory.SelectedItem as Category;
+            LoadFoodByCategoryId(selectedCategory.Id);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).Id);
+                ReloadTable();
+            }
+            else
+            {
+                LoadTable();
+            }
+            
+        }
+
         #endregion
 
         #region Events
@@ -147,18 +163,21 @@ namespace QuanLyQuanCafe
         {
             FormAccountProfile formAccount = new FormAccountProfile();
             formAccount.LoadAccount(_loginAccount);
-            formAccount.UpdateAccount += f_UpdateAccount;
+            formAccount.UpdateAccount += UpdateAccount;
             formAccount.ShowDialog();
         }
 
-        private void f_UpdateAccount(object sender, AccountEvent e)
+        private void UpdateAccount(object sender, AccountEvent e)
         {
             tsmiAccountInfo.Text =  "Thông tin tài khoản (" + e.Account.DisplayName + ")";
         }
 
         private void TsmiAdmin_Click(object sender, EventArgs e)
         {
-            FormAdmin f = new FormAdmin();
+            FormAdmin f = new FormAdmin
+            {
+                UpdateFood = UpdateFood
+            };
             f.ShowDialog();
         }
 

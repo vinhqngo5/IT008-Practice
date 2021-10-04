@@ -16,6 +16,7 @@ namespace QuanLyQuanCafe
     public partial class FormAdmin : Form
     {
         private readonly BindingSource _foodList = new BindingSource();
+        public Action UpdateFood;
 
         public FormAdmin()
         {
@@ -79,9 +80,6 @@ namespace QuanLyQuanCafe
             LoadListFood();
         }
 
-
-        #endregion
-
         private void btnAddFood_Click(object sender, EventArgs e)
         {
             string name = txbFoodName.Text;
@@ -92,11 +90,53 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Thêm món thành công!", "Thêm món");
                 LoadListFood();
+                UpdateFood?.Invoke();
             }
             else
             {
                 MessageBox.Show("Thêm món không thành công!", "Thêm món");
             }
         }
+
+        private void btnEditFood_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txbFoodID.Text);
+            string name = txbFoodName.Text;
+            int idCategory = (cbFoodCategory.SelectedItem as Category).Id;
+            float price = Convert.ToSingle(nmFoodPrice.Value);
+
+            if (FoodDAO.Instance.UpdateFood(id, name, idCategory, price))
+            {
+                MessageBox.Show("Cập nhật món thành công!", "Cập nhật món");
+                LoadListFood();
+                UpdateFood?.Invoke();
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật món không thành công!", "Cập nhật món");
+            }
+        }
+
+        private void btnDeleteFood_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txbFoodID.Text);
+
+            if (FoodDAO.Instance.DeleteFood(id))
+            {
+                MessageBox.Show("Xoá món thành công!", "Xoá món");
+                LoadListFood();
+                UpdateFood?.Invoke();
+            }
+            else
+            {
+                MessageBox.Show("Xoá món không thành công!", "Xoá món");
+            }
+        }
+
+        private void btnSearchFood_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

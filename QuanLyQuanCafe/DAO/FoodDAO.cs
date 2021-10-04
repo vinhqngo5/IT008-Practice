@@ -48,5 +48,15 @@ namespace QuanLyQuanCafe.DAO
         {
             return DataProvider.Instance.ExecuteNonQuery("USP_InsertFood @name , @idCategory , @price", new object[] { name, idCategory, price }) > 0;
         }
+
+        public bool UpdateFood(int id, string name, int idCategory, float price)
+        {
+            return DataProvider.Instance.ExecuteNonQuery("USP_UpdateFood @id , @name , @idCategory , @price", new object[] { id, name, idCategory, price }) > 0;
+        }
+
+        public bool DeleteFood(int id)
+        {
+            return DataProvider.Instance.ExecuteNonQuery("USP_DeleteFood @id", new object[] { id }) > 0;
+        }
     }
 }
