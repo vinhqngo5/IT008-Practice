@@ -39,5 +39,29 @@ namespace QuanLyQuanCafe.DAO
         {
             return DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @passWord , @newPassWord", new object[] { userName, displayName, passWord, newPass }) > 0;
         }
+
+        public DataTable GetListAccount()
+        {
+            return DataProvider.Instance.ExecuteQuery("USP_GetListAccount");
+        }
+
+        public bool InsertAccount(string userName, string displayName, bool type)
+        {
+            return DataProvider.Instance.ExecuteNonQuery("USP_InsertAccount @userName , @displayName , @type", new object[] { userName, displayName, type }) > 0;
+        }
+
+        public bool UpdateAccount(string userName, string displayName, bool type)
+        {
+            return DataProvider.Instance.ExecuteNonQuery("USP_EditAccount @userName , @displayName , @type", new object[] { userName, displayName, type }) > 0;
+        }
+        public bool DeleteAccount(string userName)
+        {
+            return DataProvider.Instance.ExecuteNonQuery("USP_DeleteAccount @userName", new object[] { userName }) > 0;
+        }
+
+        public bool ResetPassword(string userName)
+        {
+            return DataProvider.Instance.ExecuteNonQuery("USP_ResetPassword @userName", new object[] { userName }) > 0;
+        }
     }
 }
