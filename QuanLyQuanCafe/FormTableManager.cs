@@ -139,7 +139,6 @@ namespace QuanLyQuanCafe
             {
                 LoadTable();
             }
-            
         }
 
         #endregion
@@ -176,7 +175,8 @@ namespace QuanLyQuanCafe
         {
             FormAdmin f = new FormAdmin
             {
-                UpdateFood = UpdateFood
+                UpdateFood = UpdateFood,
+                LoginAccount = _loginAccount
             };
             f.ShowDialog();
         }
