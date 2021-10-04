@@ -67,6 +67,11 @@ namespace QuanLyQuanCafe
             cbFoodCategory.DisplayMember = "Name";
         }
 
+        List<Food> SearchFoodByName(string name)
+        {
+            return FoodDAO.Instance.SearchFoodByName(name);
+        }
+
         #endregion
 
         #region Events
@@ -135,7 +140,7 @@ namespace QuanLyQuanCafe
 
         private void btnSearchFood_Click(object sender, EventArgs e)
         {
-
+            _foodList.DataSource = SearchFoodByName(txbSearchFoodName.Text);
         }
         #endregion
     }

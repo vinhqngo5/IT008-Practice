@@ -58,5 +58,18 @@ namespace QuanLyQuanCafe.DAO
         {
             return DataProvider.Instance.ExecuteNonQuery("USP_DeleteFood @id", new object[] { id }) > 0;
         }
+
+        public List<Food> SearchFoodByName(string name)
+        {
+            List<Food> list = new List<Food>();
+
+            DataTable data = DataProvider.Instance.ExecuteQuery("USP_SearchFood @name", new object[] { name });
+
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new Food(row));
+            }
+            return list;
+        }
     }
 }
