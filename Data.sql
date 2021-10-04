@@ -79,6 +79,12 @@ BEGIN
 END
 GO
 
+-- ALTER TABLE
+ALTER TABLE Food
+ADD Status BIT DEFAULT 1 NOT NULL
+-- 1: Available, 0: not available
+GO
+
 -- INSERT VALUES
 INSERT INTO dbo.Account
 	(
@@ -279,7 +285,7 @@ AS
 BEGIN
 	SELECT Name, Price, Count, Price * Count as TotalPrice
 	FROM Food, Bill, BillInfo
-	WHERE Bill.IdTable = @idTable AND Bill.Id = BillInfo.IdBill AND BillInfo.IdFood = Food.Id AND Bill.Status = 0
+	WHERE Bill.IdTable = @idTable AND Bill.Id = BillInfo.IdBill AND BillInfo.IdFood = Food.Id AND Bill.Status = 0 AND Food.Status = 1
 END
 GO
 
@@ -332,7 +338,7 @@ AS
 BEGIN
 	SELECT *
 	FROM dbo.Food
-	WHERE @idCategory = IdCategory
+	WHERE @idCategory = IdCategory AND Status = 1
 END
 GO
 
@@ -416,7 +422,7 @@ GO
 CREATE PROC USP_GetListFood
 AS
 BEGIN
-	SELECT * FROM Food
+	SELECT Id, Name, IdCategory, Price FROM Food WHERE Status = 1
 END
 GO
 
@@ -432,12 +438,53 @@ CREATE PROC USP_InsertFood
 	@name NVARCHAR(100), @idCategory INT, @price FLOAT
 AS
 BEGIN
-	INSERT	dbo.Food
-		( Name , IdCategory , Price )
-	VALUES
-		( @name , @idCategory , @price  )
+	DECLARE @idFood INT
+
+	SELECT @idFood = Id FROM Food WHERE Name = @name AND IdCategory = @idCategory
+
+	IF @idFood IS NULL
+		INSERT	dbo.Food
+			( Name , IdCategory , Price )
+		VALUES
+			( @name , @idCategory , @price  )
+	ELSE
+		UPDATE Food SET Status = 1, Price = @price WHERE Id = @idFood
 END
-Go
+GO
+
+CREATE PROC USP_UpdateFood
+	@id INT, @name NVARCHAR(100), @idCategory INT, @price FLOAT
+AS
+BEGIN
+	DECLARE @idFood INT
+
+	SELECT @idFood = Id FROM Food WHERE Name = @name AND IdCategory = @idCategory
+	IF @idFood IS NULL
+		UPDATE Food SET Name = @name, IdCategory = @idCategory, Price = @price WHERE Id = @id
+	ELSE
+	BEGIN
+		UPDATE Food SET Status = 1, Price = @price WHERE Id = @idFood
+		DELETE FROM Food WHERE Id = @id
+	END
+END
+GO
+
+CREATE PROC USP_DeleteFood
+	@id INT
+AS
+BEGIN
+	UPDATE Food SET Status = 0 WHERE Id = @id
+	
+	DECLARE @idBill INT
+	
+	SELECT @idBill = Bill.Id 
+	FROM Bill, BillInfo 
+	WHERE BillInfo.IdFood = @id AND BillInfo.IdBill = Bill.Id AND Bill.Status = 0
+
+	IF @idBill IS NOT NULL
+		DELETE FROM BillInfo WHERE IdBill = @idBill AND IdFood = @id
+END
+GO
 
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
