@@ -174,13 +174,62 @@ namespace QuanLyQuanCafe
 
         private void TsmiAdmin_Click(object sender, EventArgs e)
         {
-            FormAdmin f = new FormAdmin
-            {
-                UpdateFood = UpdateFood,
-                LoginAccount = _loginAccount
-            };
+            FormAdmin f = new FormAdmin();
+            f.InsertFood += f_InsertFood;
+            f.DeleteFood += f_DeleteFood;
+            f.UpdateFood += f_UpdateFood;
             f.UpdateAccount += UpdateAccount;
+            f.LoginAccount = this._loginAccount;
+
             f.ShowDialog();
+        }
+
+        private void f_UpdateFood(object sender, EventArgs e)
+        {
+           Category selectedCategory = cbCategory.SelectedItem as Category;
+            if (selectedCategory != null)
+                LoadFoodByCategoryId(selectedCategory.Id);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).Id);
+                ReloadTable();
+            }
+            else
+            {
+                LoadTable();
+            }
+        }
+
+        private void f_DeleteFood(object sender, EventArgs e)
+        {
+            Category selectedCategory = cbCategory.SelectedItem as Category;
+            if (selectedCategory != null)
+                LoadFoodByCategoryId(selectedCategory.Id);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).Id);
+                ReloadTable();
+            }
+            else
+            {
+                LoadTable();
+            }
+        }
+
+        private void f_InsertFood(object sender, EventArgs e)
+        {
+            Category selectedCategory = cbCategory.SelectedItem as Category;
+            if (selectedCategory != null)
+                LoadFoodByCategoryId(selectedCategory.Id);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as Table).Id);
+                ReloadTable();
+            }
+            else
+            {
+                LoadTable();
+            }
         }
 
         private void cbCategory_SelectionChangeCommitted(object sender, EventArgs e)

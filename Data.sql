@@ -45,9 +45,13 @@ BEGIN
 		Id INT IDENTITY(1, 1) PRIMARY KEY,
 		Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
 		IdCategory INT NOT NULL,
-		Price FLOAT NOT NULL DEFAULT 0
+		Price FLOAT NOT NULL DEFAULT 0,
+		Status BIT NOT NULL DEFAULT 1,
+		-- 1: còn phục vụ, ngưng phục vụ
 
-			FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
+		FOREIGN KEY
+		(IdCategory) REFERENCES dbo.FoodCategory
+		(Id)
 	)
 
 	CREATE TABLE Bill
@@ -79,11 +83,6 @@ BEGIN
 END
 GO
 
--- ALTER TABLE
-ALTER TABLE Food
-ADD Status BIT DEFAULT 1 NOT NULL
--- 1: Available, 0: not available
-GO
 
 -- INSERT VALUES
 INSERT INTO dbo.Account
@@ -481,11 +480,13 @@ BEGIN
 		UPDATE Food SET Name = @name, IdCategory = @idCategory, Price = @price WHERE Id = @id
 	ELSE
 	BEGIN
-		UPDATE Food SET Status = 1, Price = @price WHERE Id = @idFood
 		UPDATE Food SET Status = 0, Price = @price WHERE Id = @id
+		UPDATE Food SET Status = 1, Price = @price WHERE Id = @idFood
 	END
 END
 GO
+
+SELECT * FROM dbo.Food
 
 CREATE PROC USP_DeleteFood
 	@id INT
@@ -696,7 +697,7 @@ BEGIN
 	SET @strInput = replace(@strInput,' ','-')
 	RETURN @strInput
 END
-
+GO
 
 SELECT *
 FROM dbo.Account

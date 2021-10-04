@@ -18,14 +18,13 @@ namespace QuanLyQuanCafe
         private readonly BindingSource _foodList = new BindingSource();
         private readonly BindingSource _accountList = new BindingSource();
         private Account _loginAccount;
-        public Action UpdateFood;
         private event EventHandler<AccountEvent> _updateAccount;
         public event EventHandler<AccountEvent> UpdateAccount
         {
-            add {_updateAccount += value; }
+            add { _updateAccount += value; }
             remove { _updateAccount -= value; }
         }
-        
+
         public Account LoginAccount { get => _loginAccount; set => _loginAccount = value; }
 
         public FormAdmin()
@@ -39,7 +38,7 @@ namespace QuanLyQuanCafe
             LoadAccount();
             AddAccountBinding();
         }
-   
+
         #region Methods
 
         void LoadListBillByDate(DateTime dateCheckIn, DateTime dateCheckOut)
@@ -163,6 +162,26 @@ namespace QuanLyQuanCafe
 
         #region Events
 
+        private event EventHandler _insertFood;
+        public event EventHandler InsertFood
+        {
+            add { _insertFood += value; }
+            remove { _insertFood -= value; }
+        }
+
+        private event EventHandler _deleteFood;
+        public event EventHandler DeleteFood
+        {
+            add { _deleteFood += value; }
+            remove { _deleteFood -= value; }
+        }
+
+        private event EventHandler _updateFood;
+        public event EventHandler UpdateFood
+        {
+            add { _updateFood += value; }
+            remove { _updateFood -= value; }
+        }
         private void btnViewBill_Click(object sender, EventArgs e)
         {
             LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
@@ -182,7 +201,7 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Thêm món thành công!", "Thêm món");
                 LoadListFood();
-                UpdateFood?.Invoke();
+                _insertFood?.Invoke(this, new EventArgs());
             }
             else
             {
@@ -201,7 +220,7 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Cập nhật món thành công!", "Cập nhật món");
                 LoadListFood();
-                UpdateFood?.Invoke();
+                _updateFood?.Invoke(this, new EventArgs());
             }
             else
             {
@@ -217,7 +236,7 @@ namespace QuanLyQuanCafe
             {
                 MessageBox.Show("Xoá món thành công!", "Xoá món");
                 LoadListFood();
-                UpdateFood?.Invoke();
+                _deleteFood?.Invoke(this, new EventArgs());
             }
             else
             {
