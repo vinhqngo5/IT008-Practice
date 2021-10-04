@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
- --DROP DATABASE QUANLYQUANCAFE
- --CREATE DATABASE QUANLYQUANCAFE
- --GO
+-- DROP DATABASE QUANLYQUANCAFE
+-- CREATE DATABASE QUANLYQUANCAFE
+-- GO
 
 USE QUANLYQUANCAFE
 GO
@@ -45,9 +45,13 @@ BEGIN
 		Id INT IDENTITY(1, 1) PRIMARY KEY,
 		Name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
 		IdCategory INT NOT NULL,
-		Price FLOAT NOT NULL DEFAULT 0
+		Price FLOAT NOT NULL DEFAULT 0,
+		Status BIT NOT NULL DEFAULT 1,
+		-- 1: còn phục vụ, ngưng phục vụ
 
-			FOREIGN KEY (IdCategory) REFERENCES dbo.FoodCategory(Id)
+		FOREIGN KEY
+		(IdCategory) REFERENCES dbo.FoodCategory
+		(Id)
 	)
 
 	CREATE TABLE Bill
@@ -332,7 +336,7 @@ AS
 BEGIN
 	SELECT *
 	FROM dbo.Food
-	WHERE @idCategory = IdCategory
+	WHERE @idCategory = IdCategory AND STATUS = 1
 END
 GO
 
@@ -394,13 +398,18 @@ END
 GO
 
 CREATE PROC USP_UpdateAccount
-@userName NVARCHAR(100), @displayName NVARCHAR(100), @passWord NVARCHAR(100), @newPassWord NVARCHAR(100)
+	@userName NVARCHAR(100),
+	@displayName NVARCHAR(100),
+	@passWord NVARCHAR(100),
+	@newPassWord NVARCHAR(100)
 AS
 BEGIN
 	DECLARE @isRightPass INT = 0
-	
-	SELECT @isRightPass = COUNT(*) FROM dbo.Account WHERE UserName = @userName AND PassWord = @passWord
-	
+
+	SELECT @isRightPass = COUNT(*)
+	FROM dbo.Account
+	WHERE UserName = @userName AND PassWord = @passWord
+
 	IF (@isRightPass = 1)
 	BEGIN
 		IF (@newPassWord = NULL OR @newPassWord = '')
@@ -416,15 +425,18 @@ GO
 CREATE PROC USP_GetListFood
 AS
 BEGIN
-	SELECT Id AS ID, Name AS [Tên món ăn], IdCategory AS [Loại món ăn], Price AS [Giá] FROM Food
+	SELECT Id AS ID, Name, IdCategory, Price
+	FROM Food WHERE Status = 1
 END
 GO
 
 CREATE PROC USP_GetListCategoryFoodById
-@id INT
+	@id INT
 AS
 BEGIN
-	SELECT * FROM FoodCategory WHERE Id = @id
+	SELECT *
+	FROM FoodCategory
+	WHERE Id = @id
 END
 GO
 
@@ -454,15 +466,18 @@ AS
 BEGIN
 	DECLARE @tableIdBill TABLE(Id INT)
 
-	INSERT INTO @tableIdBill SELECT IdBill FROM Deleted
-	SELECT * FROM @tableIdBill
+	INSERT INTO @tableIdBill
+	SELECT IdBill
+	FROM Deleted
+	SELECT *
+	FROM @tableIdBill
 
 	DECLARE @count INT
-	
+
 	SELECT @count = COUNT(*)
-	FROM BillInfo 
-	JOIN @tableIdBill AS t
-	ON t.Id = BillInfo.IdBill
+	FROM BillInfo
+		JOIN @tableIdBill AS t
+		ON t.Id = BillInfo.IdBill
 
 	IF @count = 0  
 		DELETE FROM Bill
@@ -504,29 +519,24 @@ CREATE TRIGGER UTG_DeleteBill
 ON dbo.Bill AFTER DELETE
 AS
 BEGIN
-	DECLARE @tableIdBill TABLE(Id INT, Status INT)
+	DECLARE @tableIdBill TABLE(Id INT,
+		Status INT)
 
-	INSERT INTO @tableIdBill SELECT IdTable, Status FROM Deleted
+	INSERT INTO @tableIdBill
+	SELECT IdTable, Status
+	FROM Deleted
 
 	UPDATE TableFood 
 	SET Status = 0 
 	FROM TableFood
-	JOIN @tableIdBill AS t
-	ON TableFood.Id = t.Id
+		JOIN @tableIdBill AS t
+		ON TableFood.Id = t.Id
 END
 GO
 
-CREATE PROC USP_GetAccountByUserName
-@userName nvarchar(100)
-AS
-BEGIN
-	SELECT * FROM Account WHERE UserName = @userName
-END
-GO
+UPDATE dbo.Account SET Type = 1 WHERE userName = N'admin'
+
+UPDATE dbo.Food SET Name = N'', IdCategory = 5, Price = 0 WHERE Id = 6
 
 
-
-
-
-
-
+UPDATE dbo.Food SET Status = 1 WHERE Id = 1

@@ -122,7 +122,7 @@ namespace QuanLyQuanCafe
 
             //this will settings for this thread
             //Thread.CurrentThread.CurrentCulture = _culture;
-            
+
             txbTotalPrice.Text = totalPrice.ToString("C0", _culture);
         }
 
@@ -153,13 +153,38 @@ namespace QuanLyQuanCafe
 
         private void f_UpdateAccount(object sender, AccountEvent e)
         {
-            tsmiAccountInfo.Text =  "Thông tin tài khoản (" + e.Account.DisplayName + ")";
+            tsmiAccountInfo.Text = "Thông tin tài khoản (" + e.Account.DisplayName + ")";
         }
 
         private void TsmiAdmin_Click(object sender, EventArgs e)
         {
             FormAdmin f = new FormAdmin();
+            f.InsertFood += f_InsertFood;
+            f.DeleteFood += f_DeleteFood;
+            f.UpdateFood += f_UpdateFood;
             f.ShowDialog();
+        }
+
+        private void f_UpdateFood(object sender, EventArgs e)
+        {
+            LoadFoodByCategoryId((cbCategory.SelectedItem as Category).Id);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).Id);
+        }
+
+        private void f_DeleteFood(object sender, EventArgs e)
+        {
+            LoadFoodByCategoryId((cbCategory.SelectedItem as Category).Id);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).Id);
+            //LoadTable();
+        }
+
+        private void f_InsertFood(object sender, EventArgs e)
+        {
+            LoadFoodByCategoryId((cbCategory.SelectedItem as Category).Id);
+            if (lsvBill.Tag != null)
+                ShowBill((lsvBill.Tag as Table).Id);
         }
 
         private void cbCategory_SelectionChangeCommitted(object sender, EventArgs e)
