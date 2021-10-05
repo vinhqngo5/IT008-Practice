@@ -49,5 +49,15 @@ namespace QuanLyQuanCafe.DAO
         {
             return DataProvider.Instance.ExecuteQuery("USP_GetListBillByDate @dateCheckIn , @dateCheckOut", new object[] { dateCheckIn, dateCheckOut });
         }
+        public DataTable GetListBillByDateAndNumPage(DateTime dateCheckIn, DateTime dateCheckOut, int numPage, int numRow)
+        {
+            return DataProvider.Instance.ExecuteQuery("USP_GetListBillByDateAndNumPage @dateCheckIn , @dateCheckOut , @numPage , @numRow", new object[] { dateCheckIn, dateCheckOut, numPage, numRow });
+        }
+        public int GetMaxPageBill(DateTime dateCheckIn, DateTime dateCheckOut,int numRow)
+        {
+            int tmp = DataProvider.Instance.ExecuteQuery("USP_GetMaxBillByDate @DateCheckIn ,  @DateCheckOut ", new object[] { dateCheckIn, dateCheckOut }).Rows.Count;
+            int maxNumPage = (int)Math.Ceiling(Convert.ToDouble(tmp) / numRow);
+            return maxNumPage;  
+        }
     }
 }

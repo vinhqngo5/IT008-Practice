@@ -15,6 +15,7 @@ namespace QuanLyQuanCafe
 {
     public partial class FormAdmin : Form
     {
+        private readonly int _numRow = 5;
         private readonly BindingSource _foodList = new BindingSource();
         private readonly BindingSource _accountList = new BindingSource();
         private Account _loginAccount;
@@ -31,7 +32,7 @@ namespace QuanLyQuanCafe
         {
             InitializeComponent();
             LoadDateTimePickerBill();
-            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+            LoadListBillByDateAndNumPage(dtpkFromDate.Value, dtpkToDate.Value, Convert.ToInt32(txpNumPage.Text), _numRow);
             LoadCategoryIntoComboBox();
             LoadListFood();
             AddFoodBinding();
@@ -41,9 +42,10 @@ namespace QuanLyQuanCafe
 
         #region Methods
 
-        void LoadListBillByDate(DateTime dateCheckIn, DateTime dateCheckOut)
+        void LoadListBillByDateAndNumPage(DateTime dateCheckIn, DateTime dateCheckOut, int numPage, int numRow)
         {
-            dtgvBill.DataSource = BillDAO.Instance.GetListBillByDate(dateCheckIn, dateCheckOut);
+            dtgvBill.DataSource = BillDAO.Instance.GetListBillByDateAndNumPage(dateCheckIn, dateCheckOut, numPage, numRow);
+            dtgvBill.Columns["Id"].Visible = false;
         }
 
         void LoadDateTimePickerBill()
@@ -188,7 +190,7 @@ namespace QuanLyQuanCafe
         }
         private void btnViewBill_Click(object sender, EventArgs e)
         {
-            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+            LoadListBillByDateAndNumPage(dtpkFromDate.Value, dtpkToDate.Value, Convert.ToInt32(txpNumPage.Text), _numRow);
         }
         private void btnShowFood_Click(object sender, EventArgs e)
         {
@@ -290,5 +292,51 @@ namespace QuanLyQuanCafe
             ResetPassword(userName);
         }
         #endregion
+        private void btnFirstPage_Click(object sender, EventArgs e)
+        {
+            txpNumPage.Text = "1";
+            LoadListBillByDateAndNumPage(dtpkFromDate.Value,dtpkToDate.Value,1,_numRow);
+        }
+
+        private void btnPreviousPage_Click(object sender, EventArgs e)
+        {
+            int numPage = Convert.ToInt32(txpNumPage.Text) - 1;
+            if (numPage < 1)
+            {
+                MessageBox.Show("Đây là trang đầu tiên", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            txpNumPage.Text = Convert.ToString(numPage);
+            LoadListBillByDateAndNumPage(dtpkFromDate.Value, dtpkToDate.Value,numPage , _numRow);
+        }
+
+        private void btnNextPage_Click(object sender, EventArgs e)
+        {
+            int numPage = Convert.ToInt32(txpNumPage.Text) + 1;
+            if (numPage > BillDAO.Instance.GetMaxPageBill(dtpkFromDate.Value, dtpkToDate.Value, _numRow))
+            {
+                MessageBox.Show("Đây là trang cuối cùng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            txpNumPage.Text = Convert.ToString(numPage);
+            LoadListBillByDateAndNumPage(dtpkFromDate.Value, dtpkToDate.Value, numPage, _numRow);
+        }
+
+        private void btnLastPage_Click(object sender, EventArgs e)
+        {
+            int numPage = BillDAO.Instance.GetMaxPageBill(dtpkFromDate.Value, dtpkToDate.Value, _numRow);
+            txpNumPage.Text = Convert.ToString(numPage);
+            LoadListBillByDateAndNumPage(dtpkFromDate.Value, dtpkToDate.Value, numPage, _numRow);
+        }
+
+        private void txpNumPage_TextChanged(object sender, EventArgs e)
+        {
+            int lastPage = BillDAO.Instance.GetMaxPageBill(dtpkFromDate.Value, dtpkToDate.Value, _numRow);
+            if (txpNumPage.Text == "")
+                return;
+            if (Convert.ToInt32(txpNumPage.Text)<1 || Convert.ToInt32(txpNumPage.Text) >lastPage)
+                MessageBox.Show(string.Format("Trang đầu tiên là 1 và Trang cuối cùng là {0}",lastPage), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            LoadListBillByDateAndNumPage(dtpkFromDate.Value, dtpkToDate.Value, Convert.ToInt32(txpNumPage.Text), _numRow);
+        }
     }
 }

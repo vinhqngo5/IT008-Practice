@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
--- CREATE DATABASE QUANLYQUANCAFE
--- GO
+ --DROP DATABASE QUANLYQUANCAFE
+ --CREATE DATABASE QUANLYQUANCAFE
+ --GO
 
 USE QUANLYQUANCAFE
 GO
@@ -111,7 +111,6 @@ VALUES
 		N'1', -- PassWord - nvarchar(1000)
 		0  -- Type - bit
 	)
-
 -- Insert for reseed
 INSERT dbo.TableFood
 	(Name)
@@ -236,7 +235,7 @@ AS
 BEGIN
 	SELECT *
 	FROM Account
-	WHERE UserName = @userName AND PassWord =@passWord
+	WHERE UserName = @userName AND PassWord =  dbo.EncrytionPasssWord(@passWord)
 END
 GO
 
@@ -409,7 +408,7 @@ BEGIN
 
 	SELECT @isRightPass = COUNT(*)
 	FROM dbo.Account
-	WHERE UserName = @userName AND PassWord = @passWord
+	WHERE UserName = @userName AND PassWord =  dbo.EncrytionPasssWord(@passWord)
 
 	IF (@isRightPass = 1)
 	BEGIN
@@ -418,7 +417,7 @@ BEGIN
 			UPDATE dbo.Account SET DisplayName = @displayName WHERE UserName = @userName
 		END		
 		ELSE
-			UPDATE dbo.Account SET DisplayName = @displayName, PassWord = @newPassWord WHERE UserName = @userName
+			UPDATE dbo.Account SET DisplayName = @displayName, PassWord =  dbo.EncrytionPasssWord(@newPassWord) WHERE UserName = @userName
 	END
 END
 GO
@@ -534,9 +533,9 @@ BEGIN
 
 	IF @isExist IS NULL
 		INSERT dbo.Account
-		(Username, DisplayName, Type)
+		(Username, DisplayName, PassWord, Type)
 	VALUES
-		( @userName, @displayName, @type )
+		( @userName, @displayName,  dbo.EncrytionPasssWord('0'), @type )
 END
 GO
 
@@ -564,7 +563,40 @@ CREATE PROC USP_ResetPassword
 	@userName NVARCHAR(100)
 AS
 BEGIN
-	UPDATE dbo.Account SET PassWord = '0' WHERE UserName = @userName
+	UPDATE dbo.Account SET PassWord =  dbo.EncrytionPasssWord('0') WHERE UserName = @userName
+END
+GO
+
+
+CREATE PROC USP_GetListBillByDateAndNumPage
+	@dateCheckIn DATE,
+	@dateCheckOut DATE,
+	@numPage INT,
+	@numRow INT
+AS
+BEGIN
+	DECLARE @selectRows INT = @numPage*@numRow
+	DECLARE @exceptRows INT = (@numPage-1)*@numRow
+
+	SELECT Bill.Id, Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền] INTO BillShow
+	FROM TableFood
+		JOIN Bill ON Bill.IdTable = TableFood.Id
+		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
+	ORDER BY DateCheckIn, Name, Bill.Id
+	SELECT TOP(@selectRows) * FROM BillShow WHERE NOT EXISTS (SELECT TOP(@exceptRows) * FROM BillShow)
+	DROP TABLE BillShow
+END
+GO
+
+CREATE PROC USP_GetMaxBillByDate
+	@dateCheckIn DATE,
+	@dateCheckOut DATE
+AS
+BEGIN
+	SELECT *
+	FROM Bill
+	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
 END
 GO
 
@@ -699,6 +731,13 @@ BEGIN
 END
 GO
 
-SELECT *
-FROM dbo.Account
-UPDATE dbo.Account SET Type = 1 WHERE UserName= N'admin'
+CREATE FUNCTION [dbo].[EncrytionPasssWord] ( @strInput NVARCHAR(4000) ) 
+RETURNS NVARCHAR(4000) 
+AS 
+BEGIN
+	RETURN CONVERT(NVARCHAR(32),HashBytes('MD5', @strInput),2)
+END
+UPDATE Account SET PassWord = dbo.EncrytionPasssWord(PassWord)
+GO
+
+
