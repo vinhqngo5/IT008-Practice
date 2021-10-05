@@ -94,6 +94,10 @@ namespace QuanLyQuanCafe
 
         void AddAccount(string userName, string displayName, bool type)
         {
+            if (userName.Equals(_loginAccount.UserName))
+            {
+                MessageBox.Show("Tên tài khoản đã tồn tại","Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             if (AccountDAO.Instance.InsertAccount(userName, displayName, type))
             {
                 MessageBox.Show("Thêm tài khoản thành công");
