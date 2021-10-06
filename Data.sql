@@ -568,6 +568,41 @@ BEGIN
 END
 GO
 
+CREATE PROC USP_GetListBillByDateAndPage
+	@dateCheckIn DATE,
+	@dateCheckOut DATE,
+	@page INT
+AS
+BEGIN
+	DECLARE @pageRows INT = 10
+	DECLARE @selectRows INT = @pageRows
+	DECLARE @exceptRows INT = (@page - 1) * @pageRows
+
+	;
+	WITH BillShow AS (SELECT Bill.Id, Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
+	FROM TableFood
+		JOIN Bill ON Bill.IdTable = TableFood.Id
+		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut)
+
+	SELECT TOP (@selectRows) * FROM BillShow AS b WHERE b.Id NOT IN
+		(SELECT TOP (@exceptRows) Id FROM BillShow)
+	ORDER BY [Ngày vào], [Tên bàn]
+END
+GO
+
+CREATE PROC USP_GetNumBillByDate
+	@dateCheckIn DATE,
+	@dateCheckOut DATE
+AS
+BEGIN
+	SELECT COUNT(*)
+	FROM TableFood
+		JOIN Bill ON Bill.IdTable = TableFood.Id
+		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
+END
+GO
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -662,6 +697,8 @@ BEGIN
 END
 GO
 
+
+
 -- FUNCTION
 CREATE FUNCTION [dbo].[fuConvertToUnsign1] ( @strInput NVARCHAR(4000) ) 
 RETURNS NVARCHAR(4000) 
@@ -699,6 +736,12 @@ BEGIN
 END
 GO
 
-SELECT *
+SELECT TOP(1) *
 FROM dbo.Account
 UPDATE dbo.Account SET Type = 1 WHERE UserName= N'admin'
+
+SELECT Bill.Id, Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
+	FROM TableFood
+		JOIN Bill ON Bill.IdTable = TableFood.Id
+		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	WHERE Bill.Status = 1

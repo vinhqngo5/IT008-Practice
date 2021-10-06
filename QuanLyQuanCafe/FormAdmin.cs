@@ -310,13 +310,15 @@ namespace QuanLyQuanCafe
 
         private void btnPreviousBillPage_Click(object sender, EventArgs e)
         {
-            if (txbBillPage.Text == "1")
+            if (txbBillPage.Text == "1" || txbBillPage.Text == "")
                 return;
             txbBillPage.Text = Convert.ToString(Convert.ToInt32(txbBillPage.Text) - 1);
         }
 
         private void btnNextBillPage_Click(object sender, EventArgs e)
         {
+            if (txbBillPage.Text == "")
+                return;
             txbBillPage.Text = Convert.ToString(Convert.ToInt32(txbBillPage.Text) + 1);
         }
     }
