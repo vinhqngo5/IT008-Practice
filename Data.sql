@@ -392,19 +392,35 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_GetListBillByDate
+ALTER PROC USP_GetListBillByDate
 	@dateCheckIn DATE,
-	@dateCheckOut DATE
+	@dateCheckOut DATE,
+	@pageNumber INT = 1,
+	@rowsOfPage INT = 10
 AS
 BEGIN
-	SELECT Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
-	FROM TableFood
-		JOIN Bill ON Bill.IdTable = TableFood.Id
-		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
-	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
-	ORDER BY DateCheckIn, Name
+	IF @rowsOfPage = -1
+	BEGIN
+		SELECT Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
+		FROM TableFood
+			JOIN Bill ON Bill.IdTable = TableFood.Id
+		WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
+		ORDER BY DateCheckIn, LEN(Name), Name
+	END
+	ELSE
+	BEGIN
+		SELECT Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
+		FROM TableFood
+			JOIN Bill ON Bill.IdTable = TableFood.Id
+		WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
+		ORDER BY DateCheckIn, LEN(Name), Name
+		OFFSET (@pageNumber-1)*@rowsOfPage ROWS
+		FETCH NEXT @rowsOfPage ROWS ONLY
+	END
 END
 GO
+
+USP_GetListBillByDate @dateCheckIn = '20211001', @dateCheckOut = '20211030', @rowsOfPage = 1
 
 CREATE PROC USP_UpdateAccount
 	@userName NVARCHAR(100),
@@ -706,7 +722,3 @@ BEGIN
 	RETURN @strInput
 END
 GO
-
-SELECT *
-FROM dbo.Account
-UPDATE dbo.Account SET Type = 1 WHERE UserName= N'admin'
