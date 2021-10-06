@@ -29,7 +29,7 @@ namespace QuanLyQuanCafe
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tcAdmin = new System.Windows.Forms.TabControl();
             this.tpBill = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -37,6 +37,11 @@ namespace QuanLyQuanCafe
             this.dtpkToDate = new System.Windows.Forms.DateTimePicker();
             this.dtpkFromDate = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnPrevious = new System.Windows.Forms.Button();
+            this.btnFirst = new System.Windows.Forms.Button();
+            this.btnLast = new System.Windows.Forms.Button();
+            this.txbPageNumber = new System.Windows.Forms.TextBox();
+            this.btnNext = new System.Windows.Forms.Button();
             this.dtgvBill = new System.Windows.Forms.DataGridView();
             this.tpFood = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -99,6 +104,7 @@ namespace QuanLyQuanCafe
             this.panel23 = new System.Windows.Forms.Panel();
             this.btnResetPassword = new System.Windows.Forms.Button();
             this.panel25 = new System.Windows.Forms.Panel();
+            this.chkAccountType = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel26 = new System.Windows.Forms.Panel();
             this.txbDisplayName = new System.Windows.Forms.TextBox();
@@ -113,7 +119,6 @@ namespace QuanLyQuanCafe
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
             this.dtgvAccount = new System.Windows.Forms.DataGridView();
-            this.chkAccountType = new System.Windows.Forms.CheckBox();
             this.tcAdmin.SuspendLayout();
             this.tpBill.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -216,11 +221,71 @@ namespace QuanLyQuanCafe
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnPrevious);
+            this.panel1.Controls.Add(this.btnFirst);
+            this.panel1.Controls.Add(this.btnLast);
+            this.panel1.Controls.Add(this.txbPageNumber);
+            this.panel1.Controls.Add(this.btnNext);
             this.panel1.Controls.Add(this.dtgvBill);
             this.panel1.Location = new System.Drawing.Point(6, 38);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(638, 369);
             this.panel1.TabIndex = 0;
+            // 
+            // btnPrevious
+            // 
+            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrevious.Location = new System.Drawing.Point(259, 345);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(36, 23);
+            this.btnPrevious.TabIndex = 6;
+            this.btnPrevious.Text = "<";
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            // 
+            // btnFirst
+            // 
+            this.btnFirst.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFirst.Location = new System.Drawing.Point(217, 345);
+            this.btnFirst.Name = "btnFirst";
+            this.btnFirst.Size = new System.Drawing.Size(36, 23);
+            this.btnFirst.TabIndex = 5;
+            this.btnFirst.Text = "<<";
+            this.btnFirst.UseVisualStyleBackColor = true;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
+            // 
+            // btnLast
+            // 
+            this.btnLast.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLast.Location = new System.Drawing.Point(390, 345);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(36, 23);
+            this.btnLast.TabIndex = 4;
+            this.btnLast.Text = ">>";
+            this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
+            // 
+            // txbPageNumber
+            // 
+            this.txbPageNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbPageNumber.Location = new System.Drawing.Point(301, 346);
+            this.txbPageNumber.Name = "txbPageNumber";
+            this.txbPageNumber.Size = new System.Drawing.Size(41, 22);
+            this.txbPageNumber.TabIndex = 3;
+            this.txbPageNumber.Text = "1";
+            this.txbPageNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbPageNumber.TextChanged += new System.EventHandler(this.txbPageNumber_TextChanged);
+            // 
+            // btnNext
+            // 
+            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.Location = new System.Drawing.Point(348, 345);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(36, 23);
+            this.btnNext.TabIndex = 2;
+            this.btnNext.Text = ">";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // dtgvBill
             // 
@@ -232,10 +297,10 @@ namespace QuanLyQuanCafe
             this.dtgvBill.Location = new System.Drawing.Point(3, 3);
             this.dtgvBill.Name = "dtgvBill";
             this.dtgvBill.RowHeadersVisible = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle9;
-            this.dtgvBill.Size = new System.Drawing.Size(632, 363);
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dtgvBill.Size = new System.Drawing.Size(632, 332);
             this.dtgvBill.TabIndex = 0;
             // 
             // tpFood
@@ -821,6 +886,17 @@ namespace QuanLyQuanCafe
             this.panel25.Size = new System.Drawing.Size(279, 44);
             this.panel25.TabIndex = 3;
             // 
+            // chkAccountType
+            // 
+            this.chkAccountType.AutoSize = true;
+            this.chkAccountType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAccountType.Location = new System.Drawing.Point(127, 13);
+            this.chkAccountType.Name = "chkAccountType";
+            this.chkAccountType.Size = new System.Drawing.Size(64, 20);
+            this.chkAccountType.TabIndex = 1;
+            this.chkAccountType.Text = "Admin";
+            this.chkAccountType.UseVisualStyleBackColor = true;
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -955,17 +1031,6 @@ namespace QuanLyQuanCafe
             this.dtgvAccount.Size = new System.Drawing.Size(343, 340);
             this.dtgvAccount.TabIndex = 0;
             // 
-            // chkAccountType
-            // 
-            this.chkAccountType.AutoSize = true;
-            this.chkAccountType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkAccountType.Location = new System.Drawing.Point(127, 13);
-            this.chkAccountType.Name = "chkAccountType";
-            this.chkAccountType.Size = new System.Drawing.Size(64, 20);
-            this.chkAccountType.TabIndex = 1;
-            this.chkAccountType.Text = "Admin";
-            this.chkAccountType.UseVisualStyleBackColor = true;
-            // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -979,6 +1044,7 @@ namespace QuanLyQuanCafe
             this.tpBill.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvBill)).EndInit();
             this.tpFood.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
@@ -1117,5 +1183,10 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.DataGridView dtgvAccount;
         private System.Windows.Forms.CheckBox chkAccountType;
+        private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.Button btnFirst;
+        private System.Windows.Forms.Button btnLast;
+        private System.Windows.Forms.TextBox txbPageNumber;
+        private System.Windows.Forms.Button btnNext;
     }
 }

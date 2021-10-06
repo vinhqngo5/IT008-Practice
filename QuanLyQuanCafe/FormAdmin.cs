@@ -18,6 +18,7 @@ namespace QuanLyQuanCafe
         private readonly BindingSource _foodList = new BindingSource();
         private readonly BindingSource _accountList = new BindingSource();
         private Account _loginAccount;
+        private const int _rowsOfPage = 14;
         private event EventHandler<AccountEvent> _updateAccount;
         public event EventHandler<AccountEvent> UpdateAccount
         {
@@ -31,7 +32,7 @@ namespace QuanLyQuanCafe
         {
             InitializeComponent();
             LoadDateTimePickerBill();
-            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value, _rowsOfPage);
             LoadCategoryIntoComboBox();
             LoadListFood();
             AddFoodBinding();
@@ -41,9 +42,9 @@ namespace QuanLyQuanCafe
 
         #region Methods
 
-        void LoadListBillByDate(DateTime dateCheckIn, DateTime dateCheckOut)
+        void LoadListBillByDate(DateTime dateCheckIn, DateTime dateCheckOut, int rowsOfPage, int pageNumber = 1)
         {
-            dtgvBill.DataSource = BillDAO.Instance.GetListBillByDate(dateCheckIn, dateCheckOut);
+            dtgvBill.DataSource = BillDAO.Instance.GetListBillByDate(dateCheckIn, dateCheckOut, pageNumber, rowsOfPage);
         }
 
         void LoadDateTimePickerBill()
@@ -184,7 +185,7 @@ namespace QuanLyQuanCafe
         }
         private void btnViewBill_Click(object sender, EventArgs e)
         {
-            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+            LoadListBillByDate(dtpkFromDate.Value, dtpkToDate.Value, -1);
         }
         private void btnShowFood_Click(object sender, EventArgs e)
         {
@@ -286,5 +287,60 @@ namespace QuanLyQuanCafe
             ResetPassword(userName);
         }
         #endregion
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            int allRowsBill = BillDAO.Instance.GetListBillByDate(dtpkFromDate.Value, dtpkToDate.Value).Rows.Count;
+            int pageNumber = Convert.ToInt32(txbPageNumber.Text);
+            int totalPage = allRowsBill / _rowsOfPage + (allRowsBill % _rowsOfPage == 0 ? 0 : 1);
+
+            if (pageNumber < totalPage)
+            {
+                pageNumber++;
+            }
+
+            txbPageNumber.Text = Convert.ToString(pageNumber);
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            int pageNumber = Convert.ToInt32(txbPageNumber.Text);
+
+            if (pageNumber > 1)
+            {
+                pageNumber--;
+            }
+
+            txbPageNumber.Text = Convert.ToString(pageNumber);
+        }
+
+        private void txbPageNumber_TextChanged(object sender, EventArgs e)
+        {
+            int allRowsBill = BillDAO.Instance.GetListBillByDate(dtpkFromDate.Value, dtpkToDate.Value).Rows.Count;
+            int totalPage = allRowsBill / _rowsOfPage + (allRowsBill % _rowsOfPage == 0 ? 0 : 1);
+            int pageNumber = Convert.ToInt32(txbPageNumber.Text);
+
+            if (pageNumber > 0 && pageNumber <= totalPage)
+            {
+                dtgvBill.DataSource = BillDAO.Instance.GetListBillByDate(dtpkFromDate.Value, dtpkToDate.Value, pageNumber, _rowsOfPage);
+            }
+            else
+            {
+                MessageBox.Show("Trang không hợp lệ", "Thông báo");
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            int allRowsBill = BillDAO.Instance.GetListBillByDate(dtpkFromDate.Value, dtpkToDate.Value).Rows.Count;
+            int totalPage = allRowsBill / _rowsOfPage + (allRowsBill % _rowsOfPage == 0 ? 0 : 1);
+
+            txbPageNumber.Text = Convert.ToString(totalPage);
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            txbPageNumber.Text = "1";
+        }
     }
 }
