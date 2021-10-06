@@ -34,6 +34,9 @@ namespace QuanLyQuanCafe
             this.tsmiAccountInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLogout = new System.Windows.Forms.ToolStripMenuItem();
+            this.chứcNăngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCheckout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddFood = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lsvBill = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -64,9 +67,11 @@ namespace QuanLyQuanCafe
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAdmin,
-            this.tsmiAccountInfo});
+            this.tsmiAccountInfo,
+            this.chứcNăngToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(797, 24);
@@ -103,6 +108,31 @@ namespace QuanLyQuanCafe
             this.tsmiLogout.Text = "Đăng xuất";
             this.tsmiLogout.Click += new System.EventHandler(this.TsmiLogout_Click);
             // 
+            // chứcNăngToolStripMenuItem
+            // 
+            this.chứcNăngToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCheckout,
+            this.tsmiAddFood});
+            this.chứcNăngToolStripMenuItem.Name = "chứcNăngToolStripMenuItem";
+            this.chứcNăngToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.chứcNăngToolStripMenuItem.Text = "Chức năng";
+            // 
+            // tsmiCheckout
+            // 
+            this.tsmiCheckout.Name = "tsmiCheckout";
+            this.tsmiCheckout.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsmiCheckout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiCheckout.Text = "Thanh toán";
+            this.tsmiCheckout.Click += new System.EventHandler(this.tsmiCheckout_Click);
+            // 
+            // tsmiAddFood
+            // 
+            this.tsmiAddFood.Name = "tsmiAddFood";
+            this.tsmiAddFood.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.tsmiAddFood.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAddFood.Text = "Thêm món";
+            this.tsmiAddFood.Click += new System.EventHandler(this.tsmiAddFood_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.lsvBill);
@@ -125,7 +155,7 @@ namespace QuanLyQuanCafe
             this.lsvBill.Name = "lsvBill";
             this.lsvBill.Size = new System.Drawing.Size(332, 309);
             this.lsvBill.TabIndex = 0;
-            //this.lsvBill.UseCompatibleStateImageBehavior = false;
+            this.lsvBill.UseCompatibleStateImageBehavior = false;
             this.lsvBill.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
@@ -351,5 +381,8 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TextBox txbTotalPrice;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem chứcNăngToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCheckout;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddFood;
     }
 }

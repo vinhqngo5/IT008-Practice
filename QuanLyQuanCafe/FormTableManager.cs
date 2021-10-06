@@ -186,7 +186,7 @@ namespace QuanLyQuanCafe
 
         private void f_UpdateFood(object sender, EventArgs e)
         {
-           Category selectedCategory = cbCategory.SelectedItem as Category;
+            Category selectedCategory = cbCategory.SelectedItem as Category;
             if (selectedCategory != null)
                 LoadFoodByCategoryId(selectedCategory.Id);
             if (lsvBill.Tag != null)
@@ -330,5 +330,15 @@ namespace QuanLyQuanCafe
         }
 
         #endregion
+
+        private void tsmiCheckout_Click(object sender, EventArgs e)
+        {
+            btnCheckOut_Click(sender, e);
+        }
+
+        private void tsmiAddFood_Click(object sender, EventArgs e)
+        {
+            btnAddFood_Click(sender, e);
+        }
     }
 }
