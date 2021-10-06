@@ -603,6 +603,20 @@ BEGIN
 	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
 END
 GO
+
+CREATE PROC USP_GetListBillByDateForReport
+	@dateCheckIn DATE,
+	@dateCheckOut DATE
+AS
+BEGIN
+	SELECT Name , DateCheckIn , DateCheckOut, Discount , TotalPrice 
+	FROM TableFood
+		JOIN Bill ON Bill.IdTable = TableFood.Id
+		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
+	ORDER BY DateCheckIn, Name
+END
+GO
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -740,8 +754,4 @@ SELECT TOP(1) *
 FROM dbo.Account
 UPDATE dbo.Account SET Type = 1 WHERE UserName= N'admin'
 
-SELECT Bill.Id, Name AS [Tên bàn], DateCheckIn AS [Ngày vào], DateCheckOut AS [Ngày ra], Discount AS [Giảm giá], TotalPrice AS [Tổng tiền]
-	FROM TableFood
-		JOIN Bill ON Bill.IdTable = TableFood.Id
-		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
-	WHERE Bill.Status = 1
+SELECT * FROM Food

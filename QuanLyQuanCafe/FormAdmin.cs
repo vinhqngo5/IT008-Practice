@@ -321,5 +321,12 @@ namespace QuanLyQuanCafe
                 return;
             txbBillPage.Text = Convert.ToString(Convert.ToInt32(txbBillPage.Text) + 1);
         }
+
+        private void FormAdmin_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'qUANLYQUANCAFEDataSet3.USP_GetListFood' table. You can move, or remove it, as needed.
+            this.uSP_GetListBillByDateForReportTableAdapter.Fill(this.qUANLYQUANCAFEDataSet.USP_GetListBillByDateForReport, dtpkFromDate.Value, dtpkToDate.Value); 
+            this.rpViewer.RefreshReport();
+        }
     }
 }

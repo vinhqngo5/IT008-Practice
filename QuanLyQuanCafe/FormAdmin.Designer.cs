@@ -29,7 +29,10 @@ namespace QuanLyQuanCafe
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.uSPGetListFoodBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tcAdmin = new System.Windows.Forms.TabControl();
             this.tpBill = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -37,6 +40,11 @@ namespace QuanLyQuanCafe
             this.dtpkToDate = new System.Windows.Forms.DateTimePicker();
             this.dtpkFromDate = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txbBillPage = new System.Windows.Forms.TextBox();
+            this.btnNextBillPage = new System.Windows.Forms.Button();
+            this.btnLastBillPage = new System.Windows.Forms.Button();
+            this.btnPreviousBillPage = new System.Windows.Forms.Button();
+            this.btnFirstBillPage = new System.Windows.Forms.Button();
             this.dtgvBill = new System.Windows.Forms.DataGridView();
             this.tpFood = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -114,11 +122,12 @@ namespace QuanLyQuanCafe
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
             this.dtgvAccount = new System.Windows.Forms.DataGridView();
-            this.btnFirstBillPage = new System.Windows.Forms.Button();
-            this.btnPreviousBillPage = new System.Windows.Forms.Button();
-            this.btnLastBillPage = new System.Windows.Forms.Button();
-            this.btnNextBillPage = new System.Windows.Forms.Button();
-            this.txbBillPage = new System.Windows.Forms.TextBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.rpViewer = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.qUANLYQUANCAFEDataSet = new QuanLyQuanCafe.QUANLYQUANCAFEDataSet();
+            this.uSPGetListBillByDateForReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.uSP_GetListBillByDateForReportTableAdapter = new QuanLyQuanCafe.QUANLYQUANCAFEDataSetTableAdapters.USP_GetListBillByDateForReportTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.uSPGetListFoodBindingSource)).BeginInit();
             this.tcAdmin.SuspendLayout();
             this.tpBill.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -158,6 +167,9 @@ namespace QuanLyQuanCafe
             this.panel28.SuspendLayout();
             this.panel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvAccount)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.qUANLYQUANCAFEDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uSPGetListBillByDateForReportBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tcAdmin
@@ -167,8 +179,9 @@ namespace QuanLyQuanCafe
             this.tcAdmin.Controls.Add(this.tbFoodCategory);
             this.tcAdmin.Controls.Add(this.tpTable);
             this.tcAdmin.Controls.Add(this.tpAccount);
+            this.tcAdmin.Controls.Add(this.tabPage1);
             this.tcAdmin.Location = new System.Drawing.Point(16, 15);
-            this.tcAdmin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tcAdmin.Margin = new System.Windows.Forms.Padding(4);
             this.tcAdmin.Name = "tcAdmin";
             this.tcAdmin.SelectedIndex = 0;
             this.tcAdmin.Size = new System.Drawing.Size(877, 540);
@@ -179,9 +192,9 @@ namespace QuanLyQuanCafe
             this.tpBill.Controls.Add(this.panel2);
             this.tpBill.Controls.Add(this.panel1);
             this.tpBill.Location = new System.Drawing.Point(4, 25);
-            this.tpBill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpBill.Margin = new System.Windows.Forms.Padding(4);
             this.tpBill.Name = "tpBill";
-            this.tpBill.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpBill.Padding = new System.Windows.Forms.Padding(4);
             this.tpBill.Size = new System.Drawing.Size(869, 511);
             this.tpBill.TabIndex = 0;
             this.tpBill.Text = "Doanh thu";
@@ -193,7 +206,7 @@ namespace QuanLyQuanCafe
             this.panel2.Controls.Add(this.dtpkToDate);
             this.panel2.Controls.Add(this.dtpkFromDate);
             this.panel2.Location = new System.Drawing.Point(8, 7);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(851, 32);
             this.panel2.TabIndex = 1;
@@ -201,7 +214,7 @@ namespace QuanLyQuanCafe
             // btnViewBill
             // 
             this.btnViewBill.Location = new System.Drawing.Point(369, 0);
-            this.btnViewBill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnViewBill.Margin = new System.Windows.Forms.Padding(4);
             this.btnViewBill.Name = "btnViewBill";
             this.btnViewBill.Size = new System.Drawing.Size(103, 32);
             this.btnViewBill.TabIndex = 2;
@@ -212,7 +225,7 @@ namespace QuanLyQuanCafe
             // dtpkToDate
             // 
             this.dtpkToDate.Location = new System.Drawing.Point(580, 4);
-            this.dtpkToDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpkToDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpkToDate.Name = "dtpkToDate";
             this.dtpkToDate.Size = new System.Drawing.Size(265, 22);
             this.dtpkToDate.TabIndex = 1;
@@ -220,7 +233,7 @@ namespace QuanLyQuanCafe
             // dtpkFromDate
             // 
             this.dtpkFromDate.Location = new System.Drawing.Point(4, 4);
-            this.dtpkFromDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpkFromDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpkFromDate.Name = "dtpkFromDate";
             this.dtpkFromDate.Size = new System.Drawing.Size(265, 22);
             this.dtpkFromDate.TabIndex = 0;
@@ -234,10 +247,58 @@ namespace QuanLyQuanCafe
             this.panel1.Controls.Add(this.btnFirstBillPage);
             this.panel1.Controls.Add(this.dtgvBill);
             this.panel1.Location = new System.Drawing.Point(8, 47);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(851, 454);
             this.panel1.TabIndex = 0;
+            // 
+            // txbBillPage
+            // 
+            this.txbBillPage.Location = new System.Drawing.Point(369, 424);
+            this.txbBillPage.Name = "txbBillPage";
+            this.txbBillPage.Size = new System.Drawing.Size(103, 22);
+            this.txbBillPage.TabIndex = 5;
+            this.txbBillPage.TextChanged += new System.EventHandler(this.txbBillPage_TextChanged);
+            // 
+            // btnNextBillPage
+            // 
+            this.btnNextBillPage.Location = new System.Drawing.Point(655, 420);
+            this.btnNextBillPage.Name = "btnNextBillPage";
+            this.btnNextBillPage.Size = new System.Drawing.Size(92, 31);
+            this.btnNextBillPage.TabIndex = 4;
+            this.btnNextBillPage.Text = "Trang kế";
+            this.btnNextBillPage.UseVisualStyleBackColor = true;
+            this.btnNextBillPage.Click += new System.EventHandler(this.btnNextBillPage_Click);
+            // 
+            // btnLastBillPage
+            // 
+            this.btnLastBillPage.Location = new System.Drawing.Point(753, 420);
+            this.btnLastBillPage.Name = "btnLastBillPage";
+            this.btnLastBillPage.Size = new System.Drawing.Size(92, 31);
+            this.btnLastBillPage.TabIndex = 3;
+            this.btnLastBillPage.Text = "Trang cuối";
+            this.btnLastBillPage.UseVisualStyleBackColor = true;
+            this.btnLastBillPage.Click += new System.EventHandler(this.btnLastBillPage_Click);
+            // 
+            // btnPreviousBillPage
+            // 
+            this.btnPreviousBillPage.Location = new System.Drawing.Point(102, 420);
+            this.btnPreviousBillPage.Name = "btnPreviousBillPage";
+            this.btnPreviousBillPage.Size = new System.Drawing.Size(102, 31);
+            this.btnPreviousBillPage.TabIndex = 2;
+            this.btnPreviousBillPage.Text = "Trang trước";
+            this.btnPreviousBillPage.UseVisualStyleBackColor = true;
+            this.btnPreviousBillPage.Click += new System.EventHandler(this.btnPreviousBillPage_Click);
+            // 
+            // btnFirstBillPage
+            // 
+            this.btnFirstBillPage.Location = new System.Drawing.Point(4, 420);
+            this.btnFirstBillPage.Name = "btnFirstBillPage";
+            this.btnFirstBillPage.Size = new System.Drawing.Size(92, 31);
+            this.btnFirstBillPage.TabIndex = 1;
+            this.btnFirstBillPage.Text = "Trang đầu";
+            this.btnFirstBillPage.UseVisualStyleBackColor = true;
+            this.btnFirstBillPage.Click += new System.EventHandler(this.btnFirstBillPage_Click);
             // 
             // dtgvBill
             // 
@@ -247,13 +308,13 @@ namespace QuanLyQuanCafe
             this.dtgvBill.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dtgvBill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvBill.Location = new System.Drawing.Point(4, 4);
-            this.dtgvBill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtgvBill.Margin = new System.Windows.Forms.Padding(4);
             this.dtgvBill.Name = "dtgvBill";
             this.dtgvBill.RowHeadersVisible = false;
             this.dtgvBill.RowHeadersWidth = 51;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgvBill.Size = new System.Drawing.Size(843, 409);
             this.dtgvBill.TabIndex = 0;
             // 
@@ -264,9 +325,9 @@ namespace QuanLyQuanCafe
             this.tpFood.Controls.Add(this.panel4);
             this.tpFood.Controls.Add(this.panel3);
             this.tpFood.Location = new System.Drawing.Point(4, 25);
-            this.tpFood.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpFood.Margin = new System.Windows.Forms.Padding(4);
             this.tpFood.Name = "tpFood";
-            this.tpFood.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpFood.Padding = new System.Windows.Forms.Padding(4);
             this.tpFood.Size = new System.Drawing.Size(869, 511);
             this.tpFood.TabIndex = 1;
             this.tpFood.Text = "Thức ăn";
@@ -277,7 +338,7 @@ namespace QuanLyQuanCafe
             this.panel6.Controls.Add(this.txbSearchFoodName);
             this.panel6.Controls.Add(this.btnSearchFood);
             this.panel6.Location = new System.Drawing.Point(481, 4);
-            this.panel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel6.Margin = new System.Windows.Forms.Padding(4);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(377, 64);
             this.panel6.TabIndex = 3;
@@ -285,7 +346,7 @@ namespace QuanLyQuanCafe
             // txbSearchFoodName
             // 
             this.txbSearchFoodName.Location = new System.Drawing.Point(4, 21);
-            this.txbSearchFoodName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbSearchFoodName.Margin = new System.Windows.Forms.Padding(4);
             this.txbSearchFoodName.Name = "txbSearchFoodName";
             this.txbSearchFoodName.Size = new System.Drawing.Size(264, 22);
             this.txbSearchFoodName.TabIndex = 5;
@@ -293,7 +354,7 @@ namespace QuanLyQuanCafe
             // btnSearchFood
             // 
             this.btnSearchFood.Location = new System.Drawing.Point(277, 4);
-            this.btnSearchFood.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSearchFood.Margin = new System.Windows.Forms.Padding(4);
             this.btnSearchFood.Name = "btnSearchFood";
             this.btnSearchFood.Size = new System.Drawing.Size(100, 57);
             this.btnSearchFood.TabIndex = 4;
@@ -308,7 +369,7 @@ namespace QuanLyQuanCafe
             this.panel5.Controls.Add(this.panel8);
             this.panel5.Controls.Add(this.panel7);
             this.panel5.Location = new System.Drawing.Point(481, 75);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(380, 426);
             this.panel5.TabIndex = 2;
@@ -318,7 +379,7 @@ namespace QuanLyQuanCafe
             this.panel10.Controls.Add(this.nmFoodPrice);
             this.panel10.Controls.Add(this.label4);
             this.panel10.Location = new System.Drawing.Point(4, 188);
-            this.panel10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel10.Margin = new System.Windows.Forms.Padding(4);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(372, 54);
             this.panel10.TabIndex = 4;
@@ -326,7 +387,7 @@ namespace QuanLyQuanCafe
             // nmFoodPrice
             // 
             this.nmFoodPrice.Location = new System.Drawing.Point(121, 10);
-            this.nmFoodPrice.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nmFoodPrice.Margin = new System.Windows.Forms.Padding(4);
             this.nmFoodPrice.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -352,7 +413,7 @@ namespace QuanLyQuanCafe
             this.panel9.Controls.Add(this.cbFoodCategory);
             this.panel9.Controls.Add(this.label3);
             this.panel9.Location = new System.Drawing.Point(4, 127);
-            this.panel9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel9.Margin = new System.Windows.Forms.Padding(4);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(372, 54);
             this.panel9.TabIndex = 3;
@@ -361,7 +422,7 @@ namespace QuanLyQuanCafe
             // 
             this.cbFoodCategory.FormattingEnabled = true;
             this.cbFoodCategory.Location = new System.Drawing.Point(121, 11);
-            this.cbFoodCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbFoodCategory.Margin = new System.Windows.Forms.Padding(4);
             this.cbFoodCategory.Name = "cbFoodCategory";
             this.cbFoodCategory.Size = new System.Drawing.Size(245, 24);
             this.cbFoodCategory.TabIndex = 1;
@@ -382,7 +443,7 @@ namespace QuanLyQuanCafe
             this.panel8.Controls.Add(this.txbFoodName);
             this.panel8.Controls.Add(this.label2);
             this.panel8.Location = new System.Drawing.Point(4, 65);
-            this.panel8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel8.Margin = new System.Windows.Forms.Padding(4);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(372, 54);
             this.panel8.TabIndex = 2;
@@ -390,7 +451,7 @@ namespace QuanLyQuanCafe
             // txbFoodName
             // 
             this.txbFoodName.Location = new System.Drawing.Point(121, 10);
-            this.txbFoodName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbFoodName.Margin = new System.Windows.Forms.Padding(4);
             this.txbFoodName.Name = "txbFoodName";
             this.txbFoodName.Size = new System.Drawing.Size(245, 22);
             this.txbFoodName.TabIndex = 1;
@@ -411,7 +472,7 @@ namespace QuanLyQuanCafe
             this.panel7.Controls.Add(this.txbFoodID);
             this.panel7.Controls.Add(this.label1);
             this.panel7.Location = new System.Drawing.Point(4, 4);
-            this.panel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(372, 54);
             this.panel7.TabIndex = 1;
@@ -419,7 +480,7 @@ namespace QuanLyQuanCafe
             // txbFoodID
             // 
             this.txbFoodID.Location = new System.Drawing.Point(121, 10);
-            this.txbFoodID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbFoodID.Margin = new System.Windows.Forms.Padding(4);
             this.txbFoodID.Name = "txbFoodID";
             this.txbFoodID.ReadOnly = true;
             this.txbFoodID.Size = new System.Drawing.Size(245, 22);
@@ -443,7 +504,7 @@ namespace QuanLyQuanCafe
             this.panel4.Controls.Add(this.btnDeleteFood);
             this.panel4.Controls.Add(this.btnAddFood);
             this.panel4.Location = new System.Drawing.Point(7, 5);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(468, 64);
             this.panel4.TabIndex = 1;
@@ -451,7 +512,7 @@ namespace QuanLyQuanCafe
             // btnShowFood
             // 
             this.btnShowFood.Location = new System.Drawing.Point(364, 4);
-            this.btnShowFood.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnShowFood.Margin = new System.Windows.Forms.Padding(4);
             this.btnShowFood.Name = "btnShowFood";
             this.btnShowFood.Size = new System.Drawing.Size(100, 57);
             this.btnShowFood.TabIndex = 3;
@@ -462,7 +523,7 @@ namespace QuanLyQuanCafe
             // btnEditFood
             // 
             this.btnEditFood.Location = new System.Drawing.Point(244, 4);
-            this.btnEditFood.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEditFood.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditFood.Name = "btnEditFood";
             this.btnEditFood.Size = new System.Drawing.Size(100, 57);
             this.btnEditFood.TabIndex = 2;
@@ -473,7 +534,7 @@ namespace QuanLyQuanCafe
             // btnDeleteFood
             // 
             this.btnDeleteFood.Location = new System.Drawing.Point(124, 4);
-            this.btnDeleteFood.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteFood.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteFood.Name = "btnDeleteFood";
             this.btnDeleteFood.Size = new System.Drawing.Size(100, 57);
             this.btnDeleteFood.TabIndex = 1;
@@ -484,7 +545,7 @@ namespace QuanLyQuanCafe
             // btnAddFood
             // 
             this.btnAddFood.Location = new System.Drawing.Point(4, 4);
-            this.btnAddFood.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddFood.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddFood.Name = "btnAddFood";
             this.btnAddFood.Size = new System.Drawing.Size(100, 57);
             this.btnAddFood.TabIndex = 0;
@@ -496,7 +557,7 @@ namespace QuanLyQuanCafe
             // 
             this.panel3.Controls.Add(this.dtgvFood);
             this.panel3.Location = new System.Drawing.Point(7, 76);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(468, 426);
             this.panel3.TabIndex = 0;
@@ -511,7 +572,7 @@ namespace QuanLyQuanCafe
             this.dtgvFood.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvFood.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.dtgvFood.Location = new System.Drawing.Point(4, 4);
-            this.dtgvFood.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtgvFood.Margin = new System.Windows.Forms.Padding(4);
             this.dtgvFood.Name = "dtgvFood";
             this.dtgvFood.RowHeadersVisible = false;
             this.dtgvFood.RowHeadersWidth = 51;
@@ -524,9 +585,9 @@ namespace QuanLyQuanCafe
             this.tbFoodCategory.Controls.Add(this.panel17);
             this.tbFoodCategory.Controls.Add(this.panel18);
             this.tbFoodCategory.Location = new System.Drawing.Point(4, 25);
-            this.tbFoodCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbFoodCategory.Margin = new System.Windows.Forms.Padding(4);
             this.tbFoodCategory.Name = "tbFoodCategory";
-            this.tbFoodCategory.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbFoodCategory.Padding = new System.Windows.Forms.Padding(4);
             this.tbFoodCategory.Size = new System.Drawing.Size(869, 511);
             this.tbFoodCategory.TabIndex = 2;
             this.tbFoodCategory.Text = "Danh mục";
@@ -537,7 +598,7 @@ namespace QuanLyQuanCafe
             this.panel12.Controls.Add(this.panel15);
             this.panel12.Controls.Add(this.panel16);
             this.panel12.Location = new System.Drawing.Point(480, 76);
-            this.panel12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel12.Margin = new System.Windows.Forms.Padding(4);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(380, 426);
             this.panel12.TabIndex = 6;
@@ -547,7 +608,7 @@ namespace QuanLyQuanCafe
             this.panel15.Controls.Add(this.textBox2);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Location = new System.Drawing.Point(4, 65);
-            this.panel15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel15.Margin = new System.Windows.Forms.Padding(4);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(372, 54);
             this.panel15.TabIndex = 2;
@@ -555,7 +616,7 @@ namespace QuanLyQuanCafe
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(167, 10);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(200, 22);
             this.textBox2.TabIndex = 1;
@@ -576,7 +637,7 @@ namespace QuanLyQuanCafe
             this.panel16.Controls.Add(this.txbCategoryID);
             this.panel16.Controls.Add(this.label8);
             this.panel16.Location = new System.Drawing.Point(4, 4);
-            this.panel16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel16.Margin = new System.Windows.Forms.Padding(4);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(372, 54);
             this.panel16.TabIndex = 1;
@@ -584,7 +645,7 @@ namespace QuanLyQuanCafe
             // txbCategoryID
             // 
             this.txbCategoryID.Location = new System.Drawing.Point(167, 10);
-            this.txbCategoryID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbCategoryID.Margin = new System.Windows.Forms.Padding(4);
             this.txbCategoryID.Name = "txbCategoryID";
             this.txbCategoryID.ReadOnly = true;
             this.txbCategoryID.Size = new System.Drawing.Size(200, 22);
@@ -608,7 +669,7 @@ namespace QuanLyQuanCafe
             this.panel17.Controls.Add(this.btnDeleteCategory);
             this.panel17.Controls.Add(this.btnAddCategory);
             this.panel17.Location = new System.Drawing.Point(7, 5);
-            this.panel17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel17.Margin = new System.Windows.Forms.Padding(4);
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(468, 64);
             this.panel17.TabIndex = 5;
@@ -616,7 +677,7 @@ namespace QuanLyQuanCafe
             // btnShowCategory
             // 
             this.btnShowCategory.Location = new System.Drawing.Point(364, 4);
-            this.btnShowCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnShowCategory.Margin = new System.Windows.Forms.Padding(4);
             this.btnShowCategory.Name = "btnShowCategory";
             this.btnShowCategory.Size = new System.Drawing.Size(100, 57);
             this.btnShowCategory.TabIndex = 3;
@@ -626,7 +687,7 @@ namespace QuanLyQuanCafe
             // btnEditCategory
             // 
             this.btnEditCategory.Location = new System.Drawing.Point(244, 4);
-            this.btnEditCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEditCategory.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditCategory.Name = "btnEditCategory";
             this.btnEditCategory.Size = new System.Drawing.Size(100, 57);
             this.btnEditCategory.TabIndex = 2;
@@ -636,7 +697,7 @@ namespace QuanLyQuanCafe
             // btnDeleteCategory
             // 
             this.btnDeleteCategory.Location = new System.Drawing.Point(124, 4);
-            this.btnDeleteCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteCategory.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteCategory.Name = "btnDeleteCategory";
             this.btnDeleteCategory.Size = new System.Drawing.Size(100, 57);
             this.btnDeleteCategory.TabIndex = 1;
@@ -646,7 +707,7 @@ namespace QuanLyQuanCafe
             // btnAddCategory
             // 
             this.btnAddCategory.Location = new System.Drawing.Point(4, 4);
-            this.btnAddCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddCategory.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddCategory.Name = "btnAddCategory";
             this.btnAddCategory.Size = new System.Drawing.Size(100, 57);
             this.btnAddCategory.TabIndex = 0;
@@ -657,7 +718,7 @@ namespace QuanLyQuanCafe
             // 
             this.panel18.Controls.Add(this.dtgvCategory);
             this.panel18.Location = new System.Drawing.Point(7, 76);
-            this.panel18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel18.Margin = new System.Windows.Forms.Padding(4);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(465, 426);
             this.panel18.TabIndex = 4;
@@ -666,7 +727,7 @@ namespace QuanLyQuanCafe
             // 
             this.dtgvCategory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvCategory.Location = new System.Drawing.Point(4, 4);
-            this.dtgvCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtgvCategory.Margin = new System.Windows.Forms.Padding(4);
             this.dtgvCategory.Name = "dtgvCategory";
             this.dtgvCategory.RowHeadersWidth = 51;
             this.dtgvCategory.Size = new System.Drawing.Size(457, 418);
@@ -678,9 +739,9 @@ namespace QuanLyQuanCafe
             this.tpTable.Controls.Add(this.panel19);
             this.tpTable.Controls.Add(this.panel20);
             this.tpTable.Location = new System.Drawing.Point(4, 25);
-            this.tpTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpTable.Margin = new System.Windows.Forms.Padding(4);
             this.tpTable.Name = "tpTable";
-            this.tpTable.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpTable.Padding = new System.Windows.Forms.Padding(4);
             this.tpTable.Size = new System.Drawing.Size(869, 511);
             this.tpTable.TabIndex = 3;
             this.tpTable.Text = "Bàn ăn";
@@ -692,7 +753,7 @@ namespace QuanLyQuanCafe
             this.panel11.Controls.Add(this.panel13);
             this.panel11.Controls.Add(this.panel14);
             this.panel11.Location = new System.Drawing.Point(480, 76);
-            this.panel11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel11.Margin = new System.Windows.Forms.Padding(4);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(380, 426);
             this.panel11.TabIndex = 9;
@@ -702,7 +763,7 @@ namespace QuanLyQuanCafe
             this.panel21.Controls.Add(this.cbTableStatus);
             this.panel21.Controls.Add(this.label9);
             this.panel21.Location = new System.Drawing.Point(4, 127);
-            this.panel21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel21.Margin = new System.Windows.Forms.Padding(4);
             this.panel21.Name = "panel21";
             this.panel21.Size = new System.Drawing.Size(372, 54);
             this.panel21.TabIndex = 3;
@@ -711,7 +772,7 @@ namespace QuanLyQuanCafe
             // 
             this.cbTableStatus.FormattingEnabled = true;
             this.cbTableStatus.Location = new System.Drawing.Point(167, 11);
-            this.cbTableStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbTableStatus.Margin = new System.Windows.Forms.Padding(4);
             this.cbTableStatus.Name = "cbTableStatus";
             this.cbTableStatus.Size = new System.Drawing.Size(200, 24);
             this.cbTableStatus.TabIndex = 1;
@@ -732,7 +793,7 @@ namespace QuanLyQuanCafe
             this.panel13.Controls.Add(this.txbTableName);
             this.panel13.Controls.Add(this.label5);
             this.panel13.Location = new System.Drawing.Point(4, 65);
-            this.panel13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel13.Margin = new System.Windows.Forms.Padding(4);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(372, 54);
             this.panel13.TabIndex = 2;
@@ -740,7 +801,7 @@ namespace QuanLyQuanCafe
             // txbTableName
             // 
             this.txbTableName.Location = new System.Drawing.Point(167, 10);
-            this.txbTableName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbTableName.Margin = new System.Windows.Forms.Padding(4);
             this.txbTableName.Name = "txbTableName";
             this.txbTableName.Size = new System.Drawing.Size(200, 22);
             this.txbTableName.TabIndex = 1;
@@ -761,7 +822,7 @@ namespace QuanLyQuanCafe
             this.panel14.Controls.Add(this.textBox3);
             this.panel14.Controls.Add(this.label6);
             this.panel14.Location = new System.Drawing.Point(4, 4);
-            this.panel14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel14.Margin = new System.Windows.Forms.Padding(4);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(372, 54);
             this.panel14.TabIndex = 1;
@@ -769,7 +830,7 @@ namespace QuanLyQuanCafe
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(167, 10);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(200, 22);
@@ -793,7 +854,7 @@ namespace QuanLyQuanCafe
             this.panel19.Controls.Add(this.btnDeleteTable);
             this.panel19.Controls.Add(this.btnAddTable);
             this.panel19.Location = new System.Drawing.Point(7, 5);
-            this.panel19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel19.Margin = new System.Windows.Forms.Padding(4);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(468, 64);
             this.panel19.TabIndex = 8;
@@ -801,7 +862,7 @@ namespace QuanLyQuanCafe
             // btnShowTable
             // 
             this.btnShowTable.Location = new System.Drawing.Point(364, 4);
-            this.btnShowTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnShowTable.Margin = new System.Windows.Forms.Padding(4);
             this.btnShowTable.Name = "btnShowTable";
             this.btnShowTable.Size = new System.Drawing.Size(100, 57);
             this.btnShowTable.TabIndex = 3;
@@ -811,7 +872,7 @@ namespace QuanLyQuanCafe
             // btnEditTable
             // 
             this.btnEditTable.Location = new System.Drawing.Point(244, 4);
-            this.btnEditTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEditTable.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditTable.Name = "btnEditTable";
             this.btnEditTable.Size = new System.Drawing.Size(100, 57);
             this.btnEditTable.TabIndex = 2;
@@ -821,7 +882,7 @@ namespace QuanLyQuanCafe
             // btnDeleteTable
             // 
             this.btnDeleteTable.Location = new System.Drawing.Point(124, 4);
-            this.btnDeleteTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteTable.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteTable.Name = "btnDeleteTable";
             this.btnDeleteTable.Size = new System.Drawing.Size(100, 57);
             this.btnDeleteTable.TabIndex = 1;
@@ -831,7 +892,7 @@ namespace QuanLyQuanCafe
             // btnAddTable
             // 
             this.btnAddTable.Location = new System.Drawing.Point(4, 4);
-            this.btnAddTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddTable.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddTable.Name = "btnAddTable";
             this.btnAddTable.Size = new System.Drawing.Size(100, 57);
             this.btnAddTable.TabIndex = 0;
@@ -842,7 +903,7 @@ namespace QuanLyQuanCafe
             // 
             this.panel20.Controls.Add(this.dtgvTable);
             this.panel20.Location = new System.Drawing.Point(7, 76);
-            this.panel20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel20.Margin = new System.Windows.Forms.Padding(4);
             this.panel20.Name = "panel20";
             this.panel20.Size = new System.Drawing.Size(465, 426);
             this.panel20.TabIndex = 7;
@@ -851,7 +912,7 @@ namespace QuanLyQuanCafe
             // 
             this.dtgvTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvTable.Location = new System.Drawing.Point(4, 4);
-            this.dtgvTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtgvTable.Margin = new System.Windows.Forms.Padding(4);
             this.dtgvTable.Name = "dtgvTable";
             this.dtgvTable.RowHeadersWidth = 51;
             this.dtgvTable.Size = new System.Drawing.Size(457, 418);
@@ -863,9 +924,9 @@ namespace QuanLyQuanCafe
             this.tpAccount.Controls.Add(this.panel28);
             this.tpAccount.Controls.Add(this.panel29);
             this.tpAccount.Location = new System.Drawing.Point(4, 25);
-            this.tpAccount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpAccount.Margin = new System.Windows.Forms.Padding(4);
             this.tpAccount.Name = "tpAccount";
-            this.tpAccount.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpAccount.Padding = new System.Windows.Forms.Padding(4);
             this.tpAccount.Size = new System.Drawing.Size(869, 511);
             this.tpAccount.TabIndex = 4;
             this.tpAccount.Text = "Tài khoản";
@@ -878,7 +939,7 @@ namespace QuanLyQuanCafe
             this.panel23.Controls.Add(this.panel26);
             this.panel23.Controls.Add(this.panel27);
             this.panel23.Location = new System.Drawing.Point(480, 76);
-            this.panel23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel23.Margin = new System.Windows.Forms.Padding(4);
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(380, 426);
             this.panel23.TabIndex = 6;
@@ -886,7 +947,7 @@ namespace QuanLyQuanCafe
             // btnResetPassword
             // 
             this.btnResetPassword.Location = new System.Drawing.Point(243, 188);
-            this.btnResetPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnResetPassword.Margin = new System.Windows.Forms.Padding(4);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(133, 52);
             this.btnResetPassword.TabIndex = 4;
@@ -899,7 +960,7 @@ namespace QuanLyQuanCafe
             this.panel25.Controls.Add(this.chkAccountType);
             this.panel25.Controls.Add(this.label11);
             this.panel25.Location = new System.Drawing.Point(4, 127);
-            this.panel25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel25.Margin = new System.Windows.Forms.Padding(4);
             this.panel25.Name = "panel25";
             this.panel25.Size = new System.Drawing.Size(372, 54);
             this.panel25.TabIndex = 3;
@@ -909,7 +970,7 @@ namespace QuanLyQuanCafe
             this.chkAccountType.AutoSize = true;
             this.chkAccountType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAccountType.Location = new System.Drawing.Point(169, 16);
-            this.chkAccountType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkAccountType.Margin = new System.Windows.Forms.Padding(4);
             this.chkAccountType.Name = "chkAccountType";
             this.chkAccountType.Size = new System.Drawing.Size(77, 23);
             this.chkAccountType.TabIndex = 1;
@@ -932,7 +993,7 @@ namespace QuanLyQuanCafe
             this.panel26.Controls.Add(this.txbDisplayName);
             this.panel26.Controls.Add(this.label12);
             this.panel26.Location = new System.Drawing.Point(4, 65);
-            this.panel26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel26.Margin = new System.Windows.Forms.Padding(4);
             this.panel26.Name = "panel26";
             this.panel26.Size = new System.Drawing.Size(372, 54);
             this.panel26.TabIndex = 2;
@@ -940,7 +1001,7 @@ namespace QuanLyQuanCafe
             // txbDisplayName
             // 
             this.txbDisplayName.Location = new System.Drawing.Point(169, 14);
-            this.txbDisplayName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbDisplayName.Margin = new System.Windows.Forms.Padding(4);
             this.txbDisplayName.Name = "txbDisplayName";
             this.txbDisplayName.Size = new System.Drawing.Size(197, 22);
             this.txbDisplayName.TabIndex = 1;
@@ -961,7 +1022,7 @@ namespace QuanLyQuanCafe
             this.panel27.Controls.Add(this.txbUserName);
             this.panel27.Controls.Add(this.label13);
             this.panel27.Location = new System.Drawing.Point(4, 4);
-            this.panel27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel27.Margin = new System.Windows.Forms.Padding(4);
             this.panel27.Name = "panel27";
             this.panel27.Size = new System.Drawing.Size(372, 54);
             this.panel27.TabIndex = 1;
@@ -969,7 +1030,7 @@ namespace QuanLyQuanCafe
             // txbUserName
             // 
             this.txbUserName.Location = new System.Drawing.Point(169, 14);
-            this.txbUserName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbUserName.Margin = new System.Windows.Forms.Padding(4);
             this.txbUserName.Name = "txbUserName";
             this.txbUserName.Size = new System.Drawing.Size(197, 22);
             this.txbUserName.TabIndex = 1;
@@ -992,7 +1053,7 @@ namespace QuanLyQuanCafe
             this.panel28.Controls.Add(this.btnDeleteAccount);
             this.panel28.Controls.Add(this.btnAddAccount);
             this.panel28.Location = new System.Drawing.Point(7, 5);
-            this.panel28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel28.Margin = new System.Windows.Forms.Padding(4);
             this.panel28.Name = "panel28";
             this.panel28.Size = new System.Drawing.Size(468, 64);
             this.panel28.TabIndex = 5;
@@ -1000,7 +1061,7 @@ namespace QuanLyQuanCafe
             // btnShowAccount
             // 
             this.btnShowAccount.Location = new System.Drawing.Point(364, 4);
-            this.btnShowAccount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnShowAccount.Margin = new System.Windows.Forms.Padding(4);
             this.btnShowAccount.Name = "btnShowAccount";
             this.btnShowAccount.Size = new System.Drawing.Size(100, 57);
             this.btnShowAccount.TabIndex = 3;
@@ -1011,7 +1072,7 @@ namespace QuanLyQuanCafe
             // btnEditAccount
             // 
             this.btnEditAccount.Location = new System.Drawing.Point(244, 4);
-            this.btnEditAccount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEditAccount.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditAccount.Name = "btnEditAccount";
             this.btnEditAccount.Size = new System.Drawing.Size(100, 57);
             this.btnEditAccount.TabIndex = 2;
@@ -1022,7 +1083,7 @@ namespace QuanLyQuanCafe
             // btnDeleteAccount
             // 
             this.btnDeleteAccount.Location = new System.Drawing.Point(124, 4);
-            this.btnDeleteAccount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteAccount.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteAccount.Name = "btnDeleteAccount";
             this.btnDeleteAccount.Size = new System.Drawing.Size(100, 57);
             this.btnDeleteAccount.TabIndex = 1;
@@ -1033,7 +1094,7 @@ namespace QuanLyQuanCafe
             // btnAddAccount
             // 
             this.btnAddAccount.Location = new System.Drawing.Point(4, 4);
-            this.btnAddAccount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddAccount.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddAccount.Name = "btnAddAccount";
             this.btnAddAccount.Size = new System.Drawing.Size(100, 57);
             this.btnAddAccount.TabIndex = 0;
@@ -1045,7 +1106,7 @@ namespace QuanLyQuanCafe
             // 
             this.panel29.Controls.Add(this.dtgvAccount);
             this.panel29.Location = new System.Drawing.Point(7, 76);
-            this.panel29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel29.Margin = new System.Windows.Forms.Padding(4);
             this.panel29.Name = "panel29";
             this.panel29.Size = new System.Drawing.Size(465, 426);
             this.panel29.TabIndex = 4;
@@ -1058,60 +1119,49 @@ namespace QuanLyQuanCafe
             this.dtgvAccount.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dtgvAccount.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvAccount.Location = new System.Drawing.Point(4, 4);
-            this.dtgvAccount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtgvAccount.Margin = new System.Windows.Forms.Padding(4);
             this.dtgvAccount.Name = "dtgvAccount";
             this.dtgvAccount.RowHeadersVisible = false;
             this.dtgvAccount.RowHeadersWidth = 51;
             this.dtgvAccount.Size = new System.Drawing.Size(457, 418);
             this.dtgvAccount.TabIndex = 0;
             // 
-            // btnFirstBillPage
+            // tabPage1
             // 
-            this.btnFirstBillPage.Location = new System.Drawing.Point(4, 420);
-            this.btnFirstBillPage.Name = "btnFirstBillPage";
-            this.btnFirstBillPage.Size = new System.Drawing.Size(92, 31);
-            this.btnFirstBillPage.TabIndex = 1;
-            this.btnFirstBillPage.Text = "Trang đầu";
-            this.btnFirstBillPage.UseVisualStyleBackColor = true;
-            this.btnFirstBillPage.Click += new System.EventHandler(this.btnFirstBillPage_Click);
+            this.tabPage1.Controls.Add(this.rpViewer);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(869, 511);
+            this.tabPage1.TabIndex = 5;
+            this.tabPage1.Text = "Báo cáo";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnPreviousBillPage
+            // rpViewer
             // 
-            this.btnPreviousBillPage.Location = new System.Drawing.Point(102, 420);
-            this.btnPreviousBillPage.Name = "btnPreviousBillPage";
-            this.btnPreviousBillPage.Size = new System.Drawing.Size(92, 31);
-            this.btnPreviousBillPage.TabIndex = 2;
-            this.btnPreviousBillPage.Text = "Trang trước";
-            this.btnPreviousBillPage.UseVisualStyleBackColor = true;
-            this.btnPreviousBillPage.Click += new System.EventHandler(this.btnPreviousBillPage_Click);
+            reportDataSource1.Name = "DataSet1";
+            reportDataSource1.Value = this.uSPGetListBillByDateForReportBindingSource;
+            this.rpViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.rpViewer.LocalReport.ReportEmbeddedResource = "QuanLyQuanCafe.Report1.rdlc";
+            this.rpViewer.Location = new System.Drawing.Point(3, 0);
+            this.rpViewer.Name = "rpViewer";
+            this.rpViewer.ServerReport.BearerToken = null;
+            this.rpViewer.Size = new System.Drawing.Size(864, 508);
+            this.rpViewer.TabIndex = 0;
             // 
-            // btnLastBillPage
+            // qUANLYQUANCAFEDataSet
             // 
-            this.btnLastBillPage.Location = new System.Drawing.Point(753, 420);
-            this.btnLastBillPage.Name = "btnLastBillPage";
-            this.btnLastBillPage.Size = new System.Drawing.Size(92, 31);
-            this.btnLastBillPage.TabIndex = 3;
-            this.btnLastBillPage.Text = "Trang cuối";
-            this.btnLastBillPage.UseVisualStyleBackColor = true;
-            this.btnLastBillPage.Click += new System.EventHandler(this.btnLastBillPage_Click);
+            this.qUANLYQUANCAFEDataSet.DataSetName = "QUANLYQUANCAFEDataSet";
+            this.qUANLYQUANCAFEDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // btnNextBillPage
+            // uSPGetListBillByDateForReportBindingSource
             // 
-            this.btnNextBillPage.Location = new System.Drawing.Point(655, 420);
-            this.btnNextBillPage.Name = "btnNextBillPage";
-            this.btnNextBillPage.Size = new System.Drawing.Size(92, 31);
-            this.btnNextBillPage.TabIndex = 4;
-            this.btnNextBillPage.Text = "Trang kế";
-            this.btnNextBillPage.UseVisualStyleBackColor = true;
-            this.btnNextBillPage.Click += new System.EventHandler(this.btnNextBillPage_Click);
+            this.uSPGetListBillByDateForReportBindingSource.DataMember = "USP_GetListBillByDateForReport";
+            this.uSPGetListBillByDateForReportBindingSource.DataSource = this.qUANLYQUANCAFEDataSet;
             // 
-            // txbBillPage
+            // uSP_GetListBillByDateForReportTableAdapter
             // 
-            this.txbBillPage.Location = new System.Drawing.Point(369, 424);
-            this.txbBillPage.Name = "txbBillPage";
-            this.txbBillPage.Size = new System.Drawing.Size(103, 22);
-            this.txbBillPage.TabIndex = 5;
-            this.txbBillPage.TextChanged += new System.EventHandler(this.txbBillPage_TextChanged);
+            this.uSP_GetListBillByDateForReportTableAdapter.ClearBeforeFill = true;
             // 
             // FormAdmin
             // 
@@ -1119,10 +1169,12 @@ namespace QuanLyQuanCafe
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(899, 570);
             this.Controls.Add(this.tcAdmin);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Admin";
+            this.Load += new System.EventHandler(this.FormAdmin_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.uSPGetListFoodBindingSource)).EndInit();
             this.tcAdmin.ResumeLayout(false);
             this.tpBill.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -1176,6 +1228,9 @@ namespace QuanLyQuanCafe
             this.panel28.ResumeLayout(false);
             this.panel29.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvAccount)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.qUANLYQUANCAFEDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uSPGetListBillByDateForReportBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1271,5 +1326,11 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.Button btnLastBillPage;
         private System.Windows.Forms.Button btnPreviousBillPage;
         private System.Windows.Forms.Button btnFirstBillPage;
+        private System.Windows.Forms.TabPage tabPage1;
+        private Microsoft.Reporting.WinForms.ReportViewer rpViewer;
+        private System.Windows.Forms.BindingSource uSPGetListFoodBindingSource;
+        private System.Windows.Forms.BindingSource uSPGetListBillByDateForReportBindingSource;
+        private QUANLYQUANCAFEDataSet qUANLYQUANCAFEDataSet;
+        private QUANLYQUANCAFEDataSetTableAdapters.USP_GetListBillByDateForReportTableAdapter uSP_GetListBillByDateForReportTableAdapter;
     }
 }
