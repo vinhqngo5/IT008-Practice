@@ -29,7 +29,9 @@ namespace QuanLyQuanCafe
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.tcAdmin = new System.Windows.Forms.TabControl();
             this.tpBill = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -119,6 +121,11 @@ namespace QuanLyQuanCafe
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
             this.dtgvAccount = new System.Windows.Forms.DataGridView();
+            this.tpReport = new System.Windows.Forms.TabPage();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.QUANLYQUANCAFEDataSet = new QuanLyQuanCafe.QUANLYQUANCAFEDataSet();
+            this.USP_ReportFoodRevenueBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.USP_ReportFoodRevenueTableAdapter = new QuanLyQuanCafe.QUANLYQUANCAFEDataSetTableAdapters.USP_ReportFoodRevenueTableAdapter();
             this.tcAdmin.SuspendLayout();
             this.tpBill.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -158,6 +165,9 @@ namespace QuanLyQuanCafe
             this.panel28.SuspendLayout();
             this.panel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvAccount)).BeginInit();
+            this.tpReport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QUANLYQUANCAFEDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.USP_ReportFoodRevenueBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tcAdmin
@@ -167,6 +177,7 @@ namespace QuanLyQuanCafe
             this.tcAdmin.Controls.Add(this.tbFoodCategory);
             this.tcAdmin.Controls.Add(this.tpTable);
             this.tcAdmin.Controls.Add(this.tpAccount);
+            this.tcAdmin.Controls.Add(this.tpReport);
             this.tcAdmin.Location = new System.Drawing.Point(12, 12);
             this.tcAdmin.Name = "tcAdmin";
             this.tcAdmin.SelectedIndex = 0;
@@ -1031,6 +1042,43 @@ namespace QuanLyQuanCafe
             this.dtgvAccount.Size = new System.Drawing.Size(343, 340);
             this.dtgvAccount.TabIndex = 0;
             // 
+            // tpReport
+            // 
+            this.tpReport.Controls.Add(this.reportViewer1);
+            this.tpReport.Location = new System.Drawing.Point(4, 22);
+            this.tpReport.Name = "tpReport";
+            this.tpReport.Padding = new System.Windows.Forms.Padding(3);
+            this.tpReport.Size = new System.Drawing.Size(650, 413);
+            this.tpReport.TabIndex = 5;
+            this.tpReport.Text = "Báo cáo";
+            this.tpReport.UseVisualStyleBackColor = true;
+            // 
+            // reportViewer1
+            // 
+            reportDataSource1.Name = "DataSetFoodRevenue";
+            reportDataSource1.Value = this.USP_ReportFoodRevenueBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer1.LocalReport.ReportEmbeddedResource = "QuanLyQuanCafe.ReportRevenue.rdlc";
+            this.reportViewer1.Location = new System.Drawing.Point(3, 3);
+            this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.ServerReport.BearerToken = null;
+            this.reportViewer1.Size = new System.Drawing.Size(644, 407);
+            this.reportViewer1.TabIndex = 0;
+            // 
+            // QUANLYQUANCAFEDataSet
+            // 
+            this.QUANLYQUANCAFEDataSet.DataSetName = "QUANLYQUANCAFEDataSet";
+            this.QUANLYQUANCAFEDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // USP_ReportFoodRevenueBindingSource
+            // 
+            this.USP_ReportFoodRevenueBindingSource.DataMember = "USP_ReportFoodRevenue";
+            this.USP_ReportFoodRevenueBindingSource.DataSource = this.QUANLYQUANCAFEDataSet;
+            // 
+            // USP_ReportFoodRevenueTableAdapter
+            // 
+            this.USP_ReportFoodRevenueTableAdapter.ClearBeforeFill = true;
+            // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1040,6 +1088,7 @@ namespace QuanLyQuanCafe
             this.Name = "FormAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Admin";
+            this.Load += new System.EventHandler(this.FormAdmin_Load);
             this.tcAdmin.ResumeLayout(false);
             this.tpBill.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -1093,6 +1142,9 @@ namespace QuanLyQuanCafe
             this.panel28.ResumeLayout(false);
             this.panel29.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvAccount)).EndInit();
+            this.tpReport.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.QUANLYQUANCAFEDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.USP_ReportFoodRevenueBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1188,5 +1240,10 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.Button btnLast;
         private System.Windows.Forms.TextBox txbPageNumber;
         private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.TabPage tpReport;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.BindingSource USP_ReportFoodRevenueBindingSource;
+        private QUANLYQUANCAFEDataSet QUANLYQUANCAFEDataSet;
+        private QUANLYQUANCAFEDataSetTableAdapters.USP_ReportFoodRevenueTableAdapter USP_ReportFoodRevenueTableAdapter;
     }
 }

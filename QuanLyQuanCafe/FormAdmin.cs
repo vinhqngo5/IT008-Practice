@@ -342,5 +342,13 @@ namespace QuanLyQuanCafe
         {
             txbPageNumber.Text = "1";
         }
+
+        private void FormAdmin_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'QUANLYQUANCAFEDataSet.USP_ReportFoodRevenue' table. You can move, or remove it, as needed.
+            this.USP_ReportFoodRevenueTableAdapter.Fill(this.QUANLYQUANCAFEDataSet.USP_ReportFoodRevenue);
+
+            this.reportViewer1.RefreshReport();
+        }
     }
 }
