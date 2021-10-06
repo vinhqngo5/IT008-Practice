@@ -286,5 +286,38 @@ namespace QuanLyQuanCafe
             ResetPassword(userName);
         }
         #endregion
+
+        private void btnFirstBillPage_Click(object sender, EventArgs e)
+        {
+            txbBillPage.Text = "1";
+        }
+
+        private void btnLastBillPage_Click(object sender, EventArgs e)
+        {
+            int sumRecord = BillDAO.Instance.GetNumBillByDate(dtpkFromDate.Value, dtpkToDate.Value);
+            int lastPage = sumRecord / 10;
+            if (sumRecord %10 != 0)
+            {
+                lastPage++;
+            }
+            txbBillPage.Text = Convert.ToString(lastPage);
+        }
+
+        private void txbBillPage_TextChanged(object sender, EventArgs e)
+        {
+            dtgvBill.DataSource = BillDAO.Instance.GetListBillByDateAndPage(dtpkFromDate.Value, dtpkToDate.Value, Convert.ToInt32(txbBillPage.Text));
+        }
+
+        private void btnPreviousBillPage_Click(object sender, EventArgs e)
+        {
+            if (txbBillPage.Text == "1")
+                return;
+            txbBillPage.Text = Convert.ToString(Convert.ToInt32(txbBillPage.Text) - 1);
+        }
+
+        private void btnNextBillPage_Click(object sender, EventArgs e)
+        {
+            txbBillPage.Text = Convert.ToString(Convert.ToInt32(txbBillPage.Text) + 1);
+        }
     }
 }
