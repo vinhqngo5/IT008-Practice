@@ -14,6 +14,14 @@ GO
 -- Bill
 -- BillInfo
 
+CREATE FUNCTION DEFAULT_PASSWORD()
+RETURNS NVARCHAR(100)
+AS
+BEGIN
+	RETURN '228246131016621524321118216673752813427153246731982492368117117532273224215150124149' -- 0
+	-- 231158651427298531052159442123917413623715511917738164691852551571981521548239160121 = 1
+END
+GO
 
 BEGIN
 	-- CREATE TABLE --
@@ -29,7 +37,7 @@ BEGIN
 	(
 		UserName NVARCHAR(100) PRIMARY KEY,
 		DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Staff',
-		PassWord NVARCHAR(100) NOT NULL DEFAULT 0,
+		PassWord NVARCHAR(100) NOT NULL DEFAULT dbo.DEFAULT_PASSWORD(),
 		Type BIT NOT NULL DEFAULT 0
 		-- 1: admin && 0: staff
 	)
@@ -96,19 +104,19 @@ VALUES
 	(
 		N'staff', -- UserName - nvarchar(100)
 		N'staff', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
+		dbo.DEFAULT_PASSWORD(), -- PassWord - nvarchar(100)
 		0  -- Type - bit
 	),
 	(
 		N'Admin', -- UserName - nvarchar(100)
 		N'Admin', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
-		0  -- Type - bit
+		dbo.DEFAULT_PASSWORD(), -- PassWord - nvarchar(100)
+		1  -- Type - bit
 	),
 	(
 		N'K9', -- UserName - nvarchar(100)
 		N'RongK9', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(1000)
+		dbo.DEFAULT_PASSWORD(), -- PassWord - nvarchar(1000)
 		0  -- Type - bit
 	)
 
@@ -564,7 +572,7 @@ CREATE PROC USP_ResetPassword
 	@userName NVARCHAR(100)
 AS
 BEGIN
-	UPDATE dbo.Account SET PassWord = '0' WHERE UserName = @userName
+	UPDATE dbo.Account SET PassWord = dbo.DEFAULT_PASSWORD() WHERE UserName = @userName
 END
 GO
 
