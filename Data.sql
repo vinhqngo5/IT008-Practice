@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
--- CREATE DATABASE QUANLYQUANCAFE
--- GO
+DROP DATABASE QUANLYQUANCAFE
+CREATE DATABASE QUANLYQUANCAFE
+GO
 
 USE QUANLYQUANCAFE
 GO
@@ -29,7 +29,7 @@ BEGIN
 	(
 		UserName NVARCHAR(100) PRIMARY KEY,
 		DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Staff',
-		PassWord NVARCHAR(100) NOT NULL DEFAULT 0,
+		PassWord NVARCHAR(100) NOT NULL DEFAULT '1962026656160185351301320480154111117132155',
 		Type BIT NOT NULL DEFAULT 0
 		-- 1: admin && 0: staff
 	)
@@ -96,19 +96,19 @@ VALUES
 	(
 		N'staff', -- UserName - nvarchar(100)
 		N'staff', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
+		N'1962026656160185351301320480154111117132155', -- PassWord - nvarchar(100)
 		0  -- Type - bit
 	),
 	(
 		N'Admin', -- UserName - nvarchar(100)
 		N'Admin', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(100)
+		N'1962026656160185351301320480154111117132155', -- PassWord - nvarchar(100)
 		0  -- Type - bit
 	),
 	(
 		N'K9', -- UserName - nvarchar(100)
 		N'RongK9', -- DisplayName - nvarchar(100)
-		N'1', -- PassWord - nvarchar(1000)
+		N'1962026656160185351301320480154111117132155', -- PassWord - nvarchar(1000)
 		0  -- Type - bit
 	)
 
@@ -564,7 +564,7 @@ CREATE PROC USP_ResetPassword
 	@userName NVARCHAR(100)
 AS
 BEGIN
-	UPDATE dbo.Account SET PassWord = '0' WHERE UserName = @userName
+	UPDATE dbo.Account SET PassWord = '1962026656160185351301320480154111117132155' WHERE UserName = @userName
 END
 GO
 

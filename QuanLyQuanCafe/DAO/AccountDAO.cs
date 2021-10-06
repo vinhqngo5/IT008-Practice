@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,9 +23,11 @@ namespace QuanLyQuanCafe.DAO
 
         public bool Login(string userName, string passWord)
         {
+            string hashPass = EncodePassWord(passWord);
+
             string query = "USP_Login @userName , @passWord";
 
-            DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] { userName, passWord });
+            DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] { userName, hashPass });
 
             return result.Rows.Count > 0;
         }
@@ -37,7 +40,9 @@ namespace QuanLyQuanCafe.DAO
 
         public bool UpdateAccount(string userName, string displayName, string passWord, string newPass)
         {
-            return DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @passWord , @newPassWord", new object[] { userName, displayName, passWord, newPass }) > 0;
+            string encodePass = EncodePassWord(passWord);
+            string encodeNewPass = EncodePassWord(newPass);
+            return DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @passWord , @newPassWord", new object[] { userName, displayName, encodePass, encodeNewPass }) > 0;
         }
 
         public DataTable GetListAccount()
@@ -62,6 +67,18 @@ namespace QuanLyQuanCafe.DAO
         public bool ResetPassword(string userName)
         {
             return DataProvider.Instance.ExecuteNonQuery("USP_ResetPassword @userName", new object[] { userName }) > 0;
+        }
+
+        public string EncodePassWord(string passWord)
+        {
+            byte[] temp = ASCIIEncoding.ASCII.GetBytes(passWord);
+            byte[] hashData = new MD5CryptoServiceProvider().ComputeHash(temp);
+            string hashPass = "";
+            foreach (byte item in hashData)
+            {
+                hashPass += item;
+            }
+            return hashPass;
         }
     }
 }
