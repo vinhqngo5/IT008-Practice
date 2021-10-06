@@ -329,6 +329,19 @@ namespace QuanLyQuanCafe
             }
         }
 
+
+
+
         #endregion
+
+        private void tsmiAddFood_Click(object sender, EventArgs e)
+        {
+            btnAddFood_Click(this, new EventArgs());
+        }
+
+        private void tsmiCheckOut_Click(object sender, EventArgs e)
+        {
+            btnCheckOut_Click(this, new EventArgs());
+        }
     }
 }

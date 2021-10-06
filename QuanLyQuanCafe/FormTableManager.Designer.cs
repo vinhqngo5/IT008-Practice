@@ -34,6 +34,9 @@ namespace QuanLyQuanCafe
             this.tsmiAccountInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLogout = new System.Windows.Forms.ToolStripMenuItem();
+            this.chứcNăngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddFood = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCheckOut = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lsvBill = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -64,19 +67,21 @@ namespace QuanLyQuanCafe
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAdmin,
-            this.tsmiAccountInfo});
+            this.tsmiAccountInfo,
+            this.chứcNăngToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(797, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1063, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // tsmiAdmin
             // 
             this.tsmiAdmin.Name = "tsmiAdmin";
-            this.tsmiAdmin.Size = new System.Drawing.Size(55, 20);
+            this.tsmiAdmin.Size = new System.Drawing.Size(67, 24);
             this.tsmiAdmin.Text = "Admin";
             this.tsmiAdmin.Click += new System.EventHandler(this.TsmiAdmin_Click);
             // 
@@ -86,29 +91,55 @@ namespace QuanLyQuanCafe
             this.tsmiAbout,
             this.tsmiLogout});
             this.tsmiAccountInfo.Name = "tsmiAccountInfo";
-            this.tsmiAccountInfo.Size = new System.Drawing.Size(122, 20);
+            this.tsmiAccountInfo.Size = new System.Drawing.Size(151, 24);
             this.tsmiAccountInfo.Text = "Thông tin tài khoản";
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(170, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(210, 26);
             this.tsmiAbout.Text = "Thông tin cá nhân";
             this.tsmiAbout.Click += new System.EventHandler(this.TsmiAbout_Click);
             // 
             // tsmiLogout
             // 
             this.tsmiLogout.Name = "tsmiLogout";
-            this.tsmiLogout.Size = new System.Drawing.Size(170, 22);
+            this.tsmiLogout.Size = new System.Drawing.Size(210, 26);
             this.tsmiLogout.Text = "Đăng xuất";
             this.tsmiLogout.Click += new System.EventHandler(this.TsmiLogout_Click);
+            // 
+            // chứcNăngToolStripMenuItem
+            // 
+            this.chứcNăngToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAddFood,
+            this.tsmiCheckOut});
+            this.chứcNăngToolStripMenuItem.Name = "chứcNăngToolStripMenuItem";
+            this.chứcNăngToolStripMenuItem.Size = new System.Drawing.Size(93, 24);
+            this.chứcNăngToolStripMenuItem.Text = "Chức năng";
+            // 
+            // tsmiAddFood
+            // 
+            this.tsmiAddFood.Name = "tsmiAddFood";
+            this.tsmiAddFood.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.tsmiAddFood.Size = new System.Drawing.Size(224, 26);
+            this.tsmiAddFood.Text = "Thêm món";
+            this.tsmiAddFood.Click += new System.EventHandler(this.tsmiAddFood_Click);
+            // 
+            // tsmiCheckOut
+            // 
+            this.tsmiCheckOut.Name = "tsmiCheckOut";
+            this.tsmiCheckOut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.tsmiCheckOut.Size = new System.Drawing.Size(224, 26);
+            this.tsmiCheckOut.Text = "Thanh toán";
+            this.tsmiCheckOut.Click += new System.EventHandler(this.tsmiCheckOut_Click);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.lsvBill);
-            this.panel2.Location = new System.Drawing.Point(447, 85);
+            this.panel2.Location = new System.Drawing.Point(596, 105);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(338, 315);
+            this.panel2.Size = new System.Drawing.Size(451, 388);
             this.panel2.TabIndex = 2;
             // 
             // lsvBill
@@ -121,11 +152,12 @@ namespace QuanLyQuanCafe
             this.columnHeader4});
             this.lsvBill.GridLines = true;
             this.lsvBill.HideSelection = false;
-            this.lsvBill.Location = new System.Drawing.Point(3, 3);
+            this.lsvBill.Location = new System.Drawing.Point(4, 4);
+            this.lsvBill.Margin = new System.Windows.Forms.Padding(4);
             this.lsvBill.Name = "lsvBill";
-            this.lsvBill.Size = new System.Drawing.Size(332, 309);
+            this.lsvBill.Size = new System.Drawing.Size(441, 379);
             this.lsvBill.TabIndex = 0;
-            //this.lsvBill.UseCompatibleStateImageBehavior = false;
+            this.lsvBill.UseCompatibleStateImageBehavior = false;
             this.lsvBill.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
@@ -160,18 +192,20 @@ namespace QuanLyQuanCafe
             this.panel3.Controls.Add(this.nmDisCount);
             this.panel3.Controls.Add(this.btnDiscount);
             this.panel3.Controls.Add(this.btnCheckOut);
-            this.panel3.Location = new System.Drawing.Point(447, 406);
+            this.panel3.Location = new System.Drawing.Point(596, 500);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(338, 52);
+            this.panel3.Size = new System.Drawing.Size(451, 64);
             this.panel3.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(178, 8);
+            this.label1.Location = new System.Drawing.Point(237, 10);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.Size = new System.Drawing.Size(77, 17);
             this.label1.TabIndex = 8;
             this.label1.Text = "Tổng tiền";
             // 
@@ -180,10 +214,11 @@ namespace QuanLyQuanCafe
             this.txbTotalPrice.BackColor = this.txbTotalPrice.BackColor;
             this.txbTotalPrice.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbTotalPrice.ForeColor = System.Drawing.Color.Red;
-            this.txbTotalPrice.Location = new System.Drawing.Point(165, 25);
+            this.txbTotalPrice.Location = new System.Drawing.Point(220, 31);
+            this.txbTotalPrice.Margin = new System.Windows.Forms.Padding(4);
             this.txbTotalPrice.Name = "txbTotalPrice";
             this.txbTotalPrice.ReadOnly = true;
-            this.txbTotalPrice.Size = new System.Drawing.Size(89, 22);
+            this.txbTotalPrice.Size = new System.Drawing.Size(117, 26);
             this.txbTotalPrice.TabIndex = 7;
             this.txbTotalPrice.Text = "0";
             this.txbTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -191,17 +226,19 @@ namespace QuanLyQuanCafe
             // cbSwitchTable
             // 
             this.cbSwitchTable.FormattingEnabled = true;
-            this.cbSwitchTable.Location = new System.Drawing.Point(4, 27);
+            this.cbSwitchTable.Location = new System.Drawing.Point(5, 33);
+            this.cbSwitchTable.Margin = new System.Windows.Forms.Padding(4);
             this.cbSwitchTable.Name = "cbSwitchTable";
-            this.cbSwitchTable.Size = new System.Drawing.Size(74, 21);
+            this.cbSwitchTable.Size = new System.Drawing.Size(97, 24);
             this.cbSwitchTable.TabIndex = 6;
             this.cbSwitchTable.Click += new System.EventHandler(this.cbSwitchTable_Click);
             // 
             // btnSwitchTable
             // 
-            this.btnSwitchTable.Location = new System.Drawing.Point(3, 3);
+            this.btnSwitchTable.Location = new System.Drawing.Point(4, 4);
+            this.btnSwitchTable.Margin = new System.Windows.Forms.Padding(4);
             this.btnSwitchTable.Name = "btnSwitchTable";
-            this.btnSwitchTable.Size = new System.Drawing.Size(75, 22);
+            this.btnSwitchTable.Size = new System.Drawing.Size(100, 27);
             this.btnSwitchTable.TabIndex = 5;
             this.btnSwitchTable.Text = "Chuyển bàn";
             this.btnSwitchTable.UseVisualStyleBackColor = true;
@@ -209,26 +246,29 @@ namespace QuanLyQuanCafe
             // 
             // nmDisCount
             // 
-            this.nmDisCount.Location = new System.Drawing.Point(84, 27);
+            this.nmDisCount.Location = new System.Drawing.Point(112, 33);
+            this.nmDisCount.Margin = new System.Windows.Forms.Padding(4);
             this.nmDisCount.Name = "nmDisCount";
-            this.nmDisCount.Size = new System.Drawing.Size(75, 20);
+            this.nmDisCount.Size = new System.Drawing.Size(100, 22);
             this.nmDisCount.TabIndex = 4;
             this.nmDisCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnDiscount
             // 
-            this.btnDiscount.Location = new System.Drawing.Point(84, 3);
+            this.btnDiscount.Location = new System.Drawing.Point(112, 4);
+            this.btnDiscount.Margin = new System.Windows.Forms.Padding(4);
             this.btnDiscount.Name = "btnDiscount";
-            this.btnDiscount.Size = new System.Drawing.Size(75, 22);
+            this.btnDiscount.Size = new System.Drawing.Size(100, 27);
             this.btnDiscount.TabIndex = 4;
             this.btnDiscount.Text = "Giảm giá";
             this.btnDiscount.UseVisualStyleBackColor = true;
             // 
             // btnCheckOut
             // 
-            this.btnCheckOut.Location = new System.Drawing.Point(260, 3);
+            this.btnCheckOut.Location = new System.Drawing.Point(347, 4);
+            this.btnCheckOut.Margin = new System.Windows.Forms.Padding(4);
             this.btnCheckOut.Name = "btnCheckOut";
-            this.btnCheckOut.Size = new System.Drawing.Size(75, 46);
+            this.btnCheckOut.Size = new System.Drawing.Size(100, 57);
             this.btnCheckOut.TabIndex = 3;
             this.btnCheckOut.Text = "Thanh toán";
             this.btnCheckOut.UseVisualStyleBackColor = true;
@@ -240,21 +280,23 @@ namespace QuanLyQuanCafe
             this.panel4.Controls.Add(this.btnAddFood);
             this.panel4.Controls.Add(this.cbFood);
             this.panel4.Controls.Add(this.cbCategory);
-            this.panel4.Location = new System.Drawing.Point(447, 25);
+            this.panel4.Location = new System.Drawing.Point(596, 31);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(338, 52);
+            this.panel4.Size = new System.Drawing.Size(451, 64);
             this.panel4.TabIndex = 4;
             // 
             // nmFoodCount
             // 
-            this.nmFoodCount.Location = new System.Drawing.Point(295, 18);
+            this.nmFoodCount.Location = new System.Drawing.Point(393, 22);
+            this.nmFoodCount.Margin = new System.Windows.Forms.Padding(4);
             this.nmFoodCount.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
             this.nmFoodCount.Name = "nmFoodCount";
-            this.nmFoodCount.Size = new System.Drawing.Size(39, 20);
+            this.nmFoodCount.Size = new System.Drawing.Size(52, 22);
             this.nmFoodCount.TabIndex = 3;
             this.nmFoodCount.Value = new decimal(new int[] {
             1,
@@ -264,9 +306,10 @@ namespace QuanLyQuanCafe
             // 
             // btnAddFood
             // 
-            this.btnAddFood.Location = new System.Drawing.Point(214, 3);
+            this.btnAddFood.Location = new System.Drawing.Point(285, 4);
+            this.btnAddFood.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddFood.Name = "btnAddFood";
-            this.btnAddFood.Size = new System.Drawing.Size(75, 46);
+            this.btnAddFood.Size = new System.Drawing.Size(100, 57);
             this.btnAddFood.TabIndex = 2;
             this.btnAddFood.Text = "Thêm món";
             this.btnAddFood.UseVisualStyleBackColor = true;
@@ -275,39 +318,43 @@ namespace QuanLyQuanCafe
             // cbFood
             // 
             this.cbFood.FormattingEnabled = true;
-            this.cbFood.Location = new System.Drawing.Point(3, 28);
+            this.cbFood.Location = new System.Drawing.Point(4, 34);
+            this.cbFood.Margin = new System.Windows.Forms.Padding(4);
             this.cbFood.Name = "cbFood";
-            this.cbFood.Size = new System.Drawing.Size(205, 21);
+            this.cbFood.Size = new System.Drawing.Size(272, 24);
             this.cbFood.TabIndex = 1;
             // 
             // cbCategory
             // 
             this.cbCategory.FormattingEnabled = true;
-            this.cbCategory.Location = new System.Drawing.Point(3, 3);
+            this.cbCategory.Location = new System.Drawing.Point(4, 4);
+            this.cbCategory.Margin = new System.Windows.Forms.Padding(4);
             this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(205, 21);
+            this.cbCategory.Size = new System.Drawing.Size(272, 24);
             this.cbCategory.TabIndex = 0;
             this.cbCategory.SelectionChangeCommitted += new System.EventHandler(this.cbCategory_SelectionChangeCommitted);
             // 
             // flpTable
             // 
             this.flpTable.AutoScroll = true;
-            this.flpTable.Location = new System.Drawing.Point(12, 25);
+            this.flpTable.Location = new System.Drawing.Point(16, 31);
+            this.flpTable.Margin = new System.Windows.Forms.Padding(4);
             this.flpTable.Name = "flpTable";
-            this.flpTable.Size = new System.Drawing.Size(429, 433);
+            this.flpTable.Size = new System.Drawing.Size(572, 533);
             this.flpTable.TabIndex = 5;
             // 
             // FormTableManager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 470);
+            this.ClientSize = new System.Drawing.Size(1063, 578);
             this.Controls.Add(this.flpTable);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormTableManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Phần mềm quản lý quán cafe";
@@ -351,5 +398,8 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TextBox txbTotalPrice;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem chứcNăngToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddFood;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCheckOut;
     }
 }
