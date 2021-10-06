@@ -76,6 +76,8 @@ namespace QuanLyQuanCafe
             // tsmiAdmin
             // 
             this.tsmiAdmin.Name = "tsmiAdmin";
+            this.tsmiAdmin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
+            this.tsmiAdmin.ShowShortcutKeys = false;
             this.tsmiAdmin.Size = new System.Drawing.Size(55, 20);
             this.tsmiAdmin.Text = "Admin";
             this.tsmiAdmin.Click += new System.EventHandler(this.TsmiAdmin_Click);
@@ -92,14 +94,15 @@ namespace QuanLyQuanCafe
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(170, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
             this.tsmiAbout.Text = "Thông tin cá nhân";
             this.tsmiAbout.Click += new System.EventHandler(this.TsmiAbout_Click);
             // 
             // tsmiLogout
             // 
             this.tsmiLogout.Name = "tsmiLogout";
-            this.tsmiLogout.Size = new System.Drawing.Size(170, 22);
+            this.tsmiLogout.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Q)));
+            this.tsmiLogout.Size = new System.Drawing.Size(180, 22);
             this.tsmiLogout.Text = "Đăng xuất";
             this.tsmiLogout.Click += new System.EventHandler(this.TsmiLogout_Click);
             // 
@@ -125,7 +128,7 @@ namespace QuanLyQuanCafe
             this.lsvBill.Name = "lsvBill";
             this.lsvBill.Size = new System.Drawing.Size(332, 309);
             this.lsvBill.TabIndex = 0;
-            //this.lsvBill.UseCompatibleStateImageBehavior = false;
+            this.lsvBill.UseCompatibleStateImageBehavior = false;
             this.lsvBill.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
