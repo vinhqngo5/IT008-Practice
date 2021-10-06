@@ -750,8 +750,3 @@ BEGIN
 END
 GO
 
-SELECT TOP(1) *
-FROM dbo.Account
-UPDATE dbo.Account SET Type = 1 WHERE UserName= N'admin'
-
-SELECT * FROM Food
