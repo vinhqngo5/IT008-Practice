@@ -23,12 +23,12 @@ namespace QuanLyQuanCafe.DAO
 
         public bool Login(string userName, string passWord)
         {
-            byte[] temp = Encoding.ASCII.GetBytes(passWord);
-            byte[] hashData = new MD5CryptoServiceProvider().ComputeHash(temp);
+            //byte[] temp = Encoding.ASCII.GetBytes(passWord);
+            //byte[] hashData = new MD5CryptoServiceProvider().ComputeHash(temp);
 
-            //replace pass with hashPass
-            string hashPass = "";
-            hashData.ToList().ForEach(element => hashPass += element.ToString());
+            ////replace pass with hashPass
+            //string hashPass = "";
+            //hashData.ToList().ForEach(element => hashPass += element.ToString());
 
             string query = "USP_Login @userName , @passWord";
 

@@ -29,7 +29,7 @@ namespace QuanLyQuanCafe
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tcAdmin = new System.Windows.Forms.TabControl();
             this.tpBill = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -99,6 +99,7 @@ namespace QuanLyQuanCafe
             this.panel23 = new System.Windows.Forms.Panel();
             this.btnResetPassword = new System.Windows.Forms.Button();
             this.panel25 = new System.Windows.Forms.Panel();
+            this.chkAccountType = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel26 = new System.Windows.Forms.Panel();
             this.txbDisplayName = new System.Windows.Forms.TextBox();
@@ -113,7 +114,11 @@ namespace QuanLyQuanCafe
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
             this.dtgvAccount = new System.Windows.Forms.DataGridView();
-            this.chkAccountType = new System.Windows.Forms.CheckBox();
+            this.btnFirstBillPage = new System.Windows.Forms.Button();
+            this.btnPreviousBillPage = new System.Windows.Forms.Button();
+            this.btnLastBillPage = new System.Windows.Forms.Button();
+            this.btnNextBillPage = new System.Windows.Forms.Button();
+            this.txbPageBill = new System.Windows.Forms.TextBox();
             this.tcAdmin.SuspendLayout();
             this.tpBill.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -216,6 +221,11 @@ namespace QuanLyQuanCafe
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txbPageBill);
+            this.panel1.Controls.Add(this.btnLastBillPage);
+            this.panel1.Controls.Add(this.btnNextBillPage);
+            this.panel1.Controls.Add(this.btnPreviousBillPage);
+            this.panel1.Controls.Add(this.btnFirstBillPage);
             this.panel1.Controls.Add(this.dtgvBill);
             this.panel1.Location = new System.Drawing.Point(6, 38);
             this.panel1.Name = "panel1";
@@ -232,10 +242,10 @@ namespace QuanLyQuanCafe
             this.dtgvBill.Location = new System.Drawing.Point(3, 3);
             this.dtgvBill.Name = "dtgvBill";
             this.dtgvBill.RowHeadersVisible = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle9;
-            this.dtgvBill.Size = new System.Drawing.Size(632, 363);
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.dtgvBill.Size = new System.Drawing.Size(632, 327);
             this.dtgvBill.TabIndex = 0;
             // 
             // tpFood
@@ -821,6 +831,17 @@ namespace QuanLyQuanCafe
             this.panel25.Size = new System.Drawing.Size(279, 44);
             this.panel25.TabIndex = 3;
             // 
+            // chkAccountType
+            // 
+            this.chkAccountType.AutoSize = true;
+            this.chkAccountType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAccountType.Location = new System.Drawing.Point(127, 13);
+            this.chkAccountType.Name = "chkAccountType";
+            this.chkAccountType.Size = new System.Drawing.Size(63, 20);
+            this.chkAccountType.TabIndex = 1;
+            this.chkAccountType.Text = "Admin";
+            this.chkAccountType.UseVisualStyleBackColor = true;
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -955,16 +976,56 @@ namespace QuanLyQuanCafe
             this.dtgvAccount.Size = new System.Drawing.Size(343, 340);
             this.dtgvAccount.TabIndex = 0;
             // 
-            // chkAccountType
+            // btnFirstBillPage
             // 
-            this.chkAccountType.AutoSize = true;
-            this.chkAccountType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkAccountType.Location = new System.Drawing.Point(127, 13);
-            this.chkAccountType.Name = "chkAccountType";
-            this.chkAccountType.Size = new System.Drawing.Size(64, 20);
-            this.chkAccountType.TabIndex = 1;
-            this.chkAccountType.Text = "Admin";
-            this.chkAccountType.UseVisualStyleBackColor = true;
+            this.btnFirstBillPage.Location = new System.Drawing.Point(3, 343);
+            this.btnFirstBillPage.Name = "btnFirstBillPage";
+            this.btnFirstBillPage.Size = new System.Drawing.Size(75, 23);
+            this.btnFirstBillPage.TabIndex = 1;
+            this.btnFirstBillPage.Text = "First";
+            this.btnFirstBillPage.UseVisualStyleBackColor = true;
+            this.btnFirstBillPage.Click += new System.EventHandler(this.btnFirstBillPage_Click);
+            // 
+            // btnPreviousBillPage
+            // 
+            this.btnPreviousBillPage.Location = new System.Drawing.Point(84, 344);
+            this.btnPreviousBillPage.Name = "btnPreviousBillPage";
+            this.btnPreviousBillPage.Size = new System.Drawing.Size(64, 22);
+            this.btnPreviousBillPage.TabIndex = 2;
+            this.btnPreviousBillPage.Text = "Previous";
+            this.btnPreviousBillPage.UseVisualStyleBackColor = true;
+            this.btnPreviousBillPage.Click += new System.EventHandler(this.btnPreviousBillPage_Click);
+            // 
+            // btnLastBillPage
+            // 
+            this.btnLastBillPage.Location = new System.Drawing.Point(571, 343);
+            this.btnLastBillPage.Name = "btnLastBillPage";
+            this.btnLastBillPage.Size = new System.Drawing.Size(64, 22);
+            this.btnLastBillPage.TabIndex = 2;
+            this.btnLastBillPage.Text = "Last";
+            this.btnLastBillPage.UseVisualStyleBackColor = true;
+            this.btnLastBillPage.Click += new System.EventHandler(this.btnLastBillPage_Click);
+            // 
+            // btnNextBillPage
+            // 
+            this.btnNextBillPage.Location = new System.Drawing.Point(501, 344);
+            this.btnNextBillPage.Name = "btnNextBillPage";
+            this.btnNextBillPage.Size = new System.Drawing.Size(64, 22);
+            this.btnNextBillPage.TabIndex = 2;
+            this.btnNextBillPage.Text = "Next";
+            this.btnNextBillPage.UseVisualStyleBackColor = true;
+            this.btnNextBillPage.Click += new System.EventHandler(this.btnNextBillPage_Click);
+            // 
+            // txbPageBill
+            // 
+            this.txbPageBill.Location = new System.Drawing.Point(277, 345);
+            this.txbPageBill.Name = "txbPageBill";
+            this.txbPageBill.ReadOnly = true;
+            this.txbPageBill.Size = new System.Drawing.Size(77, 20);
+            this.txbPageBill.TabIndex = 3;
+            this.txbPageBill.Text = "1";
+            this.txbPageBill.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbPageBill.TextChanged += new System.EventHandler(this.txbPageBill_TextChanged);
             // 
             // FormAdmin
             // 
@@ -979,6 +1040,7 @@ namespace QuanLyQuanCafe
             this.tpBill.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvBill)).EndInit();
             this.tpFood.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
@@ -1117,5 +1179,10 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.DataGridView dtgvAccount;
         private System.Windows.Forms.CheckBox chkAccountType;
+        private System.Windows.Forms.TextBox txbPageBill;
+        private System.Windows.Forms.Button btnLastBillPage;
+        private System.Windows.Forms.Button btnNextBillPage;
+        private System.Windows.Forms.Button btnPreviousBillPage;
+        private System.Windows.Forms.Button btnFirstBillPage;
     }
 }
