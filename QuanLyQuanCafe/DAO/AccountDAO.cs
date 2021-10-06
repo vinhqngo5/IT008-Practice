@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,13 @@ namespace QuanLyQuanCafe.DAO
 
         public bool Login(string userName, string passWord)
         {
+            //byte[] temp = Encoding.ASCII.GetBytes(passWord);
+            //byte[] hashData = new MD5CryptoServiceProvider().ComputeHash(temp);
+
+            ////replace pass with hashPass
+            //string hashPass = "";
+            //hashData.ToList().ForEach(element => hashPass += element.ToString());
+
             string query = "USP_Login @userName , @passWord";
 
             DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] { userName, passWord });
