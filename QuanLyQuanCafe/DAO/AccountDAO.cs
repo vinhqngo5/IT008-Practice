@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QuanLyQuanCafe.DAO
 {
@@ -20,11 +22,22 @@ namespace QuanLyQuanCafe.DAO
 
         private AccountDAO() { }
 
+        private string EncryptPassWord(string passWord)
+        {
+            byte[] hashPassWord = SHA256.Create().ComputeHash(Encoding.Unicode.GetBytes(passWord));
+            string encryptedPass = "";
+            foreach (byte item in hashPassWord)
+            {
+                encryptedPass += item;
+            }
+            return encryptedPass;
+        }
+
         public bool Login(string userName, string passWord)
         {
             string query = "USP_Login @userName , @passWord";
 
-            DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] { userName, passWord });
+            DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] { userName, EncryptPassWord(passWord) });
 
             return result.Rows.Count > 0;
         }
@@ -37,7 +50,7 @@ namespace QuanLyQuanCafe.DAO
 
         public bool UpdateAccount(string userName, string displayName, string passWord, string newPass)
         {
-            return DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @passWord , @newPassWord", new object[] { userName, displayName, passWord, newPass }) > 0;
+            return DataProvider.Instance.ExecuteNonQuery("USP_UpdateAccount @userName , @displayName , @passWord , @newPassWord", new object[] { userName, displayName, EncryptPassWord(passWord), EncryptPassWord(newPass) }) > 0;
         }
 
         public DataTable GetListAccount()
