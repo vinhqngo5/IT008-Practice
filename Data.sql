@@ -1,8 +1,17 @@
 --CREATE DATABASE Temp
--- USE Temp
--- DROP DATABASE QUANLYQUANCAFE
--- CREATE DATABASE QUANLYQUANCAFE
--- GO
+--GO
+
+--USE Temp
+--GO
+
+--DROP DATABASE Temp
+--GO
+
+--DROP DATABASE QUANLYQUANCAFE
+--GO
+
+CREATE DATABASE QUANLYQUANCAFE
+GO
 
 USE QUANLYQUANCAFE
 GO
@@ -13,6 +22,43 @@ GO
 -- Account
 -- Bill
 -- BillInfo
+
+-- FUNCTION
+CREATE FUNCTION [dbo].[fuConvertToUnsign1] ( @strInput NVARCHAR(4000) ) 
+RETURNS NVARCHAR(4000) 
+AS 
+BEGIN
+	IF @strInput IS NULL RETURN @strInput
+	IF @strInput = '' RETURN @strInput
+	DECLARE @RT NVARCHAR(4000)
+	DECLARE @SIGN_CHARS NCHAR(136)
+	DECLARE @UNSIGN_CHARS NCHAR (136)
+	SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệế ìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵý ĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍ ÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ' +NCHAR(272)+ NCHAR(208)
+	SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeee iiiiiooooooooooooooouuuuuuuuuuyyyyy AADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIII OOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
+	DECLARE @COUNTER int
+	DECLARE @COUNTER1 int
+	SET @COUNTER = 1
+	WHILE (@COUNTER <=LEN(@strInput)) 
+	BEGIN
+		SET @COUNTER1 = 1
+		WHILE (@COUNTER1 <=LEN(@SIGN_CHARS)+1) 
+			BEGIN
+			IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@strInput,@COUNTER ,1) ) 
+					BEGIN
+				IF @COUNTER=1 
+							SET @strInput = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)-1) 
+						ELSE 
+							SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER)
+				BREAK
+			END
+			SET @COUNTER1 = @COUNTER1 +1
+		END
+		SET @COUNTER = @COUNTER +1
+	END
+	SET @strInput = replace(@strInput,' ','-')
+	RETURN @strInput
+END
+GO
 
 CREATE FUNCTION DEFAULT_PASSWORD()
 RETURNS NVARCHAR(100)
@@ -188,10 +234,6 @@ VALUES
 	( N'Sinh tố' ),
 	( N'Nước ép' )
 
-SELECT *
-FROM FoodCategory
-GO
-
 -- Add food
 INSERT dbo.Food
 	( Name, IdCategory, Price )
@@ -224,17 +266,17 @@ GO
 --  GO
 
 -- SELECT *
-SELECT *
-FROM TableFood
-SELECT *
-FROM FoodCategory
-SELECT *
-FROM Food
-SELECT *
-FROM Bill
-SELECT *
-FROM BillInfo
-GO
+--SELECT *
+--FROM TableFood
+--SELECT *
+--FROM FoodCategory
+--SELECT *
+--FROM Food
+--SELECT *
+--FROM Bill
+--SELECT *
+--FROM BillInfo
+--GO
 
 -- STORED PROCEDURES --
 CREATE PROC USP_Login
@@ -392,7 +434,7 @@ BEGIN
 END
 GO
 
-ALTER PROC USP_GetListBillByDate
+CREATE PROC USP_GetListBillByDate
 	@dateCheckIn DATE,
 	@dateCheckOut DATE,
 	@pageNumber INT = 1,
@@ -419,8 +461,6 @@ BEGIN
 	END
 END
 GO
-
-USP_GetListBillByDate @dateCheckIn = '20211001', @dateCheckOut = '20211030', @rowsOfPage = 1
 
 CREATE PROC USP_UpdateAccount
 	@userName NVARCHAR(100),
@@ -510,8 +550,6 @@ BEGIN
 END
 GO
 
-SELECT * FROM dbo.Food
-
 CREATE PROC USP_DeleteFood
 	@id INT
 AS
@@ -590,6 +628,11 @@ AS
 BEGIN
 	UPDATE dbo.Account SET PassWord = dbo.DEFAULT_PASSWORD() WHERE UserName = @userName
 END
+GO
+
+CREATE PROC USP_ReportFoodRevenue
+AS
+	SELECT Name, SUM(Count) AS Number FROM Food, BillInfo WHERE Food.Id = BillInfo.IdFood GROUP BY Name
 GO
 
 -- TRIGGER --
@@ -683,42 +726,5 @@ BEGIN
 	FROM TableFood
 		JOIN @tableIdBill AS t
 		ON TableFood.Id = t.Id
-END
-GO
-
--- FUNCTION
-CREATE FUNCTION [dbo].[fuConvertToUnsign1] ( @strInput NVARCHAR(4000) ) 
-RETURNS NVARCHAR(4000) 
-AS 
-BEGIN
-	IF @strInput IS NULL RETURN @strInput
-	IF @strInput = '' RETURN @strInput
-	DECLARE @RT NVARCHAR(4000)
-	DECLARE @SIGN_CHARS NCHAR(136)
-	DECLARE @UNSIGN_CHARS NCHAR (136)
-	SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệế ìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵý ĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍ ÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ' +NCHAR(272)+ NCHAR(208)
-	SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeee iiiiiooooooooooooooouuuuuuuuuuyyyyy AADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIII OOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
-	DECLARE @COUNTER int
-	DECLARE @COUNTER1 int
-	SET @COUNTER = 1
-	WHILE (@COUNTER <=LEN(@strInput)) 
-	BEGIN
-		SET @COUNTER1 = 1
-		WHILE (@COUNTER1 <=LEN(@SIGN_CHARS)+1) 
-			BEGIN
-			IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@strInput,@COUNTER ,1) ) 
-					BEGIN
-				IF @COUNTER=1 
-							SET @strInput = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)-1) 
-						ELSE 
-							SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER)
-				BREAK
-			END
-			SET @COUNTER1 = @COUNTER1 +1
-		END
-		SET @COUNTER = @COUNTER +1
-	END
-	SET @strInput = replace(@strInput,' ','-')
-	RETURN @strInput
 END
 GO
