@@ -29,7 +29,9 @@ namespace QuanLyQuanCafe
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.tcAdmin = new System.Windows.Forms.TabControl();
             this.tpBill = new System.Windows.Forms.TabPage();
             this.panel22 = new System.Windows.Forms.Panel();
@@ -120,6 +122,11 @@ namespace QuanLyQuanCafe
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
             this.dtgvAccount = new System.Windows.Forms.DataGridView();
+            this.tpReport = new System.Windows.Forms.TabPage();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.QUANLYQUANCAFEDataSet = new QuanLyQuanCafe.QUANLYQUANCAFEDataSet();
+            this.USP_GetListBillByDateForReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.USP_GetListBillByDateForReportTableAdapter = new QuanLyQuanCafe.QUANLYQUANCAFEDataSetTableAdapters.USP_GetListBillByDateForReportTableAdapter();
             this.tcAdmin.SuspendLayout();
             this.tpBill.SuspendLayout();
             this.panel22.SuspendLayout();
@@ -160,6 +167,9 @@ namespace QuanLyQuanCafe
             this.panel28.SuspendLayout();
             this.panel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvAccount)).BeginInit();
+            this.tpReport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QUANLYQUANCAFEDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.USP_GetListBillByDateForReportBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tcAdmin
@@ -169,6 +179,7 @@ namespace QuanLyQuanCafe
             this.tcAdmin.Controls.Add(this.tbFoodCategory);
             this.tcAdmin.Controls.Add(this.tpTable);
             this.tcAdmin.Controls.Add(this.tpAccount);
+            this.tcAdmin.Controls.Add(this.tpReport);
             this.tcAdmin.Location = new System.Drawing.Point(16, 15);
             this.tcAdmin.Margin = new System.Windows.Forms.Padding(4);
             this.tcAdmin.Name = "tcAdmin";
@@ -316,9 +327,9 @@ namespace QuanLyQuanCafe
             this.dtgvBill.Name = "dtgvBill";
             this.dtgvBill.RowHeadersVisible = false;
             this.dtgvBill.RowHeadersWidth = 51;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgvBill.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgvBill.Size = new System.Drawing.Size(843, 414);
             this.dtgvBill.TabIndex = 0;
             // 
@@ -1130,6 +1141,44 @@ namespace QuanLyQuanCafe
             this.dtgvAccount.Size = new System.Drawing.Size(457, 418);
             this.dtgvAccount.TabIndex = 0;
             // 
+            // tpReport
+            // 
+            this.tpReport.Controls.Add(this.reportViewer1);
+            this.tpReport.Location = new System.Drawing.Point(4, 25);
+            this.tpReport.Name = "tpReport";
+            this.tpReport.Padding = new System.Windows.Forms.Padding(3);
+            this.tpReport.Size = new System.Drawing.Size(869, 511);
+            this.tpReport.TabIndex = 5;
+            this.tpReport.Text = "Báo cáo";
+            this.tpReport.UseVisualStyleBackColor = true;
+            // 
+            // reportViewer1
+            // 
+            this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            reportDataSource1.Name = "DataSet1";
+            reportDataSource1.Value = this.USP_GetListBillByDateForReportBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer1.LocalReport.ReportEmbeddedResource = "QuanLyQuanCafe.Report1.rdlc";
+            this.reportViewer1.Location = new System.Drawing.Point(3, 3);
+            this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.ServerReport.BearerToken = null;
+            this.reportViewer1.Size = new System.Drawing.Size(863, 505);
+            this.reportViewer1.TabIndex = 0;
+            // 
+            // QUANLYQUANCAFEDataSet
+            // 
+            this.QUANLYQUANCAFEDataSet.DataSetName = "QUANLYQUANCAFEDataSet";
+            this.QUANLYQUANCAFEDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // USP_GetListBillByDateForReportBindingSource
+            // 
+            this.USP_GetListBillByDateForReportBindingSource.DataMember = "USP_GetListBillByDateForReport";
+            this.USP_GetListBillByDateForReportBindingSource.DataSource = this.QUANLYQUANCAFEDataSet;
+            // 
+            // USP_GetListBillByDateForReportTableAdapter
+            // 
+            this.USP_GetListBillByDateForReportTableAdapter.ClearBeforeFill = true;
+            // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1140,6 +1189,7 @@ namespace QuanLyQuanCafe
             this.Name = "FormAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Admin";
+            this.Load += new System.EventHandler(this.FormAdmin_Load);
             this.tcAdmin.ResumeLayout(false);
             this.tpBill.ResumeLayout(false);
             this.panel22.ResumeLayout(false);
@@ -1194,6 +1244,9 @@ namespace QuanLyQuanCafe
             this.panel28.ResumeLayout(false);
             this.panel29.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvAccount)).EndInit();
+            this.tpReport.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.QUANLYQUANCAFEDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.USP_GetListBillByDateForReportBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1290,5 +1343,10 @@ namespace QuanLyQuanCafe
         private System.Windows.Forms.Button btnNextPage;
         private System.Windows.Forms.Button btnPreviousPage;
         private System.Windows.Forms.Button btnFirstPage;
+        private System.Windows.Forms.TabPage tpReport;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.BindingSource USP_GetListBillByDateForReportBindingSource;
+        private QUANLYQUANCAFEDataSet QUANLYQUANCAFEDataSet;
+        private QUANLYQUANCAFEDataSetTableAdapters.USP_GetListBillByDateForReportTableAdapter USP_GetListBillByDateForReportTableAdapter;
     }
 }

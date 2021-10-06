@@ -338,5 +338,13 @@ namespace QuanLyQuanCafe
                 MessageBox.Show(string.Format("Trang đầu tiên là 1 và Trang cuối cùng là {0}",lastPage), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             LoadListBillByDateAndNumPage(dtpkFromDate.Value, dtpkToDate.Value, Convert.ToInt32(txpNumPage.Text), _numRow);
         }
+
+        private void FormAdmin_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'QUANLYQUANCAFEDataSet.USP_GetListBillByDateForReport' table. You can move, or remove it, as needed.
+            this.USP_GetListBillByDateForReportTableAdapter.Fill(this.QUANLYQUANCAFEDataSet.USP_GetListBillByDateForReport,dtpkFromDate.Value,dtpkToDate.Value);
+
+            this.reportViewer1.RefreshReport();
+        }
     }
 }

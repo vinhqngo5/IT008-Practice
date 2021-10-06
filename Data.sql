@@ -1,8 +1,8 @@
 --CREATE DATABASE Temp
 -- USE Temp
  --DROP DATABASE QUANLYQUANCAFE
- --CREATE DATABASE QUANLYQUANCAFE
- --GO
+ CREATE DATABASE QUANLYQUANCAFE
+ GO
 
 USE QUANLYQUANCAFE
 GO
@@ -103,7 +103,7 @@ VALUES
 		N'Admin', -- UserName - nvarchar(100)
 		N'Admin', -- DisplayName - nvarchar(100)
 		N'1', -- PassWord - nvarchar(100)
-		0  -- Type - bit
+		1  -- Type - bit
 	),
 	(
 		N'K9', -- UserName - nvarchar(100)
@@ -485,8 +485,6 @@ BEGIN
 END
 GO
 
-SELECT * FROM dbo.Food
-
 CREATE PROC USP_DeleteFood
 	@id INT
 AS
@@ -600,6 +598,19 @@ BEGIN
 END
 GO
 
+CREATE PROC USP_GetListBillByDateForReport
+	@dateCheckIn DATE,
+	@dateCheckOut DATE
+AS
+BEGIN
+	SELECT *
+	FROM TableFood
+		JOIN Bill ON Bill.IdTable = TableFood.Id
+		JOIN BillInfo ON Bill.Id = BillInfo.IdBill
+	WHERE Bill.Status = 1 AND DateCheckIn >= @dateCheckIn AND DateCheckOut <= @dateCheckOut
+	ORDER BY DateCheckIn, Name
+END
+GO
 -- TRIGGER --
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -737,6 +748,8 @@ AS
 BEGIN
 	RETURN CONVERT(NVARCHAR(32),HashBytes('MD5', @strInput),2)
 END
+GO
+
 UPDATE Account SET PassWord = dbo.EncrytionPasssWord(PassWord)
 GO
 
