@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E2EF1125-7BBD-4B50-BF30-EF9A78CD4AF8}</ProjectGuid>
+    <ProjectGuid>{F3A3C704-B9EE-4A1B-BA4C-A658DC5D7A96}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>QuanLyKho</RootNamespace>
     <AssemblyName>QuanLyKho</AssemblyName>
