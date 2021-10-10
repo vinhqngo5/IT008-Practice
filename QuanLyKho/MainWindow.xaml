@@ -3,8 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:QuanLyKho"
         mc:Ignorable="d"
+        xmlns:uc="clr-namespace:QuanLyKho.UserControlLesor"
+        Name="mainWindow"
         Title="MainWindow" Height="450" Width="800"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -14,8 +17,21 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        DataContext="{StaticResource MainVM}">
+        DataContext="{StaticResource MainVM}"
+        ResizeMode="NoResize"
+        WindowStyle="None">
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Loaded">
+      <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}"/>
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
     <Grid>
-
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto"></RowDefinition>
+        <RowDefinition></RowDefinition>
+      </Grid.RowDefinitions>
+    <Grid Grid.Row="0">
+      <uc:ControlBarUC Tag="{Binding Title, ElementName=mainWindow}"></uc:ControlBarUC>
     </Grid>
+  </Grid>
 </Window>
