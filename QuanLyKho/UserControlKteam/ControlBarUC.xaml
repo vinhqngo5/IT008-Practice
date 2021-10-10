@@ -30,7 +30,7 @@
                     <StackPanel.Resources>
                         <Style TargetType="Button">
                             <Setter Property="Margin"
-                                    Value="2" />
+                                    Value="2 4 2 4" />
                             <Setter Property="Width"
                                     Value="40" />
                         </Style>
