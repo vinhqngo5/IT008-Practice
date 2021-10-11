@@ -63,8 +63,9 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0"
+                    <Button Command="{Binding InputCommand}" Grid.Column="0"
                             ToolTip="Nhập kho">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -83,7 +84,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="1"
+                    <Button Command="{Binding OutputCommand}" Grid.Column="1"
                             ToolTip="Xuất kho">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -102,7 +103,8 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="2"
+                    <Button Command="{Binding ObjectCommand}"
+                        Grid.Column="2"
                             ToolTip="Vật tư">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -121,7 +123,8 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="3"
+                    <Button Command="{Binding UnitCommand}"
+                            Grid.Column="3"
                             ToolTip="Đơn vị đo">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -140,7 +143,8 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="4"
+                    <Button Command="{Binding SupplierCommand}"
+                            Grid.Column="4"
                             ToolTip="Nhà cung cấp">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -159,8 +163,9 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="5"
-                            ToolTip="Khách hàng">
+                    <Button  Command="{Binding CustomerCommand}"
+                             Grid.Column="5"
+                             ToolTip="Khách hàng">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -178,7 +183,25 @@
                             </Grid>
                         </Grid>
                     </Button>
+                    <Button Grid.Column="6"
+                            ToolTip="Người dùng" Command="{Binding UserCommand}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock HorizontalAlignment="Center">Người dùng</TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
 
+                                <materialDesign:PackIcon Height="24"
+                                                         Width="24"
+                                                         HorizontalAlignment="Center"
+                                                         Kind="AccountMultiple" />
+                            </Grid>
+                        </Grid>
+                    </Button>
                 </Grid>
             </Grid>
 
@@ -231,9 +254,9 @@
                         <Grid Grid.Row="1"
                               Margin="5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0"
                                   Margin="5">
