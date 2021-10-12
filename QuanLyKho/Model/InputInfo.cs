@@ -14,12 +14,6 @@ namespace QuanLyKho.Model
     
     public partial class InputInfo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public InputInfo()
-        {
-            this.OutputInfoes = new HashSet<OutputInfo>();
-        }
-    
         public string Id { get; set; }
         public string IdObject { get; set; }
         public string IdInput { get; set; }
@@ -30,7 +24,5 @@ namespace QuanLyKho.Model
     
         public virtual Input Input { get; set; }
         public virtual Object Object { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
     }
 }

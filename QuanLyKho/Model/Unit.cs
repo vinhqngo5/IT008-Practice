@@ -12,10 +12,10 @@ namespace QuanLyKho.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Unit
+    public partial class UNIT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Unit()
+        public UNIT()
         {
             this.Objects = new HashSet<Object>();
         }

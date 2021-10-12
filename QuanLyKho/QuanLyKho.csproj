@@ -85,10 +85,10 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\Input.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -119,10 +119,17 @@
     <Compile Include="Model\OutputInfo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Model\Suplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Unit.cs">
+=======
+    <Compile Include="Model\Supplier.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UNIT.cs">
+>>>>>>> origin/QLK-bai9-bai11-Vinh
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\User.cs">

@@ -1,27 +1,106 @@
-create database QUANLYKHO
-go
+USE Temp
+DROP DATABASE QuanLyKho
 
-use QUANLYKHO
-go
+CREATE DATABASE QuanLyKho
+GO
 
-create table Unit
+USE QuanLyKho
+
+CREATE TABLE UNIT
 (
-	Id int identity(1,1) primary key,
-	DisplayName nvarchar(max)
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX),
 )
-go
+GO
 
-create table Suplier
+CREATE TABLE Supplier
 (
-	Id int identity(1,1) primary key,
-	DisplayName nvarchar(max),
-	Address nvarchar(max),
-	Phone nvarchar(20),
-	Email nvarchar(200),
-	MoreInfo nvarchar(max),
-	ContractDate DateTime
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX),
+    Addresses NVARCHAR(MAX),
+    Phone NVARCHAR(20),
+    Email NVARCHAR(200),
+    MoreInfo NVARCHAR(MAX),
+    ContractDate DATETIME,
 )
-go
+GO
+
+CREATE TABLE Customer
+(
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX),
+    Addresses NVARCHAR(MAX),
+    Phone NVARCHAR(20),
+    Email NVARCHAR(200),
+    MoreInfo NVARCHAR(MAX),
+    ContractDate DATETIME,
+)
+GO
+
+CREATE TABLE Object
+(
+    Id NVARCHAR(128) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX),
+    IdUnit INT NOT NULL,
+    IdSupplier INT NOT NULL,
+    QRCode NVARCHAR(MAX),
+    BarCode NVARCHAR(MAX),
+
+    FOREIGN KEY (IdUnit) REFERENCES UNIT(Id),
+    FOREIGN KEY (IdSupplier) REFERENCES Supplier(Id)
+)
+GO
+
+CREATE TABLE UserRole
+(
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX),
+)
+GO
+
+INSERT INTO UserRole
+    (DisplayName)
+VALUES
+    (N'Admin'),
+    (N'NhÃ¢n viÃªn')
+GO
+
+CREATE TABLE Users
+(
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX),
+    UserName NVARCHAR(100),
+    PassWord NVARCHAR(MAX),
+    IdRole INT NOT NULL,
+
+    FOREIGN KEY (IdRole) REFERENCES UserRole(Id),
+
+)
+GO
+
+INSERT INTO Users
+    (DisplayName, UserName, PassWord, IdRole)
+VALUES
+    (N'Admin', 'Admin', N'db69fc039dcbd2962cb4d28f5891aae1', 1),
+    (N'NhÃ¢n viÃªn', N'Staff', N'978aae9bb6bee8fb75de3e4830a1be46', 2 )
+GO
+
+CREATE TABLE Input
+(
+    Id NVARCHAR(128) PRIMARY KEY,
+    DateInput DATETIME
+)
+GO
+
+CREATE TABLE InputInfo
+(
+    Id NVARCHAR(128) PRIMARY KEY,
+    IdObject NVARCHAR(128) NOT NULL,
+    IdInput NVARCHAR(128) NOT NULL,
+    Count INT,
+    InputPrice FLOAT DEFAULT 0,
+    OutputPrice FLOAT DEFAULT 0,
+    Status NVARCHAR(Max),
 
 create table Customer
 (
@@ -35,89 +114,29 @@ create table Customer
 )
 go
 
-create table Object
-(
-	Id nvarchar(128) primary key,
-	DisplayName nvarchar(max),
-	IdUnit int not null,
-	IdSuplier int not null,
-	QRCode nvarchar(max),
-	BarCode nvarchar(max)
-
-	foreign key(IdUnit) references Unit(Id),
-	foreign key(IdSuplier) references Suplier(Id),
+    FOREIGN KEY (IdObject) REFERENCES Object(Id),
+    FOREIGN KEY (IdInput) REFERENCES Input(Id),
 )
-go
+GO
 
-create table UserRole
+CREATE TABLE Output
 (
-	Id int identity(1,1) primary key,
-	DisplayName nvarchar(max)
+    Id NVARCHAR(128) PRIMARY KEY,
+    DateOutput DATETIME
 )
-go
+GO
 
-insert into UserRole(DisplayName) values(N'Admin')
-go
-insert into UserRole(DisplayName) values(N'Nhân viên')
-go
-
-create table Users
+CREATE TABLE OutputInfo
 (
-	Id int identity(1,1) primary key,
-	DisplayName nvarchar(max),
-	UserName nvarchar(100),
-	Password nvarchar(max),
-	IdRole int not null
+    Id NVARCHAR(128) PRIMARY KEY,
+    IdInputInfo NVARCHAR(128) NOT NULL,
+    IdOutput NVARCHAR(128) NOT NULL,
+    IdCustomer INT NOT NULL,
+    Count INT,
+    Status NVARCHAR(Max),
 
-	foreign key (IdRole) references UserRole(Id)
+    FOREIGN KEY (IdInputInfo) REFERENCES InputInfo(Id),
+    FOREIGN KEY (IdOutput) REFERENCES Output(Id),
+    FOREIGN KEY (IdCustomer) REFERENCES Customer(Id),
 )
-go
-insert into Users(DisplayName, Username, Password, IdRole) values(N'RongK9', N'admin', N'db69fc039dcbd2962cb4d28f5891aae1', 1)
-go
-insert into Users(DisplayName, Username, Password, IdRole) values(N'Nhân viên', N'staff', N'978aae9bb6bee8fb75de3e4830a1be46', 2)
-go
-
-create table Input
-(
-	Id nvarchar(128) primary key,
-	DateInput DateTime
-)
-go
-
-create table InputInfo
-(
-	Id nvarchar(128) primary key,
-	IdObject nvarchar(128) not null,
-	IdInput nvarchar(128) not null,
-	Count int,
-	InputPrice float default 0,
-	OutputPrice float default 0,
-	Status nvarchar(max)
-
-
-	foreign key (IdObject) references Object(Id),
-	foreign key (IdInput) references Input(Id)
-)
-go
-
-create table Output
-(
-	Id nvarchar(128) primary key,
-	DateOutput DateTime
-)
-go
-
-create table OutputInfo
-(
-	Id nvarchar(128) primary key,
-	IdOutput nvarchar(128) not null,
-	IdInputInfo nvarchar(128) not null,
-	IdCustomer int not null,
-	Count int,	
-	Status nvarchar(max)
-
-	foreign key (IdOutput) references Output(Id),
-	foreign key (IdInputInfo) references InputInfo(Id),
-	foreign key (IdCustomer) references Customer(Id)
-)
-go
+GO
