@@ -1,126 +1,125 @@
-﻿<Window x:Class="QuanLyKho.ObjectWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QuanLyKho"
-        mc:Ignorable="d"
-        x:Name="supplierWindow"
-        Title="Vật tư"
-        Height="500"
-        Width="900"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal"
-        TextOptions.TextRenderingMode="Auto"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        xmlns:uc="clr-namespace:QuanLyKho.UserControls"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+﻿<Window
+    x:Class="QuanLyKho.ObjectWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:QuanLyKho"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:QuanLyKho.UserControls"
+    x:Name="supplierWindow"
+    Title="Vật tư"
+    Width="900"
+    Height="500"
+    ResizeMode="NoResize"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <uc:ControlBarUC Tag="{Binding Title, ElementName=supplierWindow}"></uc:ControlBarUC>
+                <uc:ControlBarUC Tag="{Binding Title, ElementName=supplierWindow}" />
             </Grid>
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.Resources>
                     <Style TargetType="materialDesign:Card">
-                        <Setter Property="Margin"
-                                Value="10">
-                        </Setter>
+                        <Setter Property="Margin" Value="10" />
                     </Style>
                 </Grid.Resources>
-                <!--các element binding từ selected item-->
+                <!--  các element binding từ selected item  -->
                 <materialDesign:Card Grid.Row="0">
-                    <WrapPanel Margin="0 0 0 10">
-                        <TextBox Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="5 5 15 5"
-                                 FontSize="16"
-                                 materialDesign:HintAssist.Hint="Tên vật tư"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <ComboBox Margin="5 5 15 5"
-                                  FontSize="16"
-                                  ItemsSource="{Binding Unit}"
-                                  SelectedItem="{Binding SelectedUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  materialDesign:HintAssist.Hint="Đơn vị đo"
-                                  IsEditable="True"
-                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"></ComboBox>
-                        <ComboBox Margin="5 5 15 5"
-                                  FontSize="16"
-                                  ItemsSource="{Binding Suplier}"
-                                  SelectedItem="{Binding SelectedSuplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  materialDesign:HintAssist.Hint="Nhà cung cấp"
-                                  IsEditable="True"
-                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"></ComboBox>
-                        <TextBox Text="{Binding QRCode, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="5 5 15 5"
-                                 FontSize="16"
-                                 materialDesign:HintAssist.Hint="QR code"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox Text="{Binding BarCode, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="5 5 15 5"
-                                 FontSize="16"
-                                 materialDesign:HintAssist.Hint="Bar code"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <WrapPanel Margin="0,0,0,10">
+                        <TextBox
+                            Margin="5,5,15,5"
+                            materialDesign:HintAssist.Hint="Tên vật tư"
+                            FontSize="16"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}" />
+                        <ComboBox
+                            Margin="5,5,15,5"
+                            materialDesign:HintAssist.Hint="Đơn vị đo"
+                            FontSize="16"
+                            IsEditable="True"
+                            ItemsSource="{Binding Unit}"
+                            SelectedItem="{Binding SelectedUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                        <ComboBox
+                            Margin="5,5,15,5"
+                            materialDesign:HintAssist.Hint="Nhà cung cấp"
+                            FontSize="16"
+                            IsEditable="True"
+                            ItemsSource="{Binding Suplier}"
+                            SelectedItem="{Binding SelectedSuplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                        <TextBox
+                            Margin="5,5,15,5"
+                            materialDesign:HintAssist.Hint="QR code"
+                            FontSize="16"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding QRCode, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox
+                            Margin="5,5,15,5"
+                            materialDesign:HintAssist.Hint="Bar code"
+                            FontSize="16"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding BarCode, UpdateSourceTrigger=PropertyChanged}" />
                     </WrapPanel>
                 </materialDesign:Card>
 
                 <materialDesign:Card Grid.Row="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20*"></ColumnDefinition>
-                            <ColumnDefinition Width="20*"></ColumnDefinition>
-                            <ColumnDefinition Width="20*"></ColumnDefinition>
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="20*" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <Button Command="{Binding AddCommand}"
-                                    Content="Thêm"
-                                    Margin="5"></Button>
+                            <Button
+                                Margin="5"
+                                Command="{Binding AddCommand}"
+                                Content="Thêm" />
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button Command="{Binding EditCommand}"
-                                    Content="Sửa"
-                                    Margin="5"></Button>
+                            <Button
+                                Margin="5"
+                                Command="{Binding EditCommand}"
+                                Content="Sửa" />
                         </Grid>
                         <Grid Grid.Column="2">
-                            <Button Command="{Binding DeleteCommand}"
-                                    Content="Xóa"
-                                    Margin="5"></Button>
+                            <Button
+                                Margin="5"
+                                Command="{Binding DeleteCommand}"
+                                Content="Xóa" />
                         </Grid>
                     </Grid>
                 </materialDesign:Card>
 
-                <materialDesign:Card Grid.Row="2"
-                                     VerticalAlignment="Stretch">
+                <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding List}"
-                                  SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                        <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Id"
-                                                    DisplayMemberBinding="{Binding Id}"></GridViewColumn>
-                                    <GridViewColumn Header="Tên vật tư"
-                                                    DisplayMemberBinding="{Binding DisplayName}"></GridViewColumn>
-                                    <GridViewColumn Header="Đơn vị đo"
-                                                    DisplayMemberBinding="{Binding Unit.DisplayName}"></GridViewColumn>
-                                    <GridViewColumn Header="Nhà cung cấp"
-                                                    DisplayMemberBinding="{Binding Suplier.DisplayName}"></GridViewColumn>
-                                    <GridViewColumn Header="QRCode"
-                                                    DisplayMemberBinding="{Binding QRCode}"></GridViewColumn>
-                                    <GridViewColumn Header="BarCode"
-                                                    DisplayMemberBinding="{Binding BarCode}"></GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Header="Tên vật tư" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Unit.DisplayName}" Header="Đơn vị đo" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Suplier.DisplayName}" Header="Nhà cung cấp" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding QRCode}" Header="QRCode" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding BarCode}" Header="BarCode" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
