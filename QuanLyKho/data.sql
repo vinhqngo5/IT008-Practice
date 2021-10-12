@@ -1,9 +1,10 @@
--- USE Temp
--- DROP DATABASE QuanLyKho
+USE Temp
+DROP DATABASE QuanLyKho
 
 CREATE DATABASE QuanLyKho
 GO
 
+USE QuanLyKho
 
 CREATE TABLE UNIT
 (
@@ -117,16 +118,14 @@ GO
 CREATE TABLE OutputInfo
 (
     Id NVARCHAR(128) PRIMARY KEY,
-    IdObject NVARCHAR(128) NOT NULL,
     IdInputInfo NVARCHAR(128) NOT NULL,
-    IdCustom INT NOT NULL,
+    IdOutput NVARCHAR(128) NOT NULL,
+    IdCustomer INT NOT NULL,
     Count INT,
-    InputPrice FLOAT DEFAULT 0,
-    OutputPrice FLOAT DEFAULT 0,
     Status NVARCHAR(Max),
 
-    FOREIGN KEY (IdObject) REFERENCES Object(Id),
     FOREIGN KEY (IdInputInfo) REFERENCES InputInfo(Id),
-    FOREIGN KEY (IdCustom) REFERENCES Customer(Id),
+    FOREIGN KEY (IdOutput) REFERENCES Output(Id),
+    FOREIGN KEY (IdCustomer) REFERENCES Customer(Id),
 )
 GO
