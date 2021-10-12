@@ -1,8 +1,7 @@
-DROP DATABASE QUANLYKHO
-create database QuanLyKhoKteam
+create database QUANLYKHO
 go
 
-use QuanlyKhoKteam
+use QUANLYKHO
 go
 
 create table Unit
