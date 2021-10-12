@@ -17,18 +17,18 @@ namespace QuanLyKho.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            this.OutputInfoes = new HashSet<OutputInfo>();
+            this.Outputs = new HashSet<Output>();
         }
     
         public int Id { get; set; }
         public string DisplayName { get; set; }
-        public string Addresses { get; set; }
+        public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string MoreInfo { get; set; }
         public Nullable<System.DateTime> ContractDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
+        public virtual ICollection<Output> Outputs { get; set; }
     }
 }

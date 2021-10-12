@@ -4,11 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:QuanLyKho"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="clr-namespace:QuanLyKho.UserControls"
-    Name="mainWindow"
+    Name="MainWindowForm"
     Title="Phần mềm quản lý kho"
     Width="800"
     Height="650"
@@ -35,7 +34,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <uc:ControlBarUC Tag="{Binding Title, ElementName=mainWindow}" />
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=MainWindowForm}" />
         </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -224,7 +223,7 @@
                 <!--  Filter  -->
                 <Grid Grid.Row="0">
                     <materialDesign:Card Margin="10">
-                        <Grid Grid.Row="0">
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
@@ -305,7 +304,10 @@
                                                 VerticalAlignment="Center"
                                                 Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                                 Text="123456" />
-                                            <materialDesign:PopupBox Padding="2,0,2,0" HorizontalAlignment="Right">
+                                            <materialDesign:PopupBox
+                                                Grid.Row="0"
+                                                Padding="2,0,2,0"
+                                                HorizontalAlignment="Right">
                                                 <StackPanel>
                                                     <!--  popup  -->
                                                 </StackPanel>
@@ -334,7 +336,10 @@
                                                 VerticalAlignment="Center"
                                                 Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                                 Text="123456" />
-                                            <materialDesign:PopupBox Padding="2,0,2,0" HorizontalAlignment="Right">
+                                            <materialDesign:PopupBox
+                                                Grid.Row="0"
+                                                Padding="2,0,2,0"
+                                                HorizontalAlignment="Right">
                                                 <StackPanel>
                                                     <!--  popup  -->
                                                 </StackPanel>
@@ -363,7 +368,10 @@
                                                 VerticalAlignment="Center"
                                                 Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                                 Text="123456" />
-                                            <materialDesign:PopupBox Padding="2,0,2,0" HorizontalAlignment="Right">
+                                            <materialDesign:PopupBox
+                                                Grid.Row="0"
+                                                Padding="2,0,2,0"
+                                                HorizontalAlignment="Right">
                                                 <StackPanel>
                                                     <!--  popup  -->
                                                 </StackPanel>

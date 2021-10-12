@@ -21,8 +21,10 @@ namespace QuanLyKho.Model
         }
     
         public string Id { get; set; }
+        public int IdCustomer { get; set; }
         public Nullable<System.DateTime> DateOutput { get; set; }
     
+        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
     }

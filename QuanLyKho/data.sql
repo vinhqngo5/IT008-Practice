@@ -1,39 +1,41 @@
-USE Temp
-DROP DATABASE QuanLyKho
+-- USE TEMP
+-- DROP DATABASE IF EXISTS QUANLYKHO
 
-CREATE DATABASE QuanLyKho
+
+CREATE DATABASE QUANLYKHO
 GO
 
-USE QuanLyKho
+USE QUANLYKHO
+GO
 
-CREATE TABLE UNIT
+CREATE TABLE Unit
 (
-    Id INT IDENTITY(1, 1) PRIMARY KEY,
-    DisplayName NVARCHAR(MAX),
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX)
 )
 GO
 
 CREATE TABLE Supplier
 (
-    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    Id INT IDENTITY(1,1) PRIMARY KEY,
     DisplayName NVARCHAR(MAX),
-    Addresses NVARCHAR(MAX),
+    Address NVARCHAR(MAX),
     Phone NVARCHAR(20),
     Email NVARCHAR(200),
     MoreInfo NVARCHAR(MAX),
-    ContractDate DATETIME,
+    ContractDate DATETIME
 )
 GO
 
 CREATE TABLE Customer
 (
-    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    Id INT IDENTITY(1,1) PRIMARY KEY,
     DisplayName NVARCHAR(MAX),
-    Addresses NVARCHAR(MAX),
+    Address NVARCHAR(MAX),
     Phone NVARCHAR(20),
     Email NVARCHAR(200),
     MoreInfo NVARCHAR(MAX),
-    ContractDate DATETIME,
+    ContractDate DATETIME
 )
 GO
 
@@ -42,53 +44,56 @@ CREATE TABLE Object
     Id NVARCHAR(128) PRIMARY KEY,
     DisplayName NVARCHAR(MAX),
     IdUnit INT NOT NULL,
-    IdSupplier INT NOT NULL,
-    QRCode NVARCHAR(MAX),
-    BarCode NVARCHAR(MAX),
+    QrCode NVARCHAR(MAX),
+    BarCode NVARCHAR(MAX)
 
-    FOREIGN KEY (IdUnit) REFERENCES UNIT(Id),
-    FOREIGN KEY (IdSupplier) REFERENCES Supplier(Id)
+        FOREIGN KEY(IdUnit) REFERENCES Unit(Id),
 )
 GO
 
 CREATE TABLE UserRole
 (
-    Id INT IDENTITY(1, 1) PRIMARY KEY,
-    DisplayName NVARCHAR(MAX),
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    DisplayName NVARCHAR(MAX)
 )
 GO
 
 INSERT INTO UserRole
     (DisplayName)
-VALUES
-    (N'Admin'),
-    (N'Nhân viên')
+VALUES(N'ADMIN')
+GO
+INSERT INTO UserRole
+    (DisplayName)
+VALUES(N'NHÂN VIÊN')
 GO
 
 CREATE TABLE Users
 (
-    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    Id INT IDENTITY(1,1) PRIMARY KEY,
     DisplayName NVARCHAR(MAX),
     UserName NVARCHAR(100),
     PassWord NVARCHAR(MAX),
-    IdRole INT NOT NULL,
+    IdRole INT NOT NULL
 
-    FOREIGN KEY (IdRole) REFERENCES UserRole(Id),
-
+        FOREIGN KEY (IdRole) REFERENCES UserRole(Id)
 )
 GO
-
 INSERT INTO Users
     (DisplayName, UserName, PassWord, IdRole)
-VALUES
-    (N'Admin', 'Admin', N'db69fc039dcbd2962cb4d28f5891aae1', 1),
-    (N'Nhân viên', N'Staff', N'978aae9bb6bee8fb75de3e4830a1be46', 2 )
+VALUES(N'RONGK9', N'ADMIN', N'1', 1)
+GO
+INSERT INTO Users
+    (DisplayName, UserName, PassWord, IdRole)
+VALUES(N'NHÂN VIÊN', N'STAFF', N'1', 2)
 GO
 
 CREATE TABLE Input
 (
     Id NVARCHAR(128) PRIMARY KEY,
+    IdSupplier INT NOT NULL,
     DateInput DATETIME
+
+        FOREIGN KEY(IdSupplier) REFERENCES Supplier(Id)
 )
 GO
 
@@ -99,44 +104,33 @@ CREATE TABLE InputInfo
     IdInput NVARCHAR(128) NOT NULL,
     Count INT,
     InputPrice FLOAT DEFAULT 0,
-    OutputPrice FLOAT DEFAULT 0,
-    Status NVARCHAR(Max),
+    Status NVARCHAR(MAX)
 
-create table Customer
-(
-	Id int identity(1,1) primary key,
-	DisplayName nvarchar(max),
-	Address nvarchar(max),
-	Phone nvarchar(20),
-	Email nvarchar(200),
-	MoreInfo nvarchar(max),
-	ContractDate DateTime
-)
-go
-
-    FOREIGN KEY (IdObject) REFERENCES Object(Id),
-    FOREIGN KEY (IdInput) REFERENCES Input(Id),
+        FOREIGN KEY (IdObject) REFERENCES Object(Id),
+    FOREIGN KEY (IdInput) REFERENCES Input(Id)
 )
 GO
 
 CREATE TABLE Output
 (
     Id NVARCHAR(128) PRIMARY KEY,
+    IdCustomer INT NOT NULL,
     DateOutput DATETIME
+
+        FOREIGN KEY (IdCustomer) REFERENCES Customer(Id)
 )
 GO
 
 CREATE TABLE OutputInfo
 (
     Id NVARCHAR(128) PRIMARY KEY,
-    IdInputInfo NVARCHAR(128) NOT NULL,
     IdOutput NVARCHAR(128) NOT NULL,
-    IdCustomer INT NOT NULL,
+    IdInputInfo NVARCHAR(128) NOT NULL,
     Count INT,
-    Status NVARCHAR(Max),
+    OutputPrice FLOAT DEFAULT 0,
+    Status NVARCHAR(MAX)
 
-    FOREIGN KEY (IdInputInfo) REFERENCES InputInfo(Id),
-    FOREIGN KEY (IdOutput) REFERENCES Output(Id),
-    FOREIGN KEY (IdCustomer) REFERENCES Customer(Id),
+        FOREIGN KEY (IdOutput) REFERENCES Output(Id),
+    FOREIGN KEY (IdInputInfo) REFERENCES InputInfo(Id)
 )
 GO

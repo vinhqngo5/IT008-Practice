@@ -18,10 +18,7 @@
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
-    TextOptions.TextRenderingMode="Auto"
-    WindowStartupLocation="CenterScreen"
-    WindowStyle="None"
-    mc:Ignorable="d">
+    TextOptions.TextRenderingMode="Auto">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -70,17 +67,13 @@
                         Width="110"
                         Background="MediumSeaGreen"
                         BorderThickness="0"
-                        Content="Đăng nhập"
-                        Style="{StaticResource MaterialDesignRaisedButton}"
-                        ToolTip="Resource name: MaterialDesignRaisedButton" />
+                        Content="Đăng nhập" />
                     <Button
                         Grid.Column="1"
                         Width="110"
                         Background="MediumPurple"
                         BorderThickness="0"
-                        Content="Đăng ký"
-                        Style="{StaticResource MaterialDesignRaisedButton}"
-                        ToolTip="Resource name: MaterialDesignRaisedButton" />
+                        Content="Đăng ký" />
                 </Grid>
             </Grid>
         </materialDesign:Card>
