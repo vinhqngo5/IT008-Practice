@@ -2,9 +2,9 @@
 {
     public class DataProvider
     {
-        private DataProvider _instance;
+        private static DataProvider _instance;
 
-        public DataProvider Instance => _instance ?? (_instance = new DataProvider());
+        public static DataProvider Instance => _instance ?? (_instance = new DataProvider());
 
         private DataProvider()
         {

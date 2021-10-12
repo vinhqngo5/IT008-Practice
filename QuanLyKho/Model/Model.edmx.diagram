@@ -5,24 +5,24 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="801e97ba178c49a2a5f6f006761870a3" Name="Diagram1">
-        <EntityTypeShape EntityType="QUANLYKHOModel.Customer" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.Input" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.InputInfo" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.Object" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.Output" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.OutputInfo" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.Supplier" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.Unit" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.UserRole" Width="1.5" PointX="7.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QUANLYKHOModel.User" Width="1.5" PointX="10" PointY="4.875" IsExpanded="true" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__OutputInf__IdCus__3E52440B" ManuallyRouted="false" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__InputInfo__IdInp__37A5467C" ManuallyRouted="false" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__InputInfo__Statu__36B12243" ManuallyRouted="false" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__OutputInf__IdInp__3D5E1FD2" ManuallyRouted="false" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__Object__BarCode__2A4B4B5E" ManuallyRouted="false" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__Object__IdSuppli__2B3F6F97" ManuallyRouted="false" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__OutputInf__Statu__3C69FB99" ManuallyRouted="false" />
-        <AssociationConnector Association="QUANLYKHOModel.FK__Users__IdRole__300424B4" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.Customer" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.Input" Width="1.5" PointX="3" PointY="5.375" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.InputInfo" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.Object" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.Output" Width="1.5" PointX="5.25" PointY="9.375" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.OutputInfo" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.Supplier" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.Unit" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.UserRole" Width="1.5" PointX="5.75" PointY="5.25" />
+        <EntityTypeShape EntityType="QUANLYKHOModel.User" Width="1.5" PointX="8" PointY="4.875" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__Output__DateOutp__398D8EEE" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__Input__DateInput__31EC6D26" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__InputInfo__IdInp__36B12243" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__InputInfo__Statu__35BCFE0A" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__OutputInf__IdInp__3E52440B" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__Object__BarCode__2A4B4B5E" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__OutputInf__Statu__3D5E1FD2" />
+        <AssociationConnector Association="QUANLYKHOModel.FK__Users__IdRole__2F10007B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

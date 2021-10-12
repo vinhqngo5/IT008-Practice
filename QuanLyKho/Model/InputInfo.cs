@@ -25,7 +25,6 @@ namespace QuanLyKho.Model
         public string IdInput { get; set; }
         public Nullable<int> Count { get; set; }
         public Nullable<double> InputPrice { get; set; }
-        public Nullable<double> OutputPrice { get; set; }
         public string Status { get; set; }
     
         public virtual Input Input { get; set; }
