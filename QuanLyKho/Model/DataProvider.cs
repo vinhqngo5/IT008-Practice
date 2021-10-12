@@ -8,17 +8,17 @@ namespace QuanLyKho.Model
 {
     public class DataProvider
     {
-        private static DataProvider s_ins;
+        private static DataProvider s_instance;
 
-        public static DataProvider Ins 
-        {
-            get => s_ins ?? (s_ins = new DataProvider());
-            set => s_ins = value; 
+        public static DataProvider Instance 
+        { 
+            get => s_instance ?? (s_instance = new DataProvider()); 
+            private set => s_instance = value; 
         }
-        public QUANLYKHOEntities DB { get; set; }
-        private DataProvider()
+        private DataProvider() 
         {
             DB = new QUANLYKHOEntities();
         }
+        public QUANLYKHOEntities DB { get; set; }
     }
 }
