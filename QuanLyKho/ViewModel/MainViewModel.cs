@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Input;
 
 namespace QuanLyKho.ViewModel
@@ -16,13 +17,29 @@ namespace QuanLyKho.ViewModel
 
         public MainViewModel()
         {
-            LoadedWindowCommand = new RelayCommand<object>(
-                (p) => { return false; },
+            LoadedWindowCommand = new RelayCommand<Window>(
+                (p) => { return true; },
                 (p) =>
                 {
                     Isloaded = true;
+                    if (p == null)
+                        return;
+                    p.Hide();
                     LoginWindow loginWindow = new LoginWindow();
                     loginWindow.ShowDialog();
+
+                    if (loginWindow.DataContext == null)
+                        return;
+                    var loginVM = loginWindow.DataContext as LoginViewModel;
+
+                    if (loginVM.Islogin)
+                    {
+                        p.Show();
+                    }
+                    else
+                    {
+                        p.Close();
+                    }
                 });
 
             UnitWindowCommand = new RelayCommand<object>(
