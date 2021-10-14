@@ -121,6 +121,7 @@
     <Compile Include="Model\Supplier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\TonKho.cs" />
     <Compile Include="Model\Unit.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

@@ -1,3 +1,6 @@
+using QuanLyKho.Model;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -5,6 +8,8 @@ namespace QuanLyKho.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
+        private ObservableCollection<TonKho> _tonKhoList;
+        public ObservableCollection<TonKho> TonKhoList { get => _tonKhoList; set { _tonKhoList = value; OnPropertyChanged(); } }
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UnitWindowCommand { get; set; }
@@ -35,6 +40,7 @@ namespace QuanLyKho.ViewModel
                     if (loginVM.Islogin)
                     {
                         p.Show();
+                        LoadTonKhoData();
                     }
                     else
                     {
@@ -90,6 +96,33 @@ namespace QuanLyKho.ViewModel
                 {
                     _ = new OutputWindow().ShowDialog();
                 });
+        }
+        void LoadTonKhoData()
+        {
+            TonKhoList = new ObservableCollection<TonKho>();
+            var objectList = DataProvider.Instance.Database.Objects;
+            int i = 1;
+            foreach (var item in objectList)
+            {
+                var inputList = DataProvider.Instance.Database.InputInfoes.Where(p => p.IdObject == item.Id);
+                var outputList = DataProvider.Instance.Database.OutputInfoes.Where(p => p.IdObject == item.Id);
+                int sumInput = 0;
+                int sumOutput = 0;
+                if (inputList.Count() != 0)
+                {
+                    sumInput = (int)inputList.Sum(p => p.Count);
+                }
+                if (outputList.Count() != 0)
+                {
+                    sumOutput = (int)outputList.Sum(p => p.Count);
+                }
+                TonKho tonKho = new TonKho();
+                tonKho.STT = i;
+                tonKho.Count = sumInput - sumOutput;
+                tonKho.Object = item;
+                TonKhoList.Add(tonKho);
+                i++;
+            }
         }
     }
 }
