@@ -193,5 +193,6 @@ INSERT INTO OutputInfo
     (Id, IdOutput, IdObject, Count, OutputPrice)
 VALUES
     (N'1', N'1', N'1', 50, 240000),
-    (N'2', N'2', N'1', 1000, 500)
+    (N'2', N'2', N'2', 1000, 500)
 GO
+

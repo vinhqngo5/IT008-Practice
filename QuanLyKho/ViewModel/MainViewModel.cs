@@ -1,4 +1,5 @@
 using QuanLyKho.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -110,11 +111,11 @@ namespace QuanLyKho.ViewModel
                 int sumOutput = 0;
                 if (inputList.Count() != 0)
                 {
-                    sumInput = (int)inputList.Sum(p => p.Count);
+                    sumInput = Convert.ToInt32(inputList.Sum(p => p.Count));
                 }
                 if (outputList.Count() != 0)
                 {
-                    sumOutput = (int)outputList.Sum(p => p.Count);
+                    sumOutput = Convert.ToInt32(outputList.Sum(p => p.Count));
                 }
                 TonKho tonKho = new TonKho();
                 tonKho.STT = i;
