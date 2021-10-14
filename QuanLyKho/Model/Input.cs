@@ -21,10 +21,8 @@ namespace QuanLyKho.Model
         }
     
         public string Id { get; set; }
-        public int IdSupplier { get; set; }
         public Nullable<System.DateTime> DateInput { get; set; }
     
-        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputInfo> InputInfoes { get; set; }
     }

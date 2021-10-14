@@ -16,12 +16,12 @@ namespace QuanLyKho.Model
     {
         public string Id { get; set; }
         public string IdOutput { get; set; }
-        public string IdInputInfo { get; set; }
+        public string IdObject { get; set; }
         public Nullable<int> Count { get; set; }
         public Nullable<double> OutputPrice { get; set; }
         public string Status { get; set; }
     
-        public virtual InputInfo InputInfo { get; set; }
+        public virtual Object Object { get; set; }
         public virtual Output Output { get; set; }
     }
 }

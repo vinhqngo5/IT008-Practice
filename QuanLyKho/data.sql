@@ -1,11 +1,11 @@
 -- USE TEMP
--- DROP DATABASE IF EXISTS QUANLYKHO
+-- DROP DATABASE IF EXISTS QuanLyKho
 
 
-CREATE DATABASE QUANLYKHO
+CREATE DATABASE QuanLyKho
 GO
 
-USE QUANLYKHO
+USE QuanLyKho
 GO
 
 CREATE TABLE Unit
@@ -45,9 +45,16 @@ CREATE TABLE Object
     DisplayName NVARCHAR(MAX),
     IdUnit INT NOT NULL,
     QrCode NVARCHAR(MAX),
-    BarCode NVARCHAR(MAX)
+    BarCode NVARCHAR(MAX),
+    IdSupplier INT NOT NULL,
+    OutputPrice FLOAT DEFAULT 0,
 
-        FOREIGN KEY(IdUnit) REFERENCES Unit(Id),
+    FOREIGN KEY
+    (IdSupplier) REFERENCES Supplier
+    (Id),
+    FOREIGN KEY
+    (IdUnit) REFERENCES Unit
+    (Id),
 )
 GO
 
@@ -90,10 +97,7 @@ GO
 CREATE TABLE Input
 (
     Id NVARCHAR(128) PRIMARY KEY,
-    IdSupplier INT NOT NULL,
     DateInput DATETIME
-
-        FOREIGN KEY(IdSupplier) REFERENCES Supplier(Id)
 )
 GO
 
@@ -125,12 +129,69 @@ CREATE TABLE OutputInfo
 (
     Id NVARCHAR(128) PRIMARY KEY,
     IdOutput NVARCHAR(128) NOT NULL,
-    IdInputInfo NVARCHAR(128) NOT NULL,
+    IdObject NVARCHAR(128) NOT NULL,
     Count INT,
     OutputPrice FLOAT DEFAULT 0,
     Status NVARCHAR(MAX)
 
         FOREIGN KEY (IdOutput) REFERENCES Output(Id),
-    FOREIGN KEY (IdInputInfo) REFERENCES InputInfo(Id)
+    FOREIGN KEY (IdObject) REFERENCES Object(Id)
 )
+GO
+
+INSERT INTO Unit
+    (DisplayName )
+VALUES
+    (N'Kg'),
+    (N'Thùng'),
+    (N'Bao')
+GO
+
+INSERT INTO Supplier
+    (DisplayName, Address, Phone, Email)
+VALUES
+    (N'Kteam1', N'Vũng Tàu', N'12324215', N'email@gmail.com')
+GO
+
+
+INSERT INTO Object
+    (Id, DisplayName, IdUnit, IdSupplier, OutputPrice)
+VALUES
+    (N'1', N'Xi măng', 1, 1, 20000),
+    (N'2', N'Gạch', 1, 1, 500)
+GO
+
+INSERT INTO Input
+    (Id, DateInput)
+VALUES
+    (N'1', '10-14-2021'),
+    (N'2', '10-14-2021')
+GO
+
+INSERT INTO InputInfo
+    (Id, IdObject, IdInput, Count, InputPrice)
+VALUES
+    (N'1', N'1', N'1', 50, 200000),
+    (N'2', N'2', N'1', 1000, 200)
+GO
+
+INSERT INTO Customer
+    (DisplayName, Address, Phone, Email)
+VALUES
+    (N'K9', N'address', N'1231231', N'email@gmail.com'),
+    (N'ProVip', N'address2', N'364356', N'email2@gmail.com')
+GO
+
+INSERT INTO Output
+    (Id, DateOutput, IdCustomer)
+VALUES
+    (N'1', '10-14-2021', 1),
+    (N'2', '10-14-2021', 2)
+GO
+
+INSERT INTO OutputInfo
+    (Id, IdOutput, IdObject, Count, OutputPrice)
+VALUES
+    (N'1', N'1', N'1', 50, 240000),
+    (N'2', N'2', N'1', 1000, 500)
 GO

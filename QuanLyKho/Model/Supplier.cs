@@ -17,7 +17,7 @@ namespace QuanLyKho.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Supplier()
         {
-            this.Inputs = new HashSet<Input>();
+            this.Objects = new HashSet<Object>();
         }
     
         public int Id { get; set; }
@@ -29,6 +29,6 @@ namespace QuanLyKho.Model
         public Nullable<System.DateTime> ContractDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Input> Inputs { get; set; }
+        public virtual ICollection<Object> Objects { get; set; }
     }
 }

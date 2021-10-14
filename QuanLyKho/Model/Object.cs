@@ -18,6 +18,7 @@ namespace QuanLyKho.Model
         public Object()
         {
             this.InputInfoes = new HashSet<InputInfo>();
+            this.OutputInfoes = new HashSet<OutputInfo>();
         }
     
         public string Id { get; set; }
@@ -25,9 +26,14 @@ namespace QuanLyKho.Model
         public int IdUnit { get; set; }
         public string QrCode { get; set; }
         public string BarCode { get; set; }
+        public int IdSupplier { get; set; }
+        public Nullable<double> OutputPrice { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputInfo> InputInfoes { get; set; }
+        public virtual Supplier Supplier { get; set; }
         public virtual Unit Unit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
     }
 }

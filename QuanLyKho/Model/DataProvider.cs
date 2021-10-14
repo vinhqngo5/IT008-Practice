@@ -8,9 +8,9 @@ namespace QuanLyKho.Model
 
         private DataProvider()
         {
-            Database = new QUANLYKHOEntities();
+            Database = new QuanLyKhoEntities();
         }
 
-        public QUANLYKHOEntities Database { get; set; }
+        public QuanLyKhoEntities Database { get; set; }
     }
 }
