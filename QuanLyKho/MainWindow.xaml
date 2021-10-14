@@ -437,12 +437,12 @@
                         </Grid>
                         <Grid Grid.Row="2">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <ListView>
+                                <ListView ItemsSource="{Binding TonKhoList}">
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn Header="STT" />
-                                            <GridViewColumn Header="Tên vật tư" />
-                                            <GridViewColumn Header="Số lượng tồn" />
+                                            <GridViewColumn DisplayMemberBinding="{Binding STT}" Header="STT" />
+                                            <GridViewColumn DisplayMemberBinding="{Binding Object.DisplayName}" Header="Tên vật tư" />
+                                            <GridViewColumn DisplayMemberBinding="{Binding Count}" Header="Số lượng tồn" />
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
