@@ -1,3 +1,7 @@
+using QuanLyKho.Model;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -5,6 +9,7 @@ namespace QuanLyKho.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
+        private ObservableCollection<Inventory> _inventories;
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UnitWindowCommand { get; set; }
@@ -14,9 +19,19 @@ namespace QuanLyKho.ViewModel
         public ICommand UserWindowCommand { get; set; }
         public ICommand InputWindowCommand { get; set; }
         public ICommand OutputWindowCommand { get; set; }
+        public ObservableCollection<Inventory> Inventories 
+        { 
+            get => _inventories; 
+            set 
+            { 
+                _inventories = value; 
+                OnPropertyChanged(); 
+            } 
+        }
 
         public MainViewModel()
         {
+            LoadInventory();
             LoadedWindowCommand = new RelayCommand<Window>(
                 (p) => { return true; },
                 (p) =>
@@ -90,6 +105,28 @@ namespace QuanLyKho.ViewModel
                 {
                     _ = new OutputWindow().ShowDialog();
                 });
+        }
+        void LoadInventory()
+        {
+            Inventories = new ObservableCollection<Inventory>();
+            var objectList = DataProvider.Instance.Database.Objects;
+            int i = 1;
+            foreach(var item in objectList)
+            {
+                var inputList = DataProvider.Instance.Database.InputInfoes.Where(intput => intput.Id == item.Id);
+                var outputList = DataProvider.Instance.Database.OutputInfoes.Where(output => output.Id == item.Id);
+                int sumInput =  0;
+                int sumOutput = 0;
+                if (inputList!=null)
+                    sumInput = Convert.ToInt32(inputList.Sum(intput => intput.Count));
+                if (outputList != null)
+                    sumOutput = Convert.ToInt32(inputList.Sum(output => output.Count));
+                Inventory inventory = new Inventory();
+                inventory.STT = i;
+                inventory.Count = sumInput - sumOutput;
+                inventory.Object = item;
+                Inventories.Add(inventory);
+            }    
         }
     }
 }
