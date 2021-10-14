@@ -120,7 +120,7 @@ namespace QuanLyKho.ViewModel
                 if (inputList!=null)
                     sumInput = Convert.ToInt32(inputList.Sum(intput => intput.Count));
                 if (outputList != null)
-                    sumOutput = Convert.ToInt32(inputList.Sum(output => output.Count));
+                    sumOutput = Convert.ToInt32(outputList.Sum(output => output.Count));
                 Inventory inventory = new Inventory();
                 inventory.STT = i;
                 inventory.Count = sumInput - sumOutput;

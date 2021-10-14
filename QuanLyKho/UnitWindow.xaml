@@ -11,6 +11,7 @@
     Title="Đơn vị đo"
     Width="400"
     Height="500"
+    DataContext="{StaticResource UnitVM}"
     ResizeMode="NoResize"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
@@ -49,7 +50,7 @@
                             materialDesign:HintAssist.Hint="Tên đơn vị đo"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                     </Grid>
                 </materialDesign:Card>
 

@@ -1,5 +1,5 @@
 -- USE TEMP
--- DROP DATABASE IF EXISTS QuanLyKho
+ --DROP DATABASE IF EXISTS QuanLyKho
 
 
 CREATE DATABASE QuanLyKho
@@ -192,6 +192,6 @@ GO
 INSERT INTO OutputInfo
     (Id, IdOutput, IdObject, Count, OutputPrice)
 VALUES
-    (N'1', N'1', N'1', 50, 240000),
-    (N'2', N'2', N'1', 1000, 500)
+    (N'1', N'1', N'1', 10, 240000),
+    (N'2', N'2', N'1', 200, 500)
 GO
