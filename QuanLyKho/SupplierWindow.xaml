@@ -11,6 +11,7 @@
     Title="Nhà cung cấp"
     Width="900"
     Height="500"
+    DataContext="{StaticResource SupplierVM}"
     ResizeMode="NoResize"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
@@ -79,7 +80,7 @@
                             VerticalAlignment="Center"
                             materialDesign:HintAssist.Hint="Ngày hợp tác"
                             FontSize="16"
-                            SelectedDate="{Binding ContractDate}"
+                            SelectedDate="{Binding ContractDate, StringFormat='dd/MM/yyyy'}"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                     </WrapPanel>
                 </materialDesign:Card>
@@ -123,7 +124,7 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding Phone}" Header="Điện thoại" />
                                     <GridViewColumn DisplayMemberBinding="{Binding Email}" Header="Email" />
                                     <GridViewColumn DisplayMemberBinding="{Binding MoreInfo}" Header="Thông tin thêm" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding ContractDate}" Header="Ngày hợp tác" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding ContractDate, StringFormat='dd/MM/yyyy'}" Header="Ngày hợp tác" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
