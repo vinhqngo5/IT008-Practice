@@ -9,10 +9,11 @@
 
 namespace QuanLyKho.Model
 {
+    using QuanLyKho.ViewModel;
     using System;
     using System.Collections.Generic;
-    
-    public partial class Object
+
+    public partial class Object:BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Object()
@@ -20,19 +21,28 @@ namespace QuanLyKho.Model
             this.InputInfoes = new HashSet<InputInfo>();
             this.OutputInfoes = new HashSet<OutputInfo>();
         }
-    
-        public string Id { get; set; }
-        public string DisplayName { get; set; }
-        public int IdUnit { get; set; }
-        public string QrCode { get; set; }
-        public string BarCode { get; set; }
-        public int IdSupplier { get; set; }
-        public Nullable<double> OutputPrice { get; set; }
-    
+
+        private string _id;
+        public string Id { get => _id; set { _id = value; OnPropertyChanged(); } }
+        private string _displayName;
+        public string DisplayName { get => _displayName; set { _displayName = value; OnPropertyChanged(); } }
+        private int _idUnit;
+        public int IdUnit { get => _idUnit; set { _idUnit = value; OnPropertyChanged(); } }
+        private string _qrCode;
+        public string QrCode { get => _qrCode; set { _qrCode = value; OnPropertyChanged(); } }
+        private string _barCode;
+        public string BarCode { get => _barCode; set { _barCode = value; OnPropertyChanged(); } }
+        private int _idSupplier;
+        public int IdSupplier { get => _idSupplier; set { _idSupplier = value; OnPropertyChanged(); } }
+        private Nullable<double> _outputPrice;
+        public Nullable<double> OutputPrice { get => _outputPrice; set { _outputPrice = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputInfo> InputInfoes { get; set; }
-        public virtual Supplier Supplier { get; set; }
-        public virtual Unit Unit { get; set; }
+        private Supplier _supplier;
+        public virtual Supplier Supplier { get => _supplier; set { _supplier = value; OnPropertyChanged(); } }
+        private Unit _unit;
+        public virtual Unit Unit { get => _unit; set { _unit = value; OnPropertyChanged(); } }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OutputInfo> OutputInfoes { get; set; }
     }
