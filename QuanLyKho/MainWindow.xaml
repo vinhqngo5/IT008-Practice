@@ -299,11 +299,11 @@
                                             <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
                                             <TextBlock
                                                 Grid.Row="2"
-                                                Margin="16,0,16,8"
+                                                Margin="16,0,0,0"
                                                 HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
+                                                VerticalAlignment="Top"
                                                 Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                Text="123456" />
+                                                Text="{Binding SumIntput}" />
                                             <materialDesign:PopupBox
                                                 Grid.Row="0"
                                                 Padding="2,0,2,0"
@@ -335,7 +335,7 @@
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                Text="123456" />
+                                                Text="{Binding SumOutput}" />
                                             <materialDesign:PopupBox
                                                 Grid.Row="0"
                                                 Padding="2,0,2,0"
@@ -363,11 +363,11 @@
                                             <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
                                             <TextBlock
                                                 Grid.Row="2"
-                                                Margin="16,0,16,8"
+                                                Margin="16,0,0,7.8"
                                                 HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
+                                                VerticalAlignment="Bottom"
                                                 Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                Text="123456" />
+                                                Text="{Binding Count}" />
                                             <materialDesign:PopupBox
                                                 Grid.Row="0"
                                                 Padding="2,0,2,0"
@@ -437,7 +437,7 @@
                         </Grid>
                         <Grid Grid.Row="2">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <ListView ItemsSource="{Binding TonKhoList}">
+                                <ListView ItemsSource="{Binding InventoryList}" SelectedItem="{Binding SelectedItem}">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"/>

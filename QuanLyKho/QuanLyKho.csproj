@@ -121,7 +121,7 @@
     <Compile Include="Model\Supplier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\TonKho.cs" />
+    <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\Unit.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -153,6 +153,7 @@
     <Compile Include="ViewModel\ControlBarViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SupplierViewModel.cs" />
     <Compile Include="ViewModel\UnitViewModel.cs" />
     <Page Include="CustomerWindow.xaml">
       <SubType>Designer</SubType>

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace QuanLyKho.Model
 {
-    public class TonKho
+    public class Inventory
     {
         public Object Object { get; set; }
         public int STT { get; set; }
+        public int SumInput { get; set; }
+        public int SumOutput { get; set; }
         public int Count { get; set; }
     }
 }

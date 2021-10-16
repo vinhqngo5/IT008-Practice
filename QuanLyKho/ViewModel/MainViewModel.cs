@@ -9,8 +9,23 @@ namespace QuanLyKho.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<TonKho> _tonKhoList;
-        public ObservableCollection<TonKho> TonKhoList { get => _tonKhoList; set { _tonKhoList = value; OnPropertyChanged(); } }
+        private ObservableCollection<Inventory> _inventoryList;
+        public ObservableCollection<Inventory> InventoryList { get => _inventoryList; set { _inventoryList = value; OnPropertyChanged(); } }
+        private Inventory _selectedItem;
+        public Inventory SelectedItem
+        {
+            get => _selectedItem; set
+            {
+                _selectedItem = value;
+                OnPropertyChanged();
+                if (SelectedItem != null)
+                {
+                    SumIntput = SelectedItem.SumInput;
+                    SumOutput = SelectedItem.SumOutput;
+                    Count = SelectedItem.Count;
+                }
+            }
+        }
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UnitWindowCommand { get; set; }
@@ -20,6 +35,14 @@ namespace QuanLyKho.ViewModel
         public ICommand UserWindowCommand { get; set; }
         public ICommand InputWindowCommand { get; set; }
         public ICommand OutputWindowCommand { get; set; }
+        public int SumIntput { get => _sumInput; set { _sumInput = value; OnPropertyChanged(); } }
+        public int SumOutput { get => _sumOutput; set { _sumOutput = value; OnPropertyChanged(); } }
+
+        public int Count { get => _count; set { _count = value; OnPropertyChanged(); } }
+
+        private int _sumInput;
+        private int _sumOutput;
+        private int _count;
 
         public MainViewModel()
         {
@@ -41,7 +64,7 @@ namespace QuanLyKho.ViewModel
                     if (loginVM.Islogin)
                     {
                         p.Show();
-                        LoadTonKhoData();
+                        LoadInventoryData();
                     }
                     else
                     {
@@ -98,9 +121,9 @@ namespace QuanLyKho.ViewModel
                     _ = new OutputWindow().ShowDialog();
                 });
         }
-        void LoadTonKhoData()
+        void LoadInventoryData()
         {
-            TonKhoList = new ObservableCollection<TonKho>();
+            InventoryList = new ObservableCollection<Inventory>();
             var objectList = DataProvider.Instance.Database.Objects;
             int i = 1;
             foreach (var item in objectList)
@@ -117,11 +140,13 @@ namespace QuanLyKho.ViewModel
                 {
                     sumOutput = Convert.ToInt32(outputList.Sum(p => p.Count));
                 }
-                TonKho tonKho = new TonKho();
-                tonKho.STT = i;
-                tonKho.Count = sumInput - sumOutput;
-                tonKho.Object = item;
-                TonKhoList.Add(tonKho);
+                Inventory inventory = new Inventory();
+                inventory.STT = i;
+                inventory.SumInput = sumInput;
+                inventory.SumOutput = sumOutput;
+                inventory.Count = sumInput - sumOutput;
+                inventory.Object = item;
+                InventoryList.Add(inventory);
                 i++;
             }
         }

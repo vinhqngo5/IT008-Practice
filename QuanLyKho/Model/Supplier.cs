@@ -9,10 +9,11 @@
 
 namespace QuanLyKho.Model
 {
+    using QuanLyKho.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Supplier
+    public partial class Supplier: BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Supplier()
@@ -21,13 +22,30 @@ namespace QuanLyKho.Model
         }
     
         public int Id { get; set; }
-        public string DisplayName { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string MoreInfo { get; set; }
+
+        public string DisplayName { get => _displayName; set { _displayName = value; OnPropertyChanged(); } }
+
+        public string Address { get => _address; set { _address = value; OnPropertyChanged(); } }
+
+        public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(); } }
+
+        public string Email { get => _email; set { _email = value; OnPropertyChanged(); } }
+
+        public string MoreInfo { get => _moreInfo; set { _moreInfo = value; OnPropertyChanged(); } }
         public Nullable<System.DateTime> ContractDate { get; set; }
-    
+
+        private string _address;
+
+        private string _displayName;
+
+        private string _phone;
+
+        private string _email;
+
+        private string _moreInfo;
+
+        private Nullable<System.DateTime> _contractDate;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Object> Objects { get; set; }
     }
