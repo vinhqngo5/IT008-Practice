@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="clr-namespace:QuanLyKho.UserControls"
     x:Name="supplierWindow"
+    DataContext="{StaticResource SupplierVM}"
     Title="Nhà cung cấp"
     Width="900"
     Height="500"
@@ -123,7 +124,8 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding Phone}" Header="Điện thoại" />
                                     <GridViewColumn DisplayMemberBinding="{Binding Email}" Header="Email" />
                                     <GridViewColumn DisplayMemberBinding="{Binding MoreInfo}" Header="Thông tin thêm" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding ContractDate}" Header="Ngày hợp tác" />
+                                    <GridViewColumn
+                                        DisplayMemberBinding="{Binding ContractDate, StringFormat='dd/MM/yyyy'}" Header="Ngày hợp tác" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
