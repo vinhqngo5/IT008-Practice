@@ -7,4 +7,5 @@
     <viewmodel:UnitViewModel x:Key="UnitVM" />
     <viewmodel:SupplierViewModel x:Key="SupplierVM" />
     <viewmodel:ObjectViewModel x:Key="ObjectVM" />
+    <viewmodel:CustomerViewModel x:Key="CustomerVM" />
 </ResourceDictionary>
