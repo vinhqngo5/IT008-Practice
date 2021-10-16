@@ -18,6 +18,7 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
+    DataContext="{StaticResource UserVM}"
     WindowStyle="None"
     mc:Ignorable="d">
     <Grid>
@@ -49,12 +50,13 @@
                             materialDesign:HintAssist.Hint="Tên đăng nhập"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <ComboBox
+                            DisplayMemberPath="DisplayName"
                             Margin="5,5,15,5"
                             materialDesign:HintAssist.Hint="Quyền"
                             FontSize="16"
-                            IsEditable="True"
+                            IsEditable="True"   
                             ItemsSource="{Binding Role}"
                             SelectedItem="{Binding SelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
@@ -63,7 +65,7 @@
                             materialDesign:HintAssist.Hint="Tên hiển thị"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </WrapPanel>
                 </materialDesign:Card>
 
@@ -109,7 +111,7 @@
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" />
                                     <GridViewColumn DisplayMemberBinding="{Binding UserName}" Header="Tên đăng nhập" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Role.DisplayName}" Header="Chức vụ" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding UserRole.DisplayName}" Header="Chức vụ" />
                                     <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Header="Tên hiển thị" />
                                 </GridView>
                             </ListView.View>

@@ -50,7 +50,7 @@
                             materialDesign:HintAssist.Hint="Tên vật tư"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <ComboBox
                             Margin="5,5,15,5"
                             materialDesign:HintAssist.Hint="Đơn vị đo"
@@ -74,13 +74,13 @@
                             materialDesign:HintAssist.Hint="QR code"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding QRCode, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding QRCode, UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" />
                         <TextBox
                             Margin="5,5,15,5"
                             materialDesign:HintAssist.Hint="Bar code"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding BarCode, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding BarCode, UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" />
                     </WrapPanel>
                 </materialDesign:Card>
 
