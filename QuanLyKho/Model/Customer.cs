@@ -9,25 +9,32 @@
 
 namespace QuanLyKho.Model
 {
+    using QuanLyKho.ViewModel;
     using System;
     using System.Collections.Generic;
-    
-    public partial class Customer
+
+    public partial class Customer : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
             this.Outputs = new HashSet<Output>();
         }
-    
+
         public int Id { get; set; }
-        public string DisplayName { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string MoreInfo { get; set; }
-        public Nullable<System.DateTime> ContractDate { get; set; }
-    
+        private string _displayName { get; set; }
+        public string DisplayName { get => _displayName; set { _displayName = value; OnPropertyChanged(); } }
+        private string _address { get; set; }
+        public string Address { get => _address; set { _address = value; OnPropertyChanged(); } }
+        private string _phone { get; set; }
+        public string Phone { get => _phone; set { _phone = value; OnPropertyChanged(); } }
+        private string _email { get; set; }
+        public string Email { get => _email; set { _email = value; OnPropertyChanged(); } }
+        private string _moreInfo { get; set; }
+        public string MoreInfo { get => _moreInfo; set { _moreInfo = value; OnPropertyChanged(); } }
+        private Nullable<System.DateTime> _contractDate { get; set; }
+        public Nullable<System.DateTime> ContractDate { get => _contractDate; set { _contractDate = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Output> Outputs { get; set; }
     }

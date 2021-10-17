@@ -11,6 +11,7 @@
     Title="Vật tư"
     Width="900"
     Height="500"
+    DataContext="{StaticResource ObjectVM}"
     ResizeMode="NoResize"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
@@ -53,6 +54,7 @@
                         <ComboBox
                             Margin="5,5,15,5"
                             materialDesign:HintAssist.Hint="Đơn vị đo"
+                            DisplayMemberPath="DisplayName"
                             FontSize="16"
                             IsEditable="True"
                             ItemsSource="{Binding Unit}"
@@ -61,17 +63,18 @@
                         <ComboBox
                             Margin="5,5,15,5"
                             materialDesign:HintAssist.Hint="Nhà cung cấp"
+                            DisplayMemberPath="DisplayName"
                             FontSize="16"
                             IsEditable="True"
-                            ItemsSource="{Binding Suplier}"
-                            SelectedItem="{Binding SelectedSuplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding Supplier}"
+                            SelectedItem="{Binding SelectedSupplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
                         <TextBox
                             Margin="5,5,15,5"
                             materialDesign:HintAssist.Hint="QR code"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding QRCode, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding QrCode, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Margin="5,5,15,5"
                             materialDesign:HintAssist.Hint="Bar code"
@@ -117,8 +120,8 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" />
                                     <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Header="Tên vật tư" />
                                     <GridViewColumn DisplayMemberBinding="{Binding Unit.DisplayName}" Header="Đơn vị đo" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Suplier.DisplayName}" Header="Nhà cung cấp" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding QRCode}" Header="QRCode" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Supplier.DisplayName}" Header="Nhà cung cấp" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding QrCode}" Header="QrCode" />
                                     <GridViewColumn DisplayMemberBinding="{Binding BarCode}" Header="BarCode" />
                                 </GridView>
                             </ListView.View>
