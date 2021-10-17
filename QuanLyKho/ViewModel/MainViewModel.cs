@@ -109,11 +109,11 @@ namespace QuanLyKho.ViewModel
                 var outputList = DataProvider.Instance.Database.OutputInfoes.Where(p => p.IdObject == item.Id);
                 int sumInput = 0;
                 int sumOutput = 0;
-                if (inputList.Count() != 0)
+                if (inputList != null && inputList.Count() != 0)
                 {
                     sumInput = Convert.ToInt32(inputList.Sum(p => p.Count));
                 }
-                if (outputList.Count() != 0)
+                if (outputList != null && outputList.Count() != 0)
                 {
                     sumOutput = Convert.ToInt32(outputList.Sum(p => p.Count));
                 }
