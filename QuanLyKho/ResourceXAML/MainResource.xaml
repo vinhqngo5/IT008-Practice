@@ -8,4 +8,5 @@
     <viewmodel:SupplierViewModel x:Key="SupplierVM" />
     <viewmodel:ObjectViewModel x:Key="ObjectVM" />
     <viewmodel:UserViewModel x:Key="UserVM" />
+    <viewmodel:ChangePassWordViewModel x:Key="ChangePassWordVM"/>
 </ResourceDictionary>

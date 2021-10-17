@@ -16,7 +16,8 @@ namespace QuanLyKho.ViewModel
         private User _selectedItem;
         public User SelectedItem
         {
-            get => _selectedItem; set
+            get => _selectedItem; 
+            set
             {
                 _selectedItem = value;
                 OnPropertyChanged();
@@ -33,6 +34,7 @@ namespace QuanLyKho.ViewModel
 
         private string _displayName;
         public string DisplayName { get => _displayName; set { _displayName = value; OnPropertyChanged(); } }
+
         private string _userName;
         public string UserName { get => _userName; set { _userName = value; OnPropertyChanged(); } }
         private UserRole _selectedRole;
@@ -48,6 +50,7 @@ namespace QuanLyKho.ViewModel
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand ChangePasswordCommand { get; set; }
 
         public UserViewModel()
         {
@@ -85,6 +88,15 @@ namespace QuanLyKho.ViewModel
                     user.UserRole = SelectedRole;
                     
                     DataProvider.Instance.Database.SaveChanges();
+                });
+            ChangePasswordCommand = new RelayCommand<object>(
+                (p) =>
+                {
+                    return true;
+                },
+                (p) =>
+                {
+                    _ = new ChangePassWordWindow().ShowDialog();
                 });
         }
     }
