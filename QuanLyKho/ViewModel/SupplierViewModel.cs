@@ -36,7 +36,6 @@ namespace QuanLyKho.ViewModel
         }
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
-        public ICommand SelectedDateCommand { get; set; }
 
 
         public string DisplayName { get => _displayName; set { _displayName = value; OnPropertyChanged(); } }
@@ -66,16 +65,6 @@ namespace QuanLyKho.ViewModel
         public SupplierViewModel()
         {
             List = new ObservableCollection<Supplier>(DataProvider.Instance.Database.Suppliers);
-            SelectedDateCommand = new RelayCommand<DatePicker>(
-                (p) =>
-                {
-                    return true;
-                },
-                (p) =>
-                {
-                    ContractDate = DateTime.ParseExact(p.SelectedDate.Value.ToString("dd/MM/yyyy"), "dd/MM/yyyy", null);
-                    //p.ToolTip = p.SelectedDate.Value.ToString("dd/MM/yyyy");
-                });
             AddCommand = new RelayCommand<object>(
                 (p) =>
                 {
